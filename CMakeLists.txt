@@ -23,5 +23,10 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     add_compile_options(/W4)
 endif()
 
-add_executable(video_analytics_detectors
+add_subdirectory(model)
+
+include_directories(model/headers)
+
+add_executable(pre-detector-signal
+               dependencies/json.hpp
                main.cpp)
