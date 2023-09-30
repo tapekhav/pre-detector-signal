@@ -10,7 +10,7 @@ file(GLOB MODEL_HEADERS headers/*.h)
 file(GLOB MODEL_SOURCE src/*.cpp)
 
 set(PROTOBUF_GENERATE_CPP_APPEND_PATH TRUE)
-set(PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/proto)
+set(PROTO_DIR ../protos)
 
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_DIR}/model.proto)
 

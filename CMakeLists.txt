@@ -34,18 +34,18 @@ set(output_files "")
 foreach(proto_file ${source_files})
     get_filename_component(output_file_name ${proto_file} NAME_WE)
     list(APPEND output_files
-            ${CMAKE_CURRENT_BINARY_DIR}/model/proto/${output_file_name}.pb.cc
-            ${CMAKE_CURRENT_BINARY_DIR}/model/proto/${output_file_name}.pb.h
+            ${CMAKE_CURRENT_BINARY_DIR}/proto/${output_file_name}.pb.cc
+            ${CMAKE_CURRENT_BINARY_DIR}/proto/${output_file_name}.pb.h
     )
 
     add_custom_command(
-            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/model/proto/${output_file_name}.pb.cc
-            ${CMAKE_CURRENT_BINARY_DIR}/model/proto/${output_file_name}.pb.h
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/proto/${output_file_name}.pb.cc
+            ${CMAKE_CURRENT_BINARY_DIR}/proto/${output_file_name}.pb.h
             COMMAND protoc
-            ARGS --cpp_out=${CMAKE_CURRENT_BINARY_DIR}/model/proto
-            -I${CMAKE_CURRENT_SOURCE_DIR}/model/proto
-            ${CMAKE_CURRENT_SOURCE_DIR}/model/proto/${proto_file}
-            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/model/proto/${proto_file}
+            ARGS --cpp_out=${CMAKE_CURRENT_BINARY_DIR}/proto
+            -I${CMAKE_CURRENT_SOURCE_DIR}/proto
+            protos/${proto_file}
+            DEPENDS protos/${proto_file}
     )
 endforeach()
 
@@ -56,7 +56,7 @@ add_subdirectory(model)
 
 include_directories(model/headers)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
-include_directories(model/proto)
+include_directories(protos)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/model)
 
 add_executable(pre-detector-signal
