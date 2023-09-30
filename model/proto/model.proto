@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+message WGS84 {
+  //coordinates
+  double x = 1;
+  double y = 2;
+  double z = 3;
+  // speed
+  double vx = 4;
+  double vy = 5;
+  double vz = 6;
+}
+
+message Model {
+  double temperature = 1;
+  double wind_speed = 2;
+  double humidity = 3;
+  WGS84 coordinates = 4;
+  double board_voltage = 5;
+  double control_voltage = 6;
+}

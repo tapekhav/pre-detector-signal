@@ -1,4 +1,5 @@
 #include <iostream>
+#include <model.pb.h>
 
 int main()
 {
