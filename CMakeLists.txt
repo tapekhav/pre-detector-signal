@@ -26,7 +26,7 @@ endif()
 find_package(Protobuf REQUIRED)
 
 set(source_files
-    model/model.proto
+    model.proto
 )
 
 set(output_files "")
