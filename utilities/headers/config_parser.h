@@ -17,6 +17,7 @@ public:
     [[nodiscard]] inline Model getModel() const { return _model; }
 
 private:
+    void setWindSpeed();
     void setCoordinates();
 private:
     Model _model;

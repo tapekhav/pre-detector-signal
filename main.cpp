@@ -7,7 +7,7 @@ int main()
     a.setData();
     auto mod = a.getModel();
 
-    std::cout << mod.wind_speed() << "\n";
+    std::cout << mod.wind_speed().vx() << "\n";
 
     return 0;
 }
