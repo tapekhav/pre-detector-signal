@@ -23,19 +23,24 @@ class ModelGenerator
 {
 public:
     //! Constructor
-    explicit ModelGenerator(Model model) : _model(std::move(model)) {}
+    explicit ModelGenerator(Model model) : _initial_model(std::move(model)) {}
     //! Generate signals of model in time interval
-    std::vector<double> generateModel(Interval time_interval);
+    std::vector<Model> generateModel(Interval time_interval);
 private:
-    void setMotion();
+    void setMotionFormula();
 
-    void setAtmosphere();
+    void setTemperatureFormula();
+
+    void setHumidityFormula();
+
+    void setBoardVoltage();
 private:
-    Model _model;
+    Model _initial_model;
 
-    std::function<Coordinates(double)> _motion_formula;
-    std::function<void(double)> _wind_formula;
-    std::function<void(double)> _atmosphere_formula;
+    std::function<WGS84*(double)> _motion_formula;
+    std::function<double(double)> _atmosphere_formula;
+    std::function<double(double)> _humidity_formula;
+    std::function<double(double, double)> _voltage_formula;
 };
 
 

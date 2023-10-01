@@ -41,7 +41,7 @@ void ConfigParser::setCoordinates()
     params->set_allocated_coordinates(coordinates.release());
     params->set_allocated_speed(speed.release());
 
-    _model.set_allocated_coordinates(params.release());
+    _model.set_allocated_wgs(params.release());
 }
 
 void ConfigParser::setWindSpeed()

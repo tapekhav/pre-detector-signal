@@ -22,7 +22,7 @@ message Model {
   double temperature = 1;
   Speed wind_speed = 2;
   double humidity = 3;
-  WGS84 coordinates = 4;
+  WGS84 wgs = 4;
   double board_voltage = 5;
   double control_voltage = 6;
 }
