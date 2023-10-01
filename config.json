@@ -7,17 +7,17 @@
 
   "model_settings" : {
     "temperature" : 1,
-    "wind_speed" : 1,
-    "humidity" : 1,
+    "wind_speed" : 2,
+    "humidity" : 3,
     "coordinates" : {
-      "x" : 1,
-      "y" : 1,
-      "z" : 1,
-      "xv" : 1,
-      "yv" : 1,
-      "zv" : 1
+      "x" : 4,
+      "y" : 5,
+      "z" : 6,
+      "xv" : 7,
+      "yv" : 8,
+      "zv" : 9
     },
-    "board_voltage" : 1,
-    "control_voltage" : 1
+    "board_voltage" : 10,
+    "control_voltage" : 11
   }
 }
