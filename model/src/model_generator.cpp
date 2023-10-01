@@ -28,6 +28,8 @@ std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
         model.set_humidity(_humidity_formula(h));
         model.set_board_voltage(_voltage_formula(model.temperature(), i));
 
+        model.set_allocated_wind_speed(std::make_unique<Speed>(_initial_model.wind_speed()).release());
+
         result.push_back(model);
     }
 
@@ -42,15 +44,16 @@ void ModelGenerator::setMotionFormula()
         auto speed = _initial_model.wgs().speed();
         auto wind_speed = _initial_model.wind_speed();
 
-        std::unique_ptr<WGS84> new_wgs84;
-        std::unique_ptr<Speed> new_speed;
-        std::unique_ptr<Coordinates> new_coordinates;
-
-        new_speed->CopyFrom(speed);
+        std::unique_ptr<WGS84> new_wgs84 = std::make_unique<WGS84>();
+        std::unique_ptr<Speed> new_speed = std::make_unique<Speed>(speed);
+        std::unique_ptr<Coordinates> new_coordinates = std::make_unique<Coordinates>();
 
         new_coordinates->set_x(coordinates.x() + time_point * (speed.vx() + wind_speed.vx()));
         new_coordinates->set_y(coordinates.y() + time_point * (speed.vy() + wind_speed.vy()));
         new_coordinates->set_z(coordinates.z() + time_point * (speed.vz() + wind_speed.vz()));
+
+        new_wgs84->set_allocated_coordinates(new_coordinates.release());
+        new_wgs84->set_allocated_speed(new_speed.release());
 
         return new_wgs84.release();
     };
