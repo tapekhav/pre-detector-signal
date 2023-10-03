@@ -7,22 +7,17 @@ message Coordinates {
   double z = 3;
 }
 
-message Speed {
-  double vx = 1;
-  double vy = 2;
-  double vz = 3;
-}
-
-message WGS84 {
+message Params {
   Coordinates coordinates = 1;
-  Speed speed = 2;
+  Coordinates speed = 2;
+  Coordinates acceleration = 3;
 }
 
 message Model {
   double temperature = 1;
-  Speed wind_speed = 2;
+  Params wind_speed = 2;
   double humidity = 3;
-  WGS84 wgs = 4;
+  Params wgs = 4;
   double board_voltage = 5;
   double control_voltage = 6;
 }

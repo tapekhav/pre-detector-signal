@@ -12,6 +12,7 @@ std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
 {
     std::vector<Model> result;
 
+    setWind();
     setMotionFormula();
     setTemperatureFormula();
     setHumidityFormula();
@@ -21,14 +22,15 @@ std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
     {
         Model model;
 
-        model.set_allocated_wgs(_motion_formula(i));
+        model.set_allocated_wind_speed(_wind_formula(i));
+        model.set_allocated_wgs(_motion_formula(i, model.wind_speed().speed()));
 
         auto h = model.wgs().coordinates().z();
         model.set_temperature(_atmosphere_formula(h));
         model.set_humidity(_humidity_formula(h));
         model.set_board_voltage(_voltage_formula(model.temperature(), i));
 
-        model.set_allocated_wind_speed(std::make_unique<Speed>(_initial_model.wind_speed()).release());
+        model.set_allocated_wind_speed(std::make_unique<Params>(_initial_model.wind_speed()).release());
 
         result.push_back(model);
     }
@@ -36,21 +38,44 @@ std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
     return result;
 }
 
+void ModelGenerator::setWind()
+{
+    _wind_formula = [=](double time_point)
+    {
+        std::unique_ptr<Params> new_wind_speed = std::make_unique<Params>();
+
+        auto acceleration = _initial_model.wind_speed().acceleration();
+        auto speed = _initial_model.wind_speed().speed();
+
+        speed.set_x(speed.x() + acceleration.x() * time_point);
+        speed.set_y(speed.y() + acceleration.y() * time_point);
+        speed.set_z(speed.z() + acceleration.z() * time_point);
+
+        std::unique_ptr<Coordinates> new_speed = std::make_unique<Coordinates>(speed);
+        std::unique_ptr<Coordinates> new_acceleration = std::make_unique<Coordinates>(acceleration);
+
+        new_wind_speed->set_allocated_speed(new_speed.release());
+        new_wind_speed->set_allocated_acceleration(new_acceleration.release());
+
+        return new_wind_speed.release();
+    };
+
+}
+
 void ModelGenerator::setMotionFormula()
 {
-    _motion_formula = [=](double time_point)
+    _motion_formula = [=](double time_point, const Coordinates& wind_speed)
     {
         auto coordinates = _initial_model.wgs().coordinates();
         auto speed = _initial_model.wgs().speed();
-        auto wind_speed = _initial_model.wind_speed();
 
-        std::unique_ptr<WGS84> new_wgs84 = std::make_unique<WGS84>();
-        std::unique_ptr<Speed> new_speed = std::make_unique<Speed>(speed);
+        std::unique_ptr<Params> new_wgs84 = std::make_unique<Params>();
+        std::unique_ptr<Coordinates> new_speed = std::make_unique<Coordinates>(speed);
         std::unique_ptr<Coordinates> new_coordinates = std::make_unique<Coordinates>();
 
-        new_coordinates->set_x(coordinates.x() + time_point * (speed.vx() + wind_speed.vx()));
-        new_coordinates->set_y(coordinates.y() + time_point * (speed.vy() + wind_speed.vy()));
-        new_coordinates->set_z(coordinates.z() + time_point * (speed.vz() + wind_speed.vz()));
+        new_coordinates->set_x(coordinates.x() + time_point * (speed.x() + wind_speed.x()));
+        new_coordinates->set_y(coordinates.y() + time_point * (speed.y() + wind_speed.y()));
+        new_coordinates->set_z(coordinates.z() + time_point * (speed.z() + wind_speed.z()));
 
         new_wgs84->set_allocated_coordinates(new_coordinates.release());
         new_wgs84->set_allocated_speed(new_speed.release());
