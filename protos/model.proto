@@ -1,21 +1,23 @@
 syntax = "proto3";
 
-message WGS84 {
-  //coordinates
+
+message Coordinates {
   double x = 1;
   double y = 2;
   double z = 3;
-  // speed
-  double vx = 4;
-  double vy = 5;
-  double vz = 6;
+}
+
+message Params {
+  Coordinates coordinates = 1;
+  Coordinates speed = 2;
+  Coordinates acceleration = 3;
 }
 
 message Model {
   double temperature = 1;
-  double wind_speed = 2;
+  Params wind_speed = 2;
   double humidity = 3;
-  WGS84 coordinates = 4;
+  Params wgs = 4;
   double board_voltage = 5;
   double control_voltage = 6;
 }
