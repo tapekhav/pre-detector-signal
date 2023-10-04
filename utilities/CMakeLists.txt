@@ -9,3 +9,4 @@ file(GLOB UTILITIES_SOURCE src/*.cpp)
 add_library(Utility ${UTILITIES_HEADERS} ${UTILITIES_SOURCE})
 
 add_compile_definitions(path_to_config="${CMAKE_CURRENT_SOURCE_DIR}/../config.json")
+target_link_libraries(Utility Qt5::Widgets Qt5::Charts)
