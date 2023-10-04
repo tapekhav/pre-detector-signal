@@ -1,7 +1,6 @@
 #include <model_generator.h>
 #include <complex>
 
-static const double g = 9.81;
 static const double L = 0.0065;
 static const double H = 1500;
 
@@ -49,8 +48,10 @@ void ModelGenerator::setMotionFormula()
         std::unique_ptr<Coordinates> new_speed = std::make_unique<Coordinates>(speed);
         std::unique_ptr<Coordinates> new_coordinates = std::make_unique<Coordinates>();
 
-        new_coordinates->set_x((coordinates.x() * k_latitude + time_point * wind_speed.x()) / k_latitude);
-        new_coordinates->set_y((coordinates.y() * k_longitude + wind_speed.y()) / k_longitude);
+        new_coordinates->set_x((coordinates.x() * k_latitude + time_point * std::exp(std::log(wind_speed.x())))
+                                                                                                        / k_latitude);
+        new_coordinates->set_y((coordinates.y() * k_longitude + time_point * std::exp(std::log(wind_speed.y())))
+                                                                                                        / k_longitude);
         new_coordinates->set_z(coordinates.z() + time_point * speed.z());
 
         new_wgs84->set_allocated_coordinates(new_coordinates.release());
