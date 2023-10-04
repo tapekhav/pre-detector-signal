@@ -10,12 +10,11 @@ message Coordinates {
 message Params {
   Coordinates coordinates = 1;
   Coordinates speed = 2;
-  Coordinates acceleration = 3;
 }
 
 message Model {
   double temperature = 1;
-  Params wind_speed = 2;
+  Coordinates wind_speed = 2;
   double humidity = 3;
   Params wgs = 4;
   double board_voltage = 5;

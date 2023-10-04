@@ -34,13 +34,10 @@ private:
     void setHumidityFormula();
 
     void setBoardVoltage();
-
-    void setWind();
 private:
     Model _initial_model;
 
     std::function<Params*(double, const Coordinates&)> _motion_formula;
-    std::function<Params*(double)> _wind_formula;
     std::function<double(double)> _atmosphere_formula;
     std::function<double(double)> _humidity_formula;
     std::function<double(double, double)> _voltage_formula;

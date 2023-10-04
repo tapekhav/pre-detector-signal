@@ -8,21 +8,19 @@
   "model_settings" : {
     "temperature" : 1,
     "wind_speed" : {
-      "vx": 4,
-      "vy": 5,
-      "vz": 6,
-      "ax" : 0.1,
-      "ay" : 0.2,
-      "az" : 0.0001
+      "vx": 10,
+      "vy": 20
     },
     "humidity" : 3,
     "coordinates" : {
-      "x" : 4,
-      "y" : 5,
-      "z" : 6,
-      "vx" : 7,
-      "vy" : 8,
-      "vz" : 9
+      "wgs" : {
+        "x": 59.9343,
+        "y": 30.3351,
+        "z": 5
+      },
+      "speed" : {
+        "vz" : 15
+      }
     },
     "board_voltage" : 10,
     "control_voltage" : 11
