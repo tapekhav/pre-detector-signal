@@ -10,7 +10,7 @@ int main()
     auto mod = a.getModel();
 
     ModelGenerator zxc(mod);
-    Interval time;
+    Interval time(0, 100000, 0.5);
     auto vec = zxc.generateModel(time);
 
     for (const auto& i : vec) {

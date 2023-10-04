@@ -52,7 +52,9 @@ void ModelGenerator::setMotionFormula()
                                                                                                         / k_latitude);
         new_coordinates->set_y((coordinates.y() * k_longitude + time_point * std::exp(std::log(wind_speed.y())))
                                                                                                         / k_longitude);
-        new_coordinates->set_z(coordinates.z() + time_point * speed.z());
+
+        auto h = coordinates.z() + time_point * speed.z();
+        new_coordinates->set_z(h < 12000 ? h : 10000);
 
         new_wgs84->set_allocated_coordinates(new_coordinates.release());
         new_wgs84->set_allocated_speed(new_speed.release());
@@ -83,5 +85,4 @@ void ModelGenerator::setBoardVoltage()
     {
         return _initial_model.board_voltage() + TCV * (temperature - _initial_model.temperature()) + TC_t * time_point;
     };
-
 }
