@@ -14,11 +14,11 @@ class GeoidDrawer:
         radius = np.sqrt(
             (self.major_axis ** 2 * np.cos(lat_rad) ** 2 + self.minor_axis ** 2 * np.sin(lat_rad) ** 2) /
             (np.cos(lat_rad) ** 2 + np.sin(lat_rad) ** 2)
-        )
+        ) + altitude
 
         x = radius * np.cos(lat_rad) * np.cos(lon_rad)
         y = radius * np.cos(lat_rad) * np.sin(lon_rad)
-        z = radius * np.sin(lat_rad) + altitude
+        z = radius * np.sin(lat_rad)
 
         ax.scatter(x, y, z, color='red', s=50, label='Point')
 
@@ -49,10 +49,10 @@ class GeoidDrawer:
         radius2 = np.sqrt(
             (self.major_axis ** 2 * np.cos(lat_rad2) ** 2 + self.minor_axis ** 2 * np.sin(lat_rad2) ** 2) /
             (np.cos(lat_rad2) ** 2 + np.sin(lat_rad2) ** 2)
-        )
+        ) + alt2
 
         x2 = radius2 * np.cos(lat_rad2) * np.cos(lon_rad2)
         y2 = radius2 * np.cos(lat_rad2) * np.sin(lon_rad2)
-        z2 = radius2 * np.sin(lat_rad2) + alt2
+        z2 = radius2 * np.sin(lat_rad2)
 
         ax.plot([x1, x2], [y1, y2], [z1, z2], linestyle='-', color='blue')

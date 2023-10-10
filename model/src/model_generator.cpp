@@ -106,6 +106,15 @@ void ModelGenerator::setMotionFormula()
     };
 }
 
+double ModelGenerator::getRadius(double lat_rad)
+{
+    double numerator = (k_major_axis * k_major_axis * cos(lat_rad) * cos(lat_rad)) +
+                       (k_minor_axis * k_minor_axis * sin(lat_rad) * sin(lat_rad));
+    double denominator = (cos(lat_rad) * cos(lat_rad)) + (sin(lat_rad) * sin(lat_rad));
+
+    return sqrt(numerator / denominator);
+}
+
 void ModelGenerator::setTemperatureFormula()
 {
     _atmosphere_formula = [=](double h)
@@ -128,13 +137,4 @@ void ModelGenerator::setBoardVoltage()
     {
         return _initial_model.board_voltage() + TCV * (temperature - _initial_model.temperature()) + TC_t * time_point;
     };
-}
-
-double ModelGenerator::getRadius(double lat_rad)
-{
-    double numerator = (k_major_axis * k_major_axis * cos(lat_rad) * cos(lat_rad)) +
-                       (k_minor_axis * k_minor_axis * sin(lat_rad) * sin(lat_rad));
-    double denominator = (cos(lat_rad) * cos(lat_rad)) + (sin(lat_rad) * sin(lat_rad));
-
-    return sqrt(numerator / denominator);
 }
