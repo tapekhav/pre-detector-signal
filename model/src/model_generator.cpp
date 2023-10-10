@@ -7,8 +7,9 @@ static const double H = 1500;
 static const double TCV = 0.0002;
 static const double TC_t = 0.0001;
 
-static const double k_latitude = 111.32 * 10e4;
-static const double k_longitude = 66.96 * 10e4;
+static const double k_major_axis = 6378137.0;
+static const double k_minor_axis = 6356752.3142;
+
 
 std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
 {
@@ -39,6 +40,35 @@ std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
 
 void ModelGenerator::setMotionFormula()
 {
+    auto toRadians = [](double degrees)
+    {
+        return degrees * M_PI / 180.0;
+    };
+
+    auto toDegrees = [](double radians)
+    {
+        return radians * 180.0 / M_PI;
+    };
+
+    auto latToMeters = [=](double lat_rad, double rad)
+    {
+        return rad * log(atan(lat_rad / 2 + M_PI / 4));
+    };
+
+    auto lonToMeters = [](double lon, double rad) {
+        return lon * rad * M_PI / 180.0;
+    };
+
+    auto metersToLat = [=](double y, double rad)
+    {
+        return toDegrees(2.0 * atan(exp(y / rad)) - M_PI / 2.0);
+    };
+
+    auto metersToLon = [=](double x, double rad) {
+        return toDegrees(x / rad);
+    };
+
+
     _motion_formula = [=](double time_point, const Coordinates& wind_speed)
     {
         auto coordinates = _initial_model.wgs().coordinates();
@@ -48,19 +78,41 @@ void ModelGenerator::setMotionFormula()
         std::unique_ptr<Coordinates> new_speed = std::make_unique<Coordinates>(speed);
         std::unique_ptr<Coordinates> new_coordinates = std::make_unique<Coordinates>();
 
-        new_coordinates->set_x((coordinates.x() * k_latitude + time_point * std::exp(std::log(wind_speed.x())))
-                                                                                                        / k_latitude);
-        new_coordinates->set_y((coordinates.y() * k_longitude + time_point * std::exp(std::log(wind_speed.y())))
-                                                                                                        / k_longitude);
+        double lat_rad = toRadians(coordinates.y());
+        double rad = getRadius(lat_rad);
+
+        double init_meters_lat = latToMeters(lat_rad, rad);
+        double init_meters_lon = lonToMeters(coordinates.x(), rad);
+
+        auto meters_lat = init_meters_lat + wind_speed.y() * std::exp(std::log10(time_point));
+        auto meters_lon = init_meters_lon + wind_speed.x() * std::exp(std::log10(time_point));
+
+        auto lat = metersToLat(meters_lat, rad);
+        auto lon = metersToLon(meters_lon, rad);
+
+        new_coordinates->set_x(lon);
+        new_coordinates->set_y(lat);
 
         auto h = coordinates.z() + time_point * speed.z();
-        new_coordinates->set_z(h < 12000 ? h : 10000);
+        new_coordinates->set_z(h);
 
         new_wgs84->set_allocated_coordinates(new_coordinates.release());
         new_wgs84->set_allocated_speed(new_speed.release());
 
+        _plotter->addPoint(lon, lat, h);
+        _meters_plotter->addPoint(std::abs(meters_lon - init_meters_lon), std::abs(meters_lat - init_meters_lat), h);
+
         return new_wgs84.release();
     };
+}
+
+double ModelGenerator::getRadius(double lat_rad)
+{
+    double numerator = (k_major_axis * k_major_axis * cos(lat_rad) * cos(lat_rad)) +
+                       (k_minor_axis * k_minor_axis * sin(lat_rad) * sin(lat_rad));
+    double denominator = (cos(lat_rad) * cos(lat_rad)) + (sin(lat_rad) * sin(lat_rad));
+
+    return sqrt(numerator / denominator);
 }
 
 void ModelGenerator::setTemperatureFormula()

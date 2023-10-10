@@ -57,3 +57,8 @@ pre-detector signal with a binary file as a result at a given time interval.
 ### Примечание.
 Приложения моделирования и обратного извлечения разрешается делать в консольном виде, тогда параметры настройки должны
 передаваться в виде конфигурационного файла, для этой цели целесообразно использовать формат _json_.
+
+![image](assets/x.png)
+![image](assets/y.png)
+![image](assets/z.png)
+![image](assets/geoid.png)

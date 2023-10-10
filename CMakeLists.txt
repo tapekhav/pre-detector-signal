@@ -18,12 +18,15 @@ if (MSVC_VERSION GREATER_EQUAL "1900")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    # add_compile_options(-Wall -Wextra -Werror -Wpedantic -Wconversion -Wformat -Wunused -Wshadow -Wuninitialized -Wsign-compare)
+    #add_compile_options(-Wall -Wextra -Werror -Wpedantic -Wconversion -Wformat -Wunused -Wshadow -Wuninitialized -Wsign-compare)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     add_compile_options(/W4)
 endif()
 
+set(CMAKE_PREFIX_PATH "/home/vladimir/anaconda3/lib/cmake/Qt5")
+
 find_package(Protobuf REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Charts)
 
 set(source_files
     model.proto
@@ -57,11 +60,14 @@ add_subdirectory(utilities)
 include_directories(model/headers)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 include_directories(utilities/headers)
+include_directories(utilities/plotter)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/model)
 
 add_executable(pre-detector-signal
                main.cpp)
 
-target_link_libraries(pre-detector-signal Model Utility ${PROTOBUF_LIBRARIES})
+target_link_libraries(pre-detector-signal Model Utility ${PROTOBUF_LIBRARIES} Qt5::Widgets Qt5::Charts)
 add_compile_definitions(path_to_config="${CMAKE_CURRENT_SOURCE_DIR}/config.json")
+add_compile_definitions(plt_dir="${CMAKE_CURRENT_SOURCE_DIR}/utilities/plotter/plotters/coordinates.txt")
+add_compile_definitions(plt="${CMAKE_CURRENT_SOURCE_DIR}/utilities/plotter/plotters/meters.txt")
