@@ -2,6 +2,7 @@
 #define PRE_DETECTOR_SIGNAL_MODEL_GENERATOR_H
 
 #include <model.pb.h>
+#include <plotter.h>
 
 #include <utility>
 
@@ -23,7 +24,8 @@ class ModelGenerator
 {
 public:
     //! Constructor
-    explicit ModelGenerator(Model model) : _initial_model(std::move(model)) {}
+    explicit ModelGenerator(Model model) : _initial_model(std::move(model)), _plotter(std::make_unique<Plotter>(plt_dir)),
+                                                                             _meters_plotter(std::make_unique<Plotter>(plt)) {}
     //! Generate signals of model in time interval
     std::vector<Model> generateModel(Interval time_interval);
 private:
@@ -34,8 +36,12 @@ private:
     void setHumidityFormula();
 
     void setBoardVoltage();
+
+    double getRadius(double lat_rad);
 private:
     Model _initial_model;
+    std::unique_ptr<Plotter> _plotter;
+    std::unique_ptr<Plotter> _meters_plotter;
 
     std::function<Params*(double, const Coordinates&)> _motion_formula;
     std::function<double(double)> _atmosphere_formula;
