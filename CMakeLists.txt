@@ -70,6 +70,7 @@ add_executable(pre-detector-signal
                main.cpp)
 
 target_link_libraries(pre-detector-signal Model Utility EncodeData ${PROTOBUF_LIBRARIES} Qt5::Widgets Qt5::Charts)
+
 add_compile_definitions(path_to_config="${CMAKE_CURRENT_SOURCE_DIR}/config.json")
 add_compile_definitions(plt_dir="${CMAKE_CURRENT_SOURCE_DIR}/utilities/plotter/plotters/coordinates.txt")
 add_compile_definitions(plt="${CMAKE_CURRENT_SOURCE_DIR}/utilities/plotter/plotters/meters.txt")

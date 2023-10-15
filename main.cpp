@@ -86,12 +86,12 @@ int main() {
 */
 #include <iostream>
 #include <bitset>
-#include <encode_word.h>
+#include <word_to_binary.h>
 
 int main() {
     double number = 12.5;
 
-    for (auto elem : EncodeWord(number).getResultBitset())
+    for (auto elem : BinaryWord(number).getResultBitset())
     {
         std::cout << elem << "\n";
     }
