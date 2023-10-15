@@ -1,15 +1,8 @@
 #include <model_generator.h>
+
 #include <complex>
 
-static const double L = 0.0065;
-static const double H = 1500;
-
-static const double TCV = 0.0002;
-static const double TC_t = 0.0001;
-
-static const double k_major_axis = 6378137.0;
-static const double k_minor_axis = 6356752.3142;
-
+#include <consts.h>
 
 std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
 {
@@ -94,7 +87,7 @@ void ModelGenerator::setMotionFormula()
         new_coordinates->set_y(lat);
 
         auto h = coordinates.z() + time_point * speed.z();
-        new_coordinates->set_z(h);
+        new_coordinates->set_z(h > 12000 ? 12000 : h);
 
         new_wgs84->set_allocated_coordinates(new_coordinates.release());
         new_wgs84->set_allocated_speed(new_speed.release());
@@ -108,8 +101,8 @@ void ModelGenerator::setMotionFormula()
 
 double ModelGenerator::getRadius(double lat_rad)
 {
-    double numerator = (k_major_axis * k_major_axis * cos(lat_rad) * cos(lat_rad)) +
-                       (k_minor_axis * k_minor_axis * sin(lat_rad) * sin(lat_rad));
+    double numerator = (consts::physics::k_major_axis * consts::physics::k_major_axis * cos(lat_rad) * cos(lat_rad)) +
+                       (consts::physics::k_minor_axis * consts::physics::k_minor_axis * sin(lat_rad) * sin(lat_rad));
     double denominator = (cos(lat_rad) * cos(lat_rad)) + (sin(lat_rad) * sin(lat_rad));
 
     return sqrt(numerator / denominator);
@@ -119,7 +112,7 @@ void ModelGenerator::setTemperatureFormula()
 {
     _atmosphere_formula = [=](double h)
     {
-        return _initial_model.temperature() - L * h;
+        return _initial_model.temperature() - consts::physics::L * h;
     };
 }
 
@@ -127,7 +120,7 @@ void ModelGenerator::setHumidityFormula()
 {
     _humidity_formula = [=](double h)
     {
-        return _initial_model.humidity() * std::exp((h - _initial_model.wgs().coordinates().z()) / H);
+        return _initial_model.humidity() * std::exp((h - _initial_model.wgs().coordinates().z()) / consts::physics::H);
     };
 }
 
@@ -135,6 +128,7 @@ void ModelGenerator::setBoardVoltage()
 {
     _voltage_formula = [=](double temperature, double time_point)
     {
-        return _initial_model.board_voltage() + TCV * (temperature - _initial_model.temperature()) + TC_t * time_point;
+        return _initial_model.board_voltage() + consts::physics::TCV * (temperature - _initial_model.temperature())
+                                              + consts::physics::TC_t * time_point;
     };
 }
