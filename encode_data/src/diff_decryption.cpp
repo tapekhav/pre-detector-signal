@@ -2,9 +2,8 @@
 
 void DiffDecryption::doDiffCode(std::bitset<14> &bitset)
 {
-    for (size_t i = 1; i < 13; ++i)
+    for (size_t i = 11; i > 1; --i)
     {
-        bitset[i] = bitset[i] ^ bitset[i - 1];
+        bitset[i] = bitset[i] ^ bitset[i + 1];
     }
 }
-

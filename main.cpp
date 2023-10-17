@@ -85,13 +85,37 @@ int main() {
 }
 */
 #include <iostream>
-#include <bitset>
+
 #include <word_to_binary.h>
+#include <encode_word.h>
+#include <diff_encryption.h>
+#include <diff_decryption.h>
 
 int main() {
     double number = 12.5;
+    EncodeWord encodeWord(std::make_unique<DiffEncryption>());
+    auto seq = BinaryWord(number).getResultBitset();
+
+    encodeWord.codeSequence(seq);
 
     for (auto elem : BinaryWord(number).getResultBitset())
+    {
+        std::cout << elem << "\n";
+    }
+
+    std::cout << "\n\n\n";
+
+    for (auto elem : seq)
+    {
+        std::cout << elem << "\n";
+    }
+
+    std::cout << "\n\n\n";
+
+    EncodeWord ahah(std::make_unique<DiffDecryption>());
+
+    ahah.codeSequence(seq);
+    for (auto elem : seq)
     {
         std::cout << elem << "\n";
     }

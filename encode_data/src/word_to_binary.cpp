@@ -22,7 +22,7 @@ std::bitset<14> BinaryWord::getBitset(std::bitset<48> encoded_value, int &offset
     return value;
 }
 
-std::vector<std::bitset<14>> BinaryWord::getResultBitset() const
+bitset_sequence BinaryWord::getResultBitset() const
 {
     std::bitset<48> short_bitset;
 
@@ -33,7 +33,7 @@ std::vector<std::bitset<14>> BinaryWord::getResultBitset() const
         short_bitset[--k] = _bitset_num[i];
     }
 
-    std::vector<std::bitset<14>> result;
+    bitset_sequence result;
     int offset = 0;
     for(size_t i = 0; i < 4; ++i)
     {
