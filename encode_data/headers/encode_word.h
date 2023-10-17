@@ -11,7 +11,7 @@ class EncodeWord
 public:
     explicit EncodeWord(std::unique_ptr<IDiffEncryption> differential) : _differential(std::move(differential)) {}
 
-    void codeSequence(std::vector<std::bitset<14>>& sequence);
+    void codeSequence(bitset_sequence& sequence);
 private:
     std::unique_ptr<IDiffEncryption> _differential;
 };

@@ -1,6 +1,6 @@
 #include <encode_word.h>
 
-void EncodeWord::codeSequence(std::vector<std::bitset<14>> &sequence)
+void EncodeWord::codeSequence(bitset_sequence &sequence)
 {
     for (auto& bits : sequence)
     {

@@ -88,6 +88,7 @@ int main() {
 
 #include <word_to_binary.h>
 #include <encode_word.h>
+#include <bitset_to_double.h>
 #include <diff_encryption.h>
 #include <diff_decryption.h>
 
@@ -120,7 +121,9 @@ int main() {
         std::cout << elem << "\n";
     }
 
-    //0100000000101001000000000000000000000000000000000000000000000000
+    BitsetToDouble zxc(seq);
+
+    std::cout << "\n\n" << zxc.getDouble() << "\n";
 
     return 0;
 }
