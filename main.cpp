@@ -93,12 +93,6 @@ int main() {
 #include <diff_decryption.h>
 
 int main() {
-    double value = 12.5; // The double value you want to convert
-    std::bitset<64> bits(*reinterpret_cast<uint64_t*>(&value));
-
-    // std::cout << bits << std::endl;
-
-
     double number = 12.5;
     EncodeWord encodeWord(std::make_unique<DiffEncryption>());
     auto seq = BinaryWord(number).getResultBitset();
@@ -107,24 +101,24 @@ int main() {
 
     for (auto elem : BinaryWord(number).getResultBitset())
     {
-        // std::cout << elem << "\n";
+        std::cout << elem << "\n";
     }
 
-    // std::cout << "\n\n\n";
+    std::cout << "\n\n\n";
 
     for (auto elem : seq)
     {
-        // std::cout << elem << "\n";
+        std::cout << elem << "\n";
     }
 
-    // std::cout << "\n\n\n";
+    std::cout << "\n\n\n";
 
     EncodeWord ahah(std::make_unique<DiffDecryption>());
 
     ahah.codeSequence(seq);
     for (auto elem : seq)
     {
-        // std::cout << elem << "\n";
+        std::cout << elem << "\n";
     }
 
     BitsetToDouble zxc(seq);

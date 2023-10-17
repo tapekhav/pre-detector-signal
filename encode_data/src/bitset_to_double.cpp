@@ -40,9 +40,5 @@ void BitsetToDouble::setValueFromSequence(std::bitset<64> &information_bitset,
         k = value[i] ? k + 1 : k;
     }
 
-    std::cout << "\n\n\n\n";
-    std::cout << information_bitset << " ";
-    std::cout << value;
-
     assert((value[13] + k % 2) % 2 == 0);
 }
