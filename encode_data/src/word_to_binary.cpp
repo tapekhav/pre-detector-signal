@@ -1,4 +1,5 @@
 #include <word_to_binary.h>
+#include <iostream>
 
 BinaryWord::BinaryWord(double num)
 {
@@ -9,12 +10,15 @@ std::bitset<14> BinaryWord::getBitset(std::bitset<48> encoded_value, int &offset
     std::bitset<14> value;
     uint8_t k = 0;
 
-    for (size_t i = 13; i > 1; --i)
+    uint16_t j = 0;
+    for (size_t i = 12; i > 0; --i)
     {
-        value[i] = encoded_value[48 - (offset + i - 1)];
+        auto val = offset - j++;
+        value[i] = encoded_value[val];
+        k = value[i] ? k + 1 : k;
     }
 
-    offset += 12;
+    offset -= 12;
 
     value[13] = k % 2 != 0;
     value[0] = true;
@@ -34,7 +38,7 @@ bitset_sequence BinaryWord::getResultBitset() const
     }
 
     bitset_sequence result;
-    int offset = 0;
+    int offset = 47;
     for(size_t i = 0; i < 4; ++i)
     {
         result.push_back(getBitset(short_bitset, offset));
