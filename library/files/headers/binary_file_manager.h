@@ -5,7 +5,7 @@
 #include <cassert>
 #include <algorithm>
 
-#include <consts.h>
+#include <library_consts.h>
 
 class BinaryFileManager
 {

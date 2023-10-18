@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <consts.h>
+#include <library_consts.h>
 
 class BinaryWord
 {

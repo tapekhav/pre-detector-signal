@@ -1,7 +1,7 @@
 #ifndef PRE_DETECTOR_SIGNAL_BITSET_TO_DOUBLE_H
 #define PRE_DETECTOR_SIGNAL_BITSET_TO_DOUBLE_H
 
-#include <consts.h>
+#include <library_consts.h>
 
 class BitsetToDouble
 {
