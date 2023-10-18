@@ -4,7 +4,7 @@
 #include <memory>
 
 #include <word_to_binary.h>
-#include <diff_encryption.h>
+#include <diff_encryption_interface.h>
 
 class EncodeWord
 {

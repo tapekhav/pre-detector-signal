@@ -56,10 +56,10 @@ add_custom_target(proto_generation DEPENDS ${output_files})
 
 add_subdirectory(model)
 add_subdirectory(utilities)
-add_subdirectory(encode_data)
+add_subdirectory(library)
 
 include_directories(model/headers)
-include_directories(encode_data/headers)
+include_directories(library/encode_data/headers)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 include_directories(utilities/headers)
 include_directories(utilities/plotter)

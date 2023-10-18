@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <memory.h>
-#include <iostream>
 
 double BitsetToDouble::getDouble() const
 {

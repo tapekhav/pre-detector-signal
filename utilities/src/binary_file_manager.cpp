@@ -5,8 +5,12 @@ BinaryFileManager::BinaryFileManager(const std::string &file_name)
 
 void BinaryFileManager::setStartFrameMarker(size_t number, double time_step)
 {
-    _file.write(reinterpret_cast<const char*>(&consts::marker::startFrameMarker),
-                sizeof(consts::marker::startFrameMarker));
-    _file.write(reinterpret_cast<char*>(&number), sizeof(number));
-    _file.write(reinterpret_cast<char*>(&time_step), sizeof(time_step));
+    std::bitset<11> bits("11111100000");
+    _file << bits.to_string();
+
+    std::bitset<8> number_bits_set(number);
+    std::bitset<32> time_step_bits_set(*reinterpret_cast<uint32_t*>(&time_step));
+
+    _file << number_bits_set << time_step_bits_set;
 }
+
