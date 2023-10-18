@@ -91,6 +91,8 @@ int main() {
 #include <bitset_to_double.h>
 #include <diff_encryption.h>
 #include <diff_decryption.h>
+#include <full_encode_number.h>
+#include <full_decode_number.h>
 
 int main() {
     double number = 12.5;
@@ -124,6 +126,15 @@ int main() {
     BitsetToDouble zxc(seq);
 
     std::cout << "\n\n" << zxc.getDouble() << "\n";
+
+    double zv = 15.012;
+
+    EncodeData data(zv);
+    auto z = data.execute();
+    DecodeData decode(z);
+
+    std::cout << "\n\n\n\n\n" << decode.execute() << "\n";
+
 
     return 0;
 }
