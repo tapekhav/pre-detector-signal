@@ -10,7 +10,9 @@ public:
 
     [[nodiscard]] double getDouble() const;
 private:
-    void setValueFromSequence(std::bitset<64>& information_bitset, std::bitset<14> value, size_t& offset) const;
+    void setValueFromSequence(std::bitset<lib_consts::kSizeDouble>& information_bitset,
+                              std::bitset<lib_consts::kSizeBitset> value,
+                              size_t& offset) const;
 private:
     bitset_sequence _sequence;
 };

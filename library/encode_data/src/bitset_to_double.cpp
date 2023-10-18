@@ -5,9 +5,9 @@
 
 double BitsetToDouble::getDouble() const
 {
-    size_t offset = 63;
-    std::bitset<64> information_bitset;
-    for (int i = 0; i < 4; ++i)
+    size_t offset = lib_consts::kSizeDouble - 1;
+    std::bitset<lib_consts::kSizeDouble> information_bitset;
+    for (int i = 0; i < lib_consts::kNumOfBitset; ++i)
     {
         setValueFromSequence(information_bitset, _sequence[i], offset);
     }
@@ -24,16 +24,16 @@ double BitsetToDouble::getDouble() const
     return result;
 }
 
-void BitsetToDouble::setValueFromSequence(std::bitset<64> &information_bitset,
-                                            std::bitset<14> value,
+void BitsetToDouble::setValueFromSequence(std::bitset<lib_consts::kSizeDouble> &information_bitset,
+                                            std::bitset<lib_consts::kSizeBitset> value,
                                             size_t &offset) const
 {
     assert(value[0] == 1);
 
-    offset -= 12;
+    offset -= lib_consts::kSizeInfoBits;
 
     int k = 0;
-    for (size_t i = 12; i > 0; --i)
+    for (size_t i = lib_consts::kSizeInfoBits; i > 0; --i)
     {
         information_bitset[offset + i] = value[i];
         k = value[i] ? k + 1 : k;

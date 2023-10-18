@@ -74,7 +74,7 @@ TEST(CheckClasses, BinaryToDouble)
 
 TEST(CheckAll, checkAll)
 {
-    double number = 15.012;
+    double number = 15.01234;
 
     EncodeData data(number);
     auto z = data.execute();
