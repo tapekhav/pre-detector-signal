@@ -60,6 +60,7 @@ add_subdirectory(library)
 
 include_directories(model/headers)
 include_directories(library/encode_data/headers)
+include_directories(library/files/headers)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 include_directories(utilities/headers)
 include_directories(utilities/plotter)

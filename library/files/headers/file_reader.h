@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 
-#include <consts.h>
+#include <library_consts.h>
 
 class FileReader
 {
