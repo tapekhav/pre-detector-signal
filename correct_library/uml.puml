@@ -1,0 +1,14 @@
+@startuml
+class Encode {
+  + number: double
+  + encode(): int16
+  + addParityBit(): void
+  + addMarkerBit(): void
+}
+class Engine {
+  + start()
+  + stop()
+}
+Car "1" -- "1" Engine : has
+
+@enduml

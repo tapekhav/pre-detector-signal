@@ -8,7 +8,7 @@
 class CLI
 {
 public:
-    explicit CLI(const std::string& path = "/home/vladimir/pre-detector-signal/result.txt") : _manager(path) {}
+    explicit CLI(const std::string& path = "/home/vladimir/pre-detector-signal/result.sh") : _manager(path) {}
 
     void encodeData(double begin, double end, double step)
     {
