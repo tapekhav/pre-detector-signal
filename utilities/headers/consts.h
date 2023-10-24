@@ -2,6 +2,10 @@
 #define PRE_DETECTOR_SIGNAL_CONSTS_H
 
 #include <cstdint>
+#include <vector>
+#include <bitset>
+
+using bitset_sequence = std::vector<std::bitset<14>>;
 
 namespace consts
 {
