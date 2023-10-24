@@ -10,10 +10,15 @@ class CLI
 public:
     explicit CLI(const std::string& path = "/home/vladimir/pre-detector-signal/result.txt") : _manager(path) {}
 
-    void run(double begin, double end, double step)
+    void encodeData(double begin, double end, double step)
     {
         setParams(begin, end, step);
         writeAllData();
+    }
+
+    std::vector<double> decodeData()
+    {
+
     }
 
 private:
@@ -39,6 +44,7 @@ private:
         auto end = static_cast<size_t>(_time_interval.end / _time_interval.step);
         for (size_t i = 0; i < end; ++i)
         {
+            _manager.setStartFrameMarker(i, 0.5);
             for (size_t j = 0; j < model_list.size(); ++j)
             {
                 writeParam(*(model_list.begin() + j));
@@ -63,7 +69,7 @@ private:
 
 int main() {
     CLI cli;
-    cli.run(0, 10, 0.5);
+    cli.encodeData(0, 1, 0.5);
 
 
     return 0;

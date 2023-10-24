@@ -82,3 +82,5 @@ TEST(CheckAll, checkAll)
 
     EXPECT_NEAR(number, decode.execute(), 1e-6);
 }
+
+//! 010editor

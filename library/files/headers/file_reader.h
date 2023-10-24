@@ -3,17 +3,17 @@
 
 #include <string>
 #include <fstream>
+#include <cassert>
 
 #include <library_consts.h>
 
 class FileReader
 {
 public:
-    explicit FileReader(const std::string& file_name = "result.txt");
+    explicit FileReader(const std::string& file_name = "result.txt")
+             : _file(file_name, std::ios::binary) { assert(_file.is_open()); }
 
-    inline void addSynchronize() { std::bitset<15> syn("111100010011010"); _file << syn.to_string(); }
-
-    void setStartFrameMarker(size_t number, double time_step);
+    bool readFrame();
 
     inline ~FileReader() { _file.close(); }
 private:
