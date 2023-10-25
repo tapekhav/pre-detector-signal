@@ -66,11 +66,44 @@ private:
     std::unique_ptr<EncodeData> _encode;
 };
 
+uint8_t countOne(uint32_t num)
+{
+    std::bitset<14> bitset(num);
+
+    uint8_t k = 0;
+    for(size_t i = 0; i < bitset.size(); ++i)
+    {
+        k = bitset[i] ? k + 1 : k;
+    }
+
+    return k;
+}
+
 
 int main() {
-    CLI cli;
-    cli.encodeData(0, 1, 0.5);
+    unsigned int informationSequence = 1234567898;
 
+    std::cout << "0000" << std::bitset<32>(informationSequence).to_string() << "\n";
+
+    int numBits = 32;
+
+    std::vector<uint32_t> vec;
+    int numGroups = (numBits + 11) / 12;
+
+    informationSequence = informationSequence & 0xFFFFFFFE;
+    for (int i = numGroups - 1; i >= 0; i--)
+    {
+        unsigned int group = (informationSequence >> (12 * i)) & 0xFFF;
+        vec.push_back(group);
+    }
+
+    for (auto group : vec)
+    {
+        group = (group << 1);
+        group = countOne(group) % 2 == 1 ? group + 8192 : group;
+        group += 1;
+        std::cout << std::bitset<14>(group) << "\n";
+    }
 
     return 0;
 }
