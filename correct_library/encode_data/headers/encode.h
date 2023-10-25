@@ -11,7 +11,7 @@ class EncodeNumber
 public:
     explicit inline EncodeNumber(double num) { _num = static_cast<uint32_t>(num * 10 * 3); }
 
-    std::vector<std::bitset<14>> CastToBitsets();
+    std::vector<uint32_t> CastToBitsets();
 
 private:
     void encodeInformationValue(std::vector<std::uint32_t>& vector);

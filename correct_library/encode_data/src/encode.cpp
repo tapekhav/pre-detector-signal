@@ -1,24 +1,20 @@
 #include <encode.h>
+#include <cmath>
 
 
-std::vector<std::bitset<14>> EncodeNumber::CastToBitsets()
+std::vector<uint32_t> EncodeNumber::CastToBitsets()
 {
     std::vector<uint32_t> vec;
 
-    const int numBits = 32;
-    int numGroups = (numBits + 11) / 12;
+    encodeInformationValue(vec);
+    addBits(vec);
 
-    _num &= 0xFFFFFFFE;
-    for (int i = numGroups - 1; i >= 0; i--)
-    {
-        uint32_t group = (_num >> (12 * i)) & 0xFFF;
-        vec.push_back(group);
-    }
+    return vec;
 }
 
 void EncodeNumber::encodeInformationValue(std::vector<std::uint32_t> &vector)
 {
-    const int numBits = 32;
+    const int numBits = std::log2(_num) + 1;
     int numGroups = (numBits + 11) / 12;
 
     _num &= 0xFFFFFFFE;

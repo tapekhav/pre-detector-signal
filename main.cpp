@@ -81,11 +81,9 @@ uint8_t countOne(uint32_t num)
 
 
 int main() {
-    unsigned int informationSequence = 1234567898;
+    unsigned int informationSequence = 123;
 
-    std::cout << "0000" << std::bitset<32>(informationSequence).to_string() << "\n";
-
-    int numBits = 32;
+    int numBits = 12;
 
     std::vector<uint32_t> vec;
     int numGroups = (numBits + 11) / 12;
@@ -97,13 +95,48 @@ int main() {
         vec.push_back(group);
     }
 
+    std::fstream file;
+    file.open("/home/vladimir/pre-detector-signal/result.sh");
     for (auto group : vec)
     {
         group = (group << 1);
         group = countOne(group) % 2 == 1 ? group + 8192 : group;
         group += 1;
-        std::cout << std::bitset<14>(group) << "\n";
+        file.write(reinterpret_cast<char*>(&group), sizeof(group));
     }
+
+    file.close();
+
+    // Создаем бинарный файл для записи
+    /*std::ofstream file("output.bin", std::ios::binary);
+
+    // Маркер начала кадра (11111100000 в двоичном представлении)
+    uint16_t frameMarker = 0b11111100000;
+
+    // Номер текущего кадра
+    uint16_t frameNumber = 42; // Здесь нужно установить реальный номер кадра
+
+    // Время текущего кадра (в секундах, можно установить другое значение)
+    double frameTime = 0.123;
+
+    // Преобразуем время в шестнадцатеричное 14-разрядное слово (значение в миллисекундах)
+    uint16_t frameTimeHex = static_cast<uint16_t>(frameTime * 1000);
+
+    // Создаем байт с признаком четности (0-й бит)
+    uint16_t parityBit = 0; // Ваш расчет четности здесь
+
+    // Создаем 14-разрядное слово с номером кадра и временем
+    uint16_t frameData = (frameNumber << 1) | (parityBit << 0);
+    frameData |= (frameTimeHex << 1);
+
+    // Записываем маркер начала кадра
+    file.write(reinterpret_cast<char*>(&frameMarker), sizeof(frameMarker));
+
+    // Записываем данные кадра
+    file.write(reinterpret_cast<char*>(&frameData), sizeof(frameData));
+
+    // Закрываем файл
+    file.close();*/
 
     return 0;
 }
