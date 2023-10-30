@@ -23,8 +23,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     add_compile_options(/W4)
 endif()
 
-set(CMAKE_PREFIX_PATH "/home/vladimir/anaconda3/lib/cmake/Qt5")
-
 find_package(Protobuf REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets Charts)
 
@@ -72,8 +70,9 @@ include_directories(
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/model)
 
-add_executable(pre-detector-signal
-               main.cpp
+add_executable(
+        pre-detector-signal
+        main.cpp
 )
 
 target_link_libraries(
@@ -82,10 +81,10 @@ target_link_libraries(
         Utility
         EncodeData
         ${PROTOBUF_LIBRARIES}
-        Qt_Plotters
         Qt5::Core
         Qt5::Widgets
         Qt5::Charts
+        Qt_Plotters
 )
 
 add_compile_definitions(path_to_config="${CMAKE_CURRENT_SOURCE_DIR}/config.json")

@@ -3,21 +3,20 @@
 
 QtClassMainWindow::QtClassMainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    _qt_plotter = std::make_unique<QtPlotter>();
-
-    auto* centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
-    auto* layout = new QVBoxLayout(centralWidget);
-    layout->addWidget(_qt_plotter->getChartView());
-    centralWidget->setLayout(layout);
+    _qt_plotter = std::make_unique<QtPlotter>(this);
+    setQtPlotter(_qt_plotter);
 }
 
 void QtClassMainWindow::setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter)
 {
-    _qt_plotter = std::move(qt_plotter);
+    setPlotter(QSize(800, 400));
+    setCentralWidget(qt_plotter.get());
 }
 
 void QtClassMainWindow::setPlotter(const QSize& size)
 {
-    _qt_plotter->resize(size);
+    if (_qt_plotter)
+    {
+        _qt_plotter->setFixedSize(size);
+    }
 }

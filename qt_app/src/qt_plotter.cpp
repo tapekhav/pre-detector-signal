@@ -1,12 +1,17 @@
 #include <qt_plotter.h>
+#include <ui_qt_plotter.h>
+
 
 QtPlotter::QtPlotter(QWidget *parent) : QWidget(parent),
+                                        ui(new Ui::QtPlotter),
                                         _chart(new QtCharts::QChart),
                                         _series(new QtCharts::QLineSeries),
                                         _axis_x(new QtCharts::QValueAxis),
                                         _axis_y(new QtCharts::QValueAxis),
                                         _chart_view(new QtCharts::QChartView(_chart))
 {
+    ui->setupUi(this);
+
     _chart_view->setRenderHint(QPainter::Antialiasing);
     _chart->addSeries(_series);
     _chart->setAxisX(_axis_x, _series);
@@ -36,4 +41,14 @@ void QtPlotter::setRanges(QPair<int, int> x_range, QPair<int, int> y_range)
 QtCharts::QChartView* QtPlotter::getChartView()
 {
     return _chart_view;
+}
+
+QtPlotter::~QtPlotter()
+{
+    delete _series;
+    delete _chart;
+    delete _chart_view;
+    delete _axis_x;
+    delete _axis_y;
+    delete ui;
 }

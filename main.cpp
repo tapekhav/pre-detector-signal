@@ -92,15 +92,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-   // QtClassMainWindow mainWindow;
-
-    // Set the initial size for the plotter
-   // QSize initialSize(800, 600);
-    //mainWindow.setPlotter(initialSize);
-
-    //mainWindow.show();
-
     QtPlotter plotter;
+    //QtClassMainWindow mainWindow;
+    //mainWindow.show();
 
     return QApplication::exec();
 }
