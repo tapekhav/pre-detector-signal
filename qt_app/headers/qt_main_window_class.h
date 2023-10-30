@@ -1,28 +1,28 @@
 #ifndef PRE_DETECTOR_SIGNAL_QT_MAIN_WINDOW_CLASS_H
 #define PRE_DETECTOR_SIGNAL_QT_MAIN_WINDOW_CLASS_H
 
+#include <memory>
+
 #include <QMainWindow>
+#include <QtCharts/QLineSeries>
 
-class QtPlotter;
+#include <qt_plotter.h>
 
-class QtClassMainWindow
+class QtClassMainWindow final : public QMainWindow
 {
+    Q_OBJECT
 public:
-    void setPlotter();
+
+    explicit QtClassMainWindow(QWidget *parent = nullptr);
+
+    void setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter);
+
+    void setPlotter(const QSize& size);
+
+    ~QtClassMainWindow() final = default;
 private:
-    QtPlotter* _qt_plotter;
-    QMainWindow _window;
+    std::unique_ptr<QtPlotter> _qt_plotter;
 };
 
-/*
-void ahah()
-{
-    QMainWindow window;
-    window.setCentralWidget(chartView);
-    window.resize(400, 300);
-    window.show();
-}
-
-*/
 
 #endif //PRE_DETECTOR_SIGNAL_QT_MAIN_WINDOW_CLASS_H

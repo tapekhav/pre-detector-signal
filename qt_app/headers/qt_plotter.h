@@ -1,37 +1,29 @@
 #ifndef PRE_DETECTOR_SIGNAL_PLOTTER_H
 #define PRE_DETECTOR_SIGNAL_PLOTTER_H
 
-#include <QApplication>
 #include <QWidget>
 #include <QtCharts/QChartView>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QLineSeries>
 
-namespace QtCharts
+class QtPlotter final : public QWidget
 {
-    class QChart;
-    class QLineSeries;
-    class QValueAxis;
-}
-
-class QtPlotter : public QWidget
-{
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit QtPlotter();
+    QtPlotter(QWidget *parent = nullptr);
 
-    void setSeries(const std::vector<QPair<int, int>>& series);
-    //! optional method
+    void setSeries(const QVector<QPair<int, int>>& series);
+    void addToSeries(int x, int y);
     void setRanges(QPair<int, int> x_range, QPair<int, int> y_range);
 
-    void setChartView();
+    QtCharts::QChartView* getChartView();
 
-    inline QtCharts::QChartView* getChartView() { return _chart_view; }
 private:
-    QtCharts::QChart *_chart;
-    QtCharts::QLineSeries *_series;
-    QtCharts::QValueAxis *_axis_x;
-    QtCharts::QValueAxis *_axis_y;
-    QtCharts::QChartView *_chart_view;
-
+    QtCharts::QChart* _chart;
+    QtCharts::QLineSeries* _series;
+    QtCharts::QValueAxis* _axis_x;
+    QtCharts::QValueAxis* _axis_y;
+    QtCharts::QChartView* _chart_view;
 };
 
-#endif //PRE_DETECTOR_SIGNAL_PLOTTER_H
+#endif // PRE_DETECTOR_SIGNAL_PLOTTER_H

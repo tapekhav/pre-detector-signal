@@ -86,44 +86,25 @@ int main() {
 */
 
 #include <QApplication>
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QValueAxis>
-#include <QMainWindow>
+#include <qt_main_window_class.h>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
-    auto *chart = new QtCharts::QChart();
-    auto *series = new QtCharts::QLineSeries();
+   // QtClassMainWindow mainWindow;
 
-    series->append(0, 6);
-    series->append(2, 4);
-    series->append(3, 8);
-    series->append(7, 2);
+    // Set the initial size for the plotter
+   // QSize initialSize(800, 600);
+    //mainWindow.setPlotter(initialSize);
 
-    chart->addSeries(series);
+    //mainWindow.show();
 
-    auto *axisX = new QtCharts::QValueAxis();
-    auto *axisY = new QtCharts::QValueAxis();
-
-    axisX->setRange(0, 10);
-    axisY->setRange(0, 10);
-
-    chart->setAxisX(axisX, series);
-    chart->setAxisY(axisY, series);
-
-    auto *chartView = new QtCharts::QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-
-    QMainWindow window;
-    window.setCentralWidget(chartView);
-    window.resize(400, 300);
-    window.show();
+    QtPlotter plotter;
 
     return QApplication::exec();
 }
+
 
 
 /*
