@@ -16,8 +16,7 @@ QT_END_NAMESPACE
 
 class QtPlotter : public QWidget
 {
-Q_OBJECT
-
+    Q_OBJECT
 public:
     explicit QtPlotter(QWidget *parent = nullptr);
     ~QtPlotter() override;
@@ -26,7 +25,10 @@ public:
     void addToSeries(int x, int y);
     void setRanges(QPair<int, int> x_range, QPair<int, int> y_range);
     QtCharts::QChartView* getChartView();
-
+signals:
+    void signal();
+public slots:
+    void slot() {};
 private:
     Ui::QtPlotter *ui;
     QtCharts::QChart* _chart;

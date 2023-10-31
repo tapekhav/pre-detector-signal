@@ -23,6 +23,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     add_compile_options(/W4)
 endif()
 
+set(CMAKE_PREFIX_PATH "/home/vladimir/anaconda3/lib/cmake/Qt5")
+
 find_package(Protobuf REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets Charts)
 
