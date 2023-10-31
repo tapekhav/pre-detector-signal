@@ -10,7 +10,6 @@
 
 class QtClassMainWindow final : public QMainWindow
 {
-    Q_OBJECT
 public:
 
     explicit QtClassMainWindow(QWidget *parent = nullptr);
@@ -18,6 +17,10 @@ public:
     void setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter);
 
     void setPlotter(const QSize& size);
+
+    void setSeries(const QVector<QPair<int, int>>& series);
+
+    void addToSeries(int x, int y);
 
     ~QtClassMainWindow() final = default;
 private:

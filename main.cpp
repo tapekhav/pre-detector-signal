@@ -92,9 +92,14 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QtPlotter plotter;
-    //QtClassMainWindow mainWindow;
-    //mainWindow.show();
+    //QtPlotter plotter;
+    QtClassMainWindow mainWindow;
+
+    QVector<QPair<int, int>> seriesData;
+    seriesData << qMakePair(1, 2) << qMakePair(3, 4) << qMakePair(5, 6) << qMakePair(7, 8);
+    mainWindow.setSeries(seriesData);
+
+    mainWindow.show();
 
     return QApplication::exec();
 }

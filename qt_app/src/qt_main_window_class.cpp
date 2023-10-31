@@ -3,7 +3,11 @@
 
 QtClassMainWindow::QtClassMainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    _qt_plotter = std::make_unique<QtPlotter>(this);
+    QVector<QPair<int, int>> seriesData;
+    seriesData << qMakePair(1, 2) << qMakePair(3, 4) << qMakePair(5, 6) << qMakePair(7, 8);
+
+    _qt_plotter = std::make_unique<QtPlotter>(seriesData, this);
+
     setQtPlotter(_qt_plotter);
 }
 
@@ -18,5 +22,21 @@ void QtClassMainWindow::setPlotter(const QSize& size)
     if (_qt_plotter)
     {
         _qt_plotter->setFixedSize(size);
+    }
+}
+
+void QtClassMainWindow::setSeries(const QVector<QPair<int, int>>& series)
+{
+    if (_qt_plotter)
+    {
+        _qt_plotter->setSeries(series);
+    }
+}
+
+void QtClassMainWindow::addToSeries(int x, int y)
+{
+    if (_qt_plotter)
+    {
+        _qt_plotter->addToSeries(x, y);
     }
 }

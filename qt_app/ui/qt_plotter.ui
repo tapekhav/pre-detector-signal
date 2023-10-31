@@ -13,16 +13,6 @@
   <property name="windowTitle">
    <string>QtPlotter</string>
   </property>
-  <widget class="QWidget" name="widget" native="true">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>40</y>
-     <width>311</width>
-     <height>191</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>

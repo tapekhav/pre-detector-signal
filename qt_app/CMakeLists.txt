@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.22.1)
 
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets Charts)
 
-#set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 
 include_directories(

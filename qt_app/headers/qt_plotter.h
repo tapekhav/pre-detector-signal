@@ -18,10 +18,11 @@ class QtPlotter : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QtPlotter(QWidget *parent = nullptr);
+    explicit QtPlotter(const QVector<QPair<int, int>>& series_data, QWidget *parent = nullptr);
     ~QtPlotter() override;
 
     void setSeries(const QVector<QPair<int, int>>& series);
+
     void addToSeries(int x, int y);
     void setRanges(QPair<int, int> x_range, QPair<int, int> y_range);
     QtCharts::QChartView* getChartView();
