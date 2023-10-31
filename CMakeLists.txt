@@ -56,13 +56,14 @@ add_custom_target(proto_generation DEPENDS ${output_files})
 
 add_subdirectory(model)
 add_subdirectory(utilities)
-add_subdirectory(encode_data)
+add_subdirectory(library)
 add_subdirectory(qt_app)
 
 include_directories(
         headers
         model/headers
-        encode_data/headers
+        library/encode_data/headers
+        library/files/headers
         ${PROTOBUF_INCLUDE_DIRS}
         utilities/headers
         utilities/plotter
