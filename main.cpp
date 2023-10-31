@@ -66,7 +66,35 @@ private:
     std::unique_ptr<EncodeData> _encode;
 };
 
+    return 0;
+}
+*/
 
+#include <QApplication>
+#include <qt_main_window_class.h>
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    //QtPlotter plotter;
+    QtClassMainWindow mainWindow;
+
+    QVector<QPair<int, int>> seriesData;
+    seriesData << qMakePair(1, 2) << qMakePair(3, 4) << qMakePair(5, 6) << qMakePair(7, 8);
+    mainWindow.setSeries(seriesData);
+
+    mainWindow.show();
+
+    return QApplication::exec();
+}
+
+
+
+/*
+#include <iostream>
+#include <bitset>
+#include <encode_word.h>
 int main() {
     CLI cli;
     cli.encodeData(0, 1, 0.5);
@@ -74,3 +102,4 @@ int main() {
 
     return 0;
 }
+*/

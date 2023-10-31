@@ -17,7 +17,7 @@ if (MSVC_VERSION GREATER_EQUAL "1900")
     endif()
 endif()
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+if (CMAKE_CXX_COMPILER_ID MATCHES " GNU|Clang")
     #add_compile_options(-Wall -Wextra -Werror -Wpedantic -Wconversion -Wformat -Wunused -Wshadow -Wuninitialized -Wsign-compare)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     add_compile_options(/W4)
@@ -26,7 +26,7 @@ endif()
 set(CMAKE_PREFIX_PATH "/home/vladimir/anaconda3/lib/cmake/Qt5")
 
 find_package(Protobuf REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets Charts)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets Charts)
 
 set(source_files
     model.proto
@@ -56,19 +56,38 @@ add_custom_target(proto_generation DEPENDS ${output_files})
 
 add_subdirectory(model)
 add_subdirectory(utilities)
-add_subdirectory(library)
+add_subdirectory(encode_data)
+add_subdirectory(qt_app)
 
-include_directories(model/headers)
-include_directories(library/encode_data/headers)
-include_directories(library/files/headers)
-include_directories(${PROTOBUF_INCLUDE_DIRS})
-include_directories(utilities/headers)
-include_directories(utilities/plotter)
+include_directories(
+        headers
+        model/headers
+        encode_data/headers
+        ${PROTOBUF_INCLUDE_DIRS}
+        utilities/headers
+        utilities/plotter
+        qt_app/headers
+        ${CMAKE_CURRENT_BINARY_DIR}/model
+)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/model)
 
-add_executable(pre-detector-signal
-               main.cpp)
+add_executable(
+        pre-detector-signal
+        main.cpp
+)
+
+target_link_libraries(
+        pre-detector-signal
+        Model
+        Utility
+        EncodeData
+        ${PROTOBUF_LIBRARIES}
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::Charts
+        Qt_Plotters
+)
 
 target_link_libraries(pre-detector-signal Model Utility EncodeData ${PROTOBUF_LIBRARIES} Qt5::Widgets Qt5::Charts)
 
