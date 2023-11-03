@@ -68,10 +68,12 @@ private:
 
 #include <QApplication>
 #include <qt_main_window_class.h>
+#include <antenna_signal_strength.h>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    SignalStrength ahah;
 
     //QtPlotter plotter;
     QtClassMainWindow mainWindow;

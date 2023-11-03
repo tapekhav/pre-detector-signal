@@ -69,6 +69,7 @@ include_directories(
         utilities/plotter
         qt_app/headers
         ${CMAKE_CURRENT_BINARY_DIR}/model
+        model/radio/headers
 )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/model)
@@ -90,7 +91,16 @@ target_link_libraries(
         Qt_Plotters
 )
 
-target_link_libraries(pre-detector-signal Model Utility EncodeData ${PROTOBUF_LIBRARIES} Qt5::Widgets Qt5::Charts)
+target_link_libraries(
+        pre-detector-signal
+        Model
+        Utility
+        EncodeData
+        Radio
+        ${PROTOBUF_LIBRARIES}
+        Qt5::Widgets
+        Qt5::Charts
+)
 
 add_compile_definitions(path_to_config="${CMAKE_CURRENT_SOURCE_DIR}/config.json")
 add_compile_definitions(plt_dir="${CMAKE_CURRENT_SOURCE_DIR}/utilities/plotter/plotters/coordinates.txt")

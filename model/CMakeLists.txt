@@ -2,11 +2,15 @@ cmake_minimum_required(VERSION 3.22.1)
 
 find_package(Protobuf REQUIRED)
 
-include_directories(headers)
-include_directories(${PROTOBUF_INCLUDE_DIRS})
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(../utilities/plotter)
-include_directories(../utilities/headers)
+add_subdirectory(radio)
+
+include_directories(
+        headers
+        ${PROTOBUF_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ../utilities/plotter
+        ../utilities/headers
+)
 
 file(GLOB MODEL_HEADERS headers/*.h)
 file(GLOB MODEL_SOURCE src/*.cpp)

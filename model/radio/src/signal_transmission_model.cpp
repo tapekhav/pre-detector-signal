@@ -19,12 +19,12 @@ void TransmissionModel::generateCosineSignal(size_t num_samples)
 
 void TransmissionModel::perfomFM2Modulation()
 {
-    for (int i = 0; i < signal.size(); ++i)
+    /*for (int i = 0; i < signal.size(); ++i)
     {
         double phase_offset = modulation_rate * data[i];
         double frequency_offset = modulation_rate * data[i];
         double phase = std::arg(signal[i]);
         signal[i] = std::polar(1.0, phase + phase_offset);
         signal[i] *= std::polar(1.0, frequency_offset);
-    }
+    } */
 }
