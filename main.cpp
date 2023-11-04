@@ -66,6 +66,7 @@ private:
     std::unique_ptr<EncodeData> _encode;
 };
 
+
 #include <QApplication>
 #include <qt_main_window_class.h>
 #include <antenna_signal_strength.h>
@@ -73,11 +74,10 @@ private:
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    SignalStrength ahah;
 
-    //QtPlotter plotter;
     QtClassMainWindow mainWindow;
     mainWindow.show();
+
 
     return QApplication::exec();
 }

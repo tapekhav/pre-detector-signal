@@ -72,6 +72,8 @@ include_directories(
         model/radio/headers
 )
 
+link_directories(${GNURADIO_LIBRARY_DIRS})
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/model)
 
 add_executable(
