@@ -1,9 +1,8 @@
 #ifndef PRE_DETECTOR_SIGNAL_FREQUENCY_MODULATION_2_H
 #define PRE_DETECTOR_SIGNAL_FREQUENCY_MODULATION_2_H
 
-#include <modulation_abstract.h>
+#include <modulation_interface.h>
 
-//! Quadrature Phase Shift Keying or Binary Phase Shift Keying? странно, здесь не используются modulate rate
 /**
  * Converting the phase modulation formula to second-order representation typically involves taking into account the modulation rate (bandwidth) and expressing the modulation in terms of its frequency domain characteristics. To do this, we can introduce the modulation rate \(B\) and the frequency deviation \(Δf\). The formula for second-order phase modulation is as follows:
 
@@ -29,17 +28,23 @@ The modulation rate (bandwidth) \(B\) is related to \(k_f\) and the message sign
 Where \(B\) is the bandwidth of the modulated signal and \(\text{max}|m(t)|\) represents the maximum amplitude of the message signal within its bandwidth.
 
 This representation is commonly used when dealing with frequency modulation (FM), and it relates the phase modulation to the frequency deviation and the modulation rate. It provides a more intuitive understanding of how the message signal affects the carrier frequency.*/
-class PhaseModulationTwo final : public AbstractModulation
+class FrequencyModulation final : public IModulation
 {
 public:
-    explicit PhaseModulationTwo(double amplitude,
-                                double freq,
-                                double central_frequency = 433 * 10e6,
-                                double modulation_rate = 4096);
+    explicit FrequencyModulation(double amplitude,
+                                 double freq,
+                                 double central_frequency = 433 * 10e6,
+                                 double modulation_rate = 4096);
 
     std::vector<double> modulate(const std::vector<double>& initial_signal) final;
 private:
     [[nodiscard]] std::vector<double> integrateSignal(const std::vector<double>& signal);
+
+private:
+    double _amplitude;
+    double _sample_freq;
+    double _central_frequency;
+    double _modulation_rate;
 };
 
 #endif //PRE_DETECTOR_SIGNAL_FREQUENCY_MODULATION_2_H
