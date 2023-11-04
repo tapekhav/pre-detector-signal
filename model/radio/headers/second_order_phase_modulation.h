@@ -31,8 +31,15 @@ Where \(B\) is the bandwidth of the modulated signal and \(\text{max}|m(t)|\) re
 This representation is commonly used when dealing with frequency modulation (FM), and it relates the phase modulation to the frequency deviation and the modulation rate. It provides a more intuitive understanding of how the message signal affects the carrier frequency.*/
 class PhaseModulationTwo final : public AbstractModulation
 {
-    explicit PhaseModulationTwo(double amplitude) : AbstractModulation(amplitude) {}
-    std::vector<double> modulate(const std::vector<double>& initial_signal);
+public:
+    explicit PhaseModulationTwo(double amplitude,
+                                double freq,
+                                double central_frequency = 433 * 10e6,
+                                double modulation_rate = 4096);
+
+    std::vector<double> modulate(const std::vector<double>& initial_signal) final;
+private:
+    [[nodiscard]] std::vector<double> integrateSignal(const std::vector<double>& signal);
 };
 
 #endif //PRE_DETECTOR_SIGNAL_FREQUENCY_MODULATION_2_H
