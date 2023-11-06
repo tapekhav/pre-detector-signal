@@ -6,7 +6,7 @@ set(CMAKE_AUTOMOC ON)
 
 include_directories(
         headers
-        ui
+        ${CMAKE_CURRENT_BINARY_DIR}
         ../model/radio/headers
 )
 

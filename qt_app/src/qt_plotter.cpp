@@ -11,26 +11,24 @@ QtPlotter::QtPlotter(const QVector<QPair<double, double>>& series_data,
 {
     _ui->setupUi(this);
 
-    customPlot = new QCustomPlot(this);
+    //auto* layout = new QVBoxLayout(this);
+    //layout->addWidget(customPlot);
 
-    auto* layout = new QVBoxLayout(this);
-    layout->addWidget(customPlot);
+    _ui->plotter->addGraph();
+    _ui->plotter->addGraph();
 
-    customPlot->addGraph();
-    customPlot->addGraph();
-
-    customPlot->graph(0)->setPen(QPen(Qt::blue));
-    customPlot->graph(1)->setPen(QPen(Qt::red));
+    _ui->plotter->graph(0)->setPen(QPen(Qt::blue));
+    _ui->plotter->graph(1)->setPen(QPen(Qt::red));
 
     setSeries(series_data, 0);
     setSeries(init_signal_data, 1);
 
-    customPlot->xAxis->setLabel("X");
-    customPlot->yAxis->setLabel("Y");
+    _ui->plotter->xAxis->setLabel("X");
+    _ui->plotter->yAxis->setLabel("Y");
 
     setRanges(series_data);
 
-    customPlot->replot();
+    _ui->plotter->replot();
 }
 
 void QtPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_graph)
@@ -43,14 +41,14 @@ void QtPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_
         yData.append(pair.second);
     }
 
-    customPlot->graph(num_graph)->setData(xData, yData);
-    customPlot->replot();
+    _ui->plotter->graph(num_graph)->setData(xData, yData);
+    _ui->plotter->replot();
 }
 
 void QtPlotter::addToSeries(double x, double y, int num_graph)
 {
-    customPlot->graph(num_graph)->addData(x, y);
-    customPlot->replot();
+    _ui->plotter->graph(num_graph)->addData(x, y);
+    _ui->plotter->replot();
 }
 
 void QtPlotter::setRanges(const QVector<QPair<double, double>>& series_data)
@@ -74,11 +72,11 @@ void QtPlotter::setRanges(const QVector<QPair<double, double>>& series_data)
     QPair<double, double> xRange(minX - paddingX, maxX + paddingX);
     QPair<double, double> yRange(minY - paddingY, maxY + paddingY);
 
-    customPlot->xAxis->setRange(xRange.first, xRange.second);
-    customPlot->yAxis->setRange(yRange.first, yRange.second);
+    _ui->plotter->xAxis->setRange(xRange.first, xRange.second);
+    _ui->plotter->yAxis->setRange(yRange.first, yRange.second);
 }
 
 QCustomPlot* QtPlotter::getCustomPlot()
 {
-    return customPlot;
+    return _ui->plotter;
 }
