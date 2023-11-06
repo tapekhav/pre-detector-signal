@@ -1,19 +1,18 @@
 #include <qt_main_window_class.h>
 #include <QVBoxLayout>
+#include <qcustomplot.h>
 
 QtClassMainWindow::QtClassMainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    QVector<QPair<int, int>> seriesData;
-    seriesData << qMakePair(1, 2) << qMakePair(3, 4) << qMakePair(5, 6) << qMakePair(7, 8);
-
-    _qt_plotter = std::make_unique<QtPlotter>(seriesData, this);
+    setSignals();
+    _qt_plotter = std::make_unique<QtPlotter>(_series_modulated_signal, _series_modulating_signal, this);
 
     setQtPlotter(_qt_plotter);
 }
 
 void QtClassMainWindow::setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter)
 {
-    setPlotter(QSize(800, 400));
+    setPlotter(QSize(800, 600));
     setCentralWidget(qt_plotter.get());
 }
 
@@ -25,18 +24,15 @@ void QtClassMainWindow::setPlotter(const QSize& size)
     }
 }
 
-void QtClassMainWindow::setSeries(const QVector<QPair<int, int>>& series)
+void QtClassMainWindow::setSignals()
 {
-    if (_qt_plotter)
-    {
-        _qt_plotter->setSeries(series);
-    }
-}
+    auto values = _signal_generator.modulateSignal();
+    auto times = _signal_generator.getTimeVector();
+    auto initial_values = _signal_generator.getModulatingSignal();
 
-void QtClassMainWindow::addToSeries(int x, int y)
-{
-    if (_qt_plotter)
+    for (size_t i = 0; i < values.size(); ++i)
     {
-        _qt_plotter->addToSeries(x, y);
+        _series_modulated_signal << qMakePair(times[i], values[i]);
+        _series_modulating_signal << qMakePair(times[i], initial_values[i]);
     }
 }

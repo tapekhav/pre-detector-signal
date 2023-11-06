@@ -1,58 +1,84 @@
 #include <qt_plotter.h>
-#include <ui_qt_plotter.h>
 #include <QVBoxLayout>
 
-QtPlotter::QtPlotter(const QVector<QPair<int, int>>& series_data, QWidget *parent)
-                                                                  : QWidget(parent),
-                                                                    ui(new Ui::QtPlotter),
-                                                                    _chart(new QtCharts::QChart),
-                                                                    _axis_x(new QtCharts::QValueAxis),
-                                                                    _axis_y(new QtCharts::QValueAxis),
-                                                                    _chart_view(new QtCharts::QChartView(_chart))
+#include <ui_qt_plotter.h>
+
+QtPlotter::QtPlotter(const QVector<QPair<double, double>>& series_data,
+                     const QVector<QPair<double, double>>& init_signal_data,
+                     QWidget *parent)
+                        : QWidget(parent),
+                          _ui(new Ui::QtPlotter)
 {
-    ui->setupUi(this);
+    _ui->setupUi(this);
 
-    _chart_view->setRenderHint(QPainter::Antialiasing);
+    customPlot = new QCustomPlot(this);
 
-    _series = new QtCharts::QLineSeries;
-    setSeries(series_data);
+    auto* layout = new QVBoxLayout(this);
+    layout->addWidget(customPlot);
 
-    _chart->addSeries(_series);
-    _chart->setAxisX(_axis_x, _series);
-    _chart->setAxisY(_axis_y, _series);
+    customPlot->addGraph();
+    customPlot->addGraph();
 
-    auto* layout = new QVBoxLayout;
-    layout->addWidget(_chart_view);
-    setLayout(layout);
+    customPlot->graph(0)->setPen(QPen(Qt::blue));
+    customPlot->graph(1)->setPen(QPen(Qt::red));
+
+    setSeries(series_data, 0);
+    setSeries(init_signal_data, 1);
+
+    customPlot->xAxis->setLabel("X");
+    customPlot->yAxis->setLabel("Y");
+
+    setRanges(series_data);
+
+    customPlot->replot();
 }
 
-void QtPlotter::setSeries(const QVector<QPair<int, int>>& series)
+void QtPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_graph)
 {
+    QVector<double> xData, yData;
+
     for (const auto& pair : series)
     {
-        _series->append(pair.first, pair.second);
+        xData.append(pair.first);
+        yData.append(pair.second);
     }
 
-    _chart->update();
+    customPlot->graph(num_graph)->setData(xData, yData);
+    customPlot->replot();
 }
 
-void QtPlotter::addToSeries(int x, int y)
+void QtPlotter::addToSeries(double x, double y, int num_graph)
 {
-    _series->append(x, y);
+    customPlot->graph(num_graph)->addData(x, y);
+    customPlot->replot();
 }
 
-void QtPlotter::setRanges(QPair<int, int> x_range, QPair<int, int> y_range)
+void QtPlotter::setRanges(const QVector<QPair<double, double>>& series_data)
 {
-    _axis_x->setRange(x_range.first, x_range.second);
-    _axis_y->setRange(y_range.first, y_range.second);
+    double minX = std::numeric_limits<double>::max();
+    double maxX = std::numeric_limits<double>::min();
+    double minY = std::numeric_limits<double>::max();
+    double maxY = std::numeric_limits<double>::min();
+
+    for (const auto& pair : series_data)
+    {
+        minX = std::min(minX, pair.first);
+        maxX = std::max(maxX, pair.first);
+        minY = std::min(minY, pair.second);
+        maxY = std::max(maxY, pair.second);
+    }
+
+    const double paddingX = 0.1 * (maxX - minX);
+    const double paddingY = 0.1 * (maxY - minY);
+
+    QPair<double, double> xRange(minX - paddingX, maxX + paddingX);
+    QPair<double, double> yRange(minY - paddingY, maxY + paddingY);
+
+    customPlot->xAxis->setRange(xRange.first, xRange.second);
+    customPlot->yAxis->setRange(yRange.first, yRange.second);
 }
 
-QtCharts::QChartView* QtPlotter::getChartView()
+QCustomPlot* QtPlotter::getCustomPlot()
 {
-    return _chart_view;
-}
-
-QtPlotter::~QtPlotter()
-{
-    delete ui;
+    return customPlot;
 }

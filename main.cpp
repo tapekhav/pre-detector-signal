@@ -18,7 +18,7 @@ public:
 
     std::vector<double> decodeData()
     {
-
+        return {};
     }
 
 private:

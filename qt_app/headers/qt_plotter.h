@@ -2,41 +2,35 @@
 #define PRE_DETECTOR_SIGNAL_QT_PLOTTER_H
 
 #include <QWidget>
-#include <QtCharts/QChart>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QValueAxis>
-#include <QtCharts/QChartView>
 #include <QVector>
 #include <QPair>
-
+#include <qcustomplot.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QtPlotter; }
 QT_END_NAMESPACE
 
-class QtPlotter : public QWidget
+class QtPlotter final : public QWidget
 {
-    Q_OBJECT
+Q_OBJECT
 public:
-    explicit QtPlotter(const QVector<QPair<int, int>>& series_data, QWidget *parent = nullptr);
-    ~QtPlotter() override;
+    explicit QtPlotter(const QVector<QPair<double, double>>& series_data,
+                       const QVector<QPair<double, double>>& init_signal_data,
+                       QWidget *parent = nullptr);
+    ~QtPlotter() final = default;
 
-    void setSeries(const QVector<QPair<int, int>>& series);
+    void setSeries(const QVector<QPair<double, double>>& series, int num_graph);
 
-    void addToSeries(int x, int y);
-    void setRanges(QPair<int, int> x_range, QPair<int, int> y_range);
-    QtCharts::QChartView* getChartView();
+    void addToSeries(double x, double y, int num_graph);
+    void setRanges(const QVector<QPair<double, double>>& series_data);
+    QCustomPlot* getCustomPlot();
 signals:
     void signal();
 public slots:
     void slot() {};
 private:
-    Ui::QtPlotter *ui;
-    QtCharts::QChart* _chart;
-    QtCharts::QLineSeries* _series;
-    QtCharts::QValueAxis* _axis_x;
-    QtCharts::QValueAxis* _axis_y;
-    QtCharts::QChartView* _chart_view;
+    QCustomPlot* customPlot;
+    Ui::QtPlotter* _ui;
 };
 
 
