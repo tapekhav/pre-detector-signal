@@ -38,7 +38,7 @@ public:
 
     std::vector<double> modulate(const std::vector<double>& initial_signal) final;
 private:
-    [[nodiscard]] std::vector<double> integrateSignal(const std::vector<double>& signal);
+    [[nodiscard]] std::vector<double> integrateSignal(const std::vector<double>& signal) const;
 
 private:
     double _amplitude;

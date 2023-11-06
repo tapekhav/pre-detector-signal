@@ -14,8 +14,13 @@ FrequencyModulation::FrequencyModulation(double amplitude,
 
 std::vector<double> FrequencyModulation::modulate(const std::vector<double> &initial_signal)
 {
-    //! TODO correct modulation_index(max(|m(t)|) instead of A)
-    auto modulation_index = std::abs(_modulation_rate / _amplitude);
+    //! max(|m(t)|) instead of A)
+    auto modulation_index = [initial_signal](double modulation_rate)
+    {
+        double max_value = *std::max(initial_signal.begin(), initial_signal.end());
+
+        return std::abs(modulation_rate / max_value);
+    };
 
     std::vector<double> modulated_signal;
 
@@ -24,12 +29,13 @@ std::vector<double> FrequencyModulation::modulate(const std::vector<double> &ini
     {
         double time_point = static_cast<double>(i) / _sample_freq;
         modulated_signal.push_back(_amplitude * cos(2 * M_PI * _central_frequency * time_point +
-                                   2 * M_PI * integrated_signal[i] * modulation_index));
+                                   2 * M_PI * integrated_signal[i] * modulation_index(_modulation_rate)));
     }
 
+    return modulated_signal;
 }
 
-std::vector<double> FrequencyModulation::integrateSignal(const std::vector<double> &signal)
+std::vector<double> FrequencyModulation::integrateSignal(const std::vector<double> &signal) const
 {
     std::vector<double> integral;
     double cumulative_sum = 0.0;
