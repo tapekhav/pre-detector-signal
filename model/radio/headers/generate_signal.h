@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include <frequency_modulation.h>
+#include <phase-shift_keying_modulation.h>
 
 class SignalGenerator
 {

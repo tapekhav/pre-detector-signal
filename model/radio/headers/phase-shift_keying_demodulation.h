@@ -1,5 +1,5 @@
-#ifndef PRE_DETECTOR_SIGNAL_FREQUENCY_DEMODULATION_H
-#define PRE_DETECTOR_SIGNAL_FREQUENCY_DEMODULATION_H
+#ifndef PRE_DETECTOR_SIGNAL_PHASE_SHIFT_KEYING_DEMODULATION_H
+#define PRE_DETECTOR_SIGNAL_PHASE_SHIFT_KEYING_DEMODULATION_H
 
 #include <demodulation_interface.h>
 
@@ -12,12 +12,12 @@
 2. Integrate \(f_i(t)\) over time to recover the original modulating signal \(m(t)\):
 \[m(t) = \frac{1}{2\pi k_f} \int_{0}^{t} f_i(\tau) d\tau\]*/
 
-class FrequencyDemodulation final : public IDemodulation
+class PSKDemodulation final : public IDemodulation
 {
 public:
-    explicit FrequencyDemodulation(double sample_rate,
-                                   double central_freq,
-                                   double modulation_rate);
+    explicit PSKDemodulation(double sample_rate,
+                             double central_freq,
+                             double modulation_rate);
 
     std::vector<double> demodulate(const std::vector<double> &modulated_signal) final;
 private:
@@ -28,4 +28,4 @@ private:
     double _modulation_rate;
 };
 
-#endif //PRE_DETECTOR_SIGNAL_FREQUENCY_DEMODULATION_H
+#endif //PRE_DETECTOR_SIGNAL_PHASE_SHIFT_KEYING_DEMODULATION_H

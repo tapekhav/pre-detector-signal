@@ -12,9 +12,9 @@ SignalGenerator::SignalGenerator(double amplitude,
                                     _phase(phase),
                                     _duration(duration),
                                     _sample_rate(sample_rate),
-                                    _modulation(std::make_unique<FrequencyModulation>(_amplitude,
-                                                                                      _frequency,
-                                                                                      _sample_rate)){}
+                                    _modulation(std::make_unique<PSKModulation>(_amplitude,
+                                                                                _frequency,
+                                                                                _sample_rate)){}
 
 std::vector<double> SignalGenerator::generateSignal()
 {

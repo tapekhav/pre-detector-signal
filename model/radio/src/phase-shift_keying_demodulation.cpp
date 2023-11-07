@@ -1,17 +1,17 @@
-#include <frequency_demodulation.h>
+#include <phase-shift_keying_demodulation.h>
 
 #include <cmath>
 #include <cstddef>
 
 
-FrequencyDemodulation::FrequencyDemodulation(double sample_rate,
-                                             double central_freq,
-                                             double modulation_rate)
+PSKDemodulation::PSKDemodulation(double sample_rate,
+                                 double central_freq,
+                                 double modulation_rate)
                                                 : _sample_rate(sample_rate),
                                                   _central_freq(central_freq),
                                                   _modulation_rate(modulation_rate) {}
 
-std::vector<double> FrequencyDemodulation::integrate(const std::vector<double> &modulated_signal) const
+std::vector<double> PSKDemodulation::integrate(const std::vector<double> &modulated_signal) const
 {
     std::vector<double> integral;
 
@@ -25,7 +25,7 @@ std::vector<double> FrequencyDemodulation::integrate(const std::vector<double> &
     return integral;
 }
 
-std::vector<double> FrequencyDemodulation::demodulate(const std::vector<double> &modulated_signal)
+std::vector<double> PSKDemodulation::demodulate(const std::vector<double> &modulated_signal)
 {
 
     auto modulation_index = [modulated_signal](double modulation_rate)

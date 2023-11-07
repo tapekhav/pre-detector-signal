@@ -1,18 +1,18 @@
-#include <frequency_modulation.h>
+#include <phase-shift_keying_modulation.h>
 #include <cmath>
 #include <algorithm>
 
 
-FrequencyModulation::FrequencyModulation(double amplitude,
-                                         double freq,
-                                         double central_frequency,
-                                         double modulation_rate)
+PSKModulation::PSKModulation(double amplitude,
+                             double freq,
+                             double central_frequency,
+                             double modulation_rate)
                                                : _amplitude(amplitude),
                                                  _sample_freq(freq),
                                                  _central_frequency(central_frequency),
                                                  _modulation_rate(modulation_rate) {}
 
-std::vector<double> FrequencyModulation::modulate(const std::vector<double> &initial_signal)
+std::vector<double> PSKModulation::modulate(const std::vector<double> &initial_signal)
 {
     auto modulation_index = [initial_signal](double modulation_rate)
     {
@@ -38,7 +38,7 @@ std::vector<double> FrequencyModulation::modulate(const std::vector<double> &ini
     return modulated_signal;
 }
 
-std::vector<double> FrequencyModulation::integrate(const std::vector<double> &signal) const
+std::vector<double> PSKModulation::integrate(const std::vector<double> &signal) const
 {
     std::vector<double> integral;
     double cumulative_sum = 0.0;
