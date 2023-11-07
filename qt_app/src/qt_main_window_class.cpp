@@ -8,6 +8,10 @@ QtClassMainWindow::QtClassMainWindow(QWidget *parent) : QMainWindow(parent)
     _qt_plotter = std::make_unique<QtPlotter>(_series_modulated_signal, _series_modulating_signal, this);
 
     setQtPlotter(_qt_plotter);
+
+    setStyleSheet("QMainWindow {\n"
+                  "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f0f0f0, stop:1 #c0c0c0);\n"
+                  "}");
 }
 
 void QtClassMainWindow::setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter)

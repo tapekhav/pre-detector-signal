@@ -11,9 +11,6 @@ QtPlotter::QtPlotter(const QVector<QPair<double, double>>& series_data,
 {
     _ui->setupUi(this);
 
-    //auto* layout = new QVBoxLayout(this);
-    //layout->addWidget(customPlot);
-
     _ui->plotter->addGraph();
     _ui->plotter->addGraph();
 

@@ -14,22 +14,140 @@
    <string>Plotter</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f0f0f0, stop:1 #c0c0c0);
-}
-</string>
+   <string notr="true"/>
   </property>
-  <widget class="QPushButton" name="apply_button">
+  <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>550</y>
-     <width>80</width>
-     <height>25</height>
+     <x>40</x>
+     <y>20</y>
+     <width>711</width>
+     <height>561</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
+   <layout class="QVBoxLayout" name="main_layout">
+    <property name="spacing">
+     <number>1</number>
+    </property>
+    <item>
+     <widget class="QCustomPlot" name="plotter" native="true"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="input_layout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="line_edit_layout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+        <item>
+         <widget class="QLineEdit" name="begin_line_edit">
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+    background-color: #f0f0f0;
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+    padding: 2px 5px;
+    color: #333333;
+}
+
+QLineEdit:hover {
+    background-color: #e0e0e0;
+}
+
+QLineEdit:focus {
+    background-color: #ffffff;
+    border: 1px solid #007ACC;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>begin</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="end_line_edit">
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+    background-color: #f0f0f0;
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+    padding: 2px 5px;
+    color: #333333;
+}
+
+QLineEdit:hover {
+    background-color: #e0e0e0;
+}
+
+QLineEdit:focus {
+    background-color: #ffffff;
+    border: 1px solid #007ACC;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>end</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="step_line_edit">
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+    background-color: #f0f0f0;
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+    padding: 2px 5px;
+    color: #333333;
+}
+
+QLineEdit:hover {
+    background-color: #e0e0e0;
+}
+
+QLineEdit:focus {
+    background-color: #ffffff;
+    border: 1px solid #007ACC;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>step</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="apply_button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
     background-color: #f0f0f0; 
     border: 1px solid #c0c0c0; 
     color: #333333; 
@@ -41,20 +159,15 @@ QPushButton:hover {
     background-color: #e0e0e0;
 }
 </string>
-   </property>
-   <property name="text">
-    <string>Apply</string>
-   </property>
-  </widget>
-  <widget class="QCustomPlot" name="plotter" native="true">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>20</y>
-     <width>701</width>
-     <height>501</height>
-    </rect>
-   </property>
+        </property>
+        <property name="text">
+         <string>Apply</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
  </widget>
  <customwidgets>
