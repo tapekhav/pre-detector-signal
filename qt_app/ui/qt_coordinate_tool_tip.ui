@@ -13,6 +13,14 @@
   <property name="windowTitle">
    <string>CoordinateToolTip</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+	background-color: white;
+    border: 1px solid black;
+	border-radius: 5px;     
+}
+</string>
+  </property>
   <widget class="QLabel" name="coordinate_label">
    <property name="geometry">
     <rect>
@@ -21,6 +29,9 @@
      <width>80</width>
      <height>60</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>TextLabel</string>

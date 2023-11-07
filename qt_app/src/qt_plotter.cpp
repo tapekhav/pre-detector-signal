@@ -16,7 +16,7 @@ QtPlotter::QtPlotter(const QVector<QPair<double, double>>& series_data,
     setPlotter(series_data, init_signal_data);
 
     setRanges(series_data);
-    setTextItem();
+    setToolTip();
 
     connect(_ui->plotter, &QCustomPlot::mouseMove, this, &QtPlotter::onMouseMove);
 
@@ -25,15 +25,15 @@ QtPlotter::QtPlotter(const QVector<QPair<double, double>>& series_data,
 
 void QtPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_graph)
 {
-    QVector<double> xData, yData;
+    QVector<double> x_data, y_data;
 
     for (const auto& pair : series)
     {
-        xData.append(pair.first);
-        yData.append(pair.second);
+        x_data.append(pair.first);
+        y_data.append(pair.second);
     }
 
-    _ui->plotter->graph(num_graph)->setData(xData, yData);
+    _ui->plotter->graph(num_graph)->setData(x_data, y_data);
     _ui->plotter->replot();
 }
 
@@ -68,11 +68,6 @@ void QtPlotter::setRanges(const QVector<QPair<double, double>>& series_data)
     _ui->plotter->yAxis->setRange(y_range.first, y_range.second);
 }
 
-QCustomPlot* QtPlotter::getCustomPlot()
-{
-    return _ui->plotter;
-}
-
 void QtPlotter::onMouseMove(QMouseEvent *event)
 {
     double x = _ui->plotter->xAxis->pixelToCoord(event->pos().x());
@@ -85,20 +80,8 @@ void QtPlotter::onMouseMove(QMouseEvent *event)
 }
 
 
-void QtPlotter::setTextItem()
+void QtPlotter::setToolTip()
 {
-    _text_item = new QCPItemText(_ui->plotter);
-
-    _text_item->position->setType(QCPItemPosition::ptAxisRectRatio);
-    _text_item->position->setCoords(0.9, 0.1);
-
-    _text_item->setFont(QFont(font().family(), 12));
-    _text_item->setColor(Qt::black);
-
-    _text_item->setText("No data");
-
-    _text_item->setTextAlignment(Qt::AlignRight);
-
     _tool_tip = new CoordinateToolTip(_ui->plotter);
 }
 
@@ -121,5 +104,4 @@ void QtPlotter::setPlotter(const QVector<QPair<double, double>>& series_data,
 QtPlotter::~QtPlotter()
 {
     delete _ui;
-    delete _text_item;
 }

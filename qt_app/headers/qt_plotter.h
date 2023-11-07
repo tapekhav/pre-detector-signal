@@ -26,19 +26,16 @@ public:
     void addToSeries(double x, double y, int num_graph);
     void setRanges(const QVector<QPair<double, double>>& series_data);
 
-    void setTextItem();
+    void setToolTip();
     void setPlotter(const QVector<QPair<double, double>>& series_data,
                     const QVector<QPair<double, double>>& init_signal_data);
 
-    QCustomPlot* getCustomPlot();
 signals:
     void signal();
 private slots:
     void onMouseMove(QMouseEvent *event);
 private:
     Ui::QtPlotter* _ui;
-
-    QCPItemText* _text_item;
     CoordinateToolTip* _tool_tip;
 };
 
