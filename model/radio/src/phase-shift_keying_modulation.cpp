@@ -4,50 +4,37 @@
 
 
 PSKModulation::PSKModulation(double amplitude,
-                             double freq,
+                             double sample_rate,
                              double central_frequency,
-                             double modulation_rate)
+                             double symbol_duration)
                                                : _amplitude(amplitude),
-                                                 _sample_freq(freq),
+                                                 _sample_rate(sample_rate),
                                                  _central_frequency(central_frequency),
-                                                 _modulation_rate(modulation_rate) {}
+                                                 _symbol_duration(symbol_duration) {}
 
-std::vector<double> PSKModulation::modulate(const std::vector<double> &initial_signal)
+std::vector<double> PSKModulation::modulate(const std::vector<bool> &initial_signal)
 {
-    auto modulation_index = [initial_signal](double modulation_rate)
+    std::vector<double> bpsk_signal;
+
+    int num_samples_per_symbol = static_cast<int>(_sample_rate * _symbol_duration);
+
+    for (int bit : initial_signal)
     {
-        double max_value = std::numeric_limits<double>::min();
-        for (const auto& i : initial_signal)
+        for (int i = 0; i < num_samples_per_symbol; ++i)
         {
-            max_value = std::max(std::abs(i), max_value);
+            double t = i / _sample_rate;
+            double phase = 2.0 * M_PI * _central_frequency * t;
+
+            if (bit == 0)
+            {
+                bpsk_signal.push_back(_amplitude * cos(phase));
+            }
+            else
+            {
+                bpsk_signal.push_back(_amplitude * cos(phase + M_PI));
+            }
         }
-
-        return std::abs(modulation_rate / max_value);
-    };
-
-    std::vector<double> modulated_signal;
-
-    auto integrated_signal = integrate(initial_signal);
-    for (size_t i = 0; i < initial_signal.size(); ++i)
-    {
-        double time_point = static_cast<double>(i) / _sample_freq;
-        modulated_signal.push_back(_amplitude * cos(2 * M_PI * _central_frequency * time_point +
-                                   2 * M_PI * integrated_signal[i] * modulation_index(_modulation_rate)));
     }
 
-    return modulated_signal;
-}
-
-std::vector<double> PSKModulation::integrate(const std::vector<double> &signal) const
-{
-    std::vector<double> integral;
-    double cumulative_sum = 0.0;
-
-    for (size_t i = 0; i < signal.size(); ++i)
-    {
-        cumulative_sum += (signal[i] + (i > 0 ? signal[i - 1] : 0)) / 2.0;
-        integral.push_back(cumulative_sum / _sample_freq);
-    }
-
-    return integral;
+    return bpsk_signal;
 }

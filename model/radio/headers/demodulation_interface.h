@@ -3,10 +3,11 @@
 
 #include <vector>
 
+template<class OutputType, class SignalType>
 class IDemodulation
 {
 public:
-    virtual std::vector<double> demodulate(const std::vector<double>& modulated_signal) = 0;
+    virtual std::vector<OutputType> demodulate(const std::vector<SignalType>& modulated_signal) = 0;
 };
 
 #endif //PRE_DETECTOR_SIGNAL_IDEMODULATION_H

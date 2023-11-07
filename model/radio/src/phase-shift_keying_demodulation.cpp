@@ -5,44 +5,29 @@
 
 
 PSKDemodulation::PSKDemodulation(double sample_rate,
-                                 double central_freq,
-                                 double modulation_rate)
+                                 double central_frequency,
+                                 double symbol_duration)
                                                 : _sample_rate(sample_rate),
-                                                  _central_freq(central_freq),
-                                                  _modulation_rate(modulation_rate) {}
+                                                  _symbol_duration(symbol_duration),
+                                                  _central_frequency(central_frequency){}
 
-std::vector<double> PSKDemodulation::integrate(const std::vector<double> &modulated_signal) const
+std::vector<bool> PSKDemodulation::demodulate(const std::vector<double> &modulated_signal)
 {
-    std::vector<double> integral;
+    std::vector<bool> binary_data;
 
-    double cumulative_sum = 0.0;
-    for (size_t i = 1; i < modulated_signal.size(); ++i)
+    int num_samples_per_symbol = static_cast<int>(_sample_rate * _symbol_duration);
+
+    for (int i = 0; i < modulated_signal.size(); i += num_samples_per_symbol)
     {
-        cumulative_sum += (modulated_signal[i] + (i > 0 ? modulated_signal[i - 1] : 0)) / 2.0;
-        integral.push_back(cumulative_sum / _sample_rate);
+        double sum = 0.0;
+
+        for (int j = i; j < i + num_samples_per_symbol; ++j)
+        {
+            sum += modulated_signal[j];
+        }
+
+        binary_data.push_back(sum >= 0);
     }
 
-    return integral;
-}
-
-std::vector<double> PSKDemodulation::demodulate(const std::vector<double> &modulated_signal)
-{
-
-    auto modulation_index = [modulated_signal](double modulation_rate)
-    {
-        double max_value = *std::max(modulated_signal.begin(), modulated_signal.end());
-
-        return std::abs(modulation_rate / max_value);
-    };
-
-    std::vector<double> demodulated_signal, fi;
-    for (size_t i = 1; i < modulated_signal.size(); ++i)
-    {
-        fi.push_back((modulated_signal[i] - modulated_signal[i - 1]) /
-                     (2 * M_PI * modulation_index(_modulation_rate) / _sample_rate));
-    }
-
-
-
-    return demodulated_signal;
+    return binary_data;
 }

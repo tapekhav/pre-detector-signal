@@ -3,7 +3,7 @@
 
 #include <modulation_interface.h>
 
-/**
+/*!
  * The general form for BPSK follows the equation:
 
     {\displaystyle s_{n}(t)={\sqrt {\frac {2E_{b}}{T_{b}}}}\cos(2\pi ft+\pi (1-n)),\quad n=0,1.}
@@ -18,25 +18,22 @@ where f is the frequency of the base band.
 Hence, the signal space can be represented by the single basis function
 
    {\displaystyle \phi (t)={\sqrt {\frac {2}{T_{b}}}}\cos(2\pi ft)}
- * */
+*/
 
-class PSKModulation final : public IModulation
+class PSKModulation final : public IModulation<double, bool>
 {
 public:
     explicit PSKModulation(double amplitude,
-                           double freq,
-                           double central_frequency = 433 * 10e6,
-                           double modulation_rate = 4096);
+                           double sample_rate,
+                           double central_frequency,
+                           double symbol_duration);
 
-    std::vector<double> modulate(const std::vector<double>& initial_signal) final;
-private:
-    [[nodiscard]] std::vector<double> integrate(const std::vector<double>& signal) const;
-
+    std::vector<double> modulate(const std::vector<bool>& initial_signal) final;
 private:
     double _amplitude;
-    double _sample_freq;
+    double _sample_rate;
     double _central_frequency;
-    double _modulation_rate;
+    double _symbol_duration;
 };
 
 #endif //PRE_DETECTOR_SIGNAL_FREQUENCY_MODULATION_2_H

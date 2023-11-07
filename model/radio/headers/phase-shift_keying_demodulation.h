@@ -12,20 +12,18 @@
 2. Integrate \(f_i(t)\) over time to recover the original modulating signal \(m(t)\):
 \[m(t) = \frac{1}{2\pi k_f} \int_{0}^{t} f_i(\tau) d\tau\]*/
 
-class PSKDemodulation final : public IDemodulation
+class PSKDemodulation final : public IDemodulation<bool, double>
 {
 public:
     explicit PSKDemodulation(double sample_rate,
-                             double central_freq,
-                             double modulation_rate);
+                             double central_frequency,
+                             double symbol_duration);
 
-    std::vector<double> demodulate(const std::vector<double> &modulated_signal) final;
+    std::vector<bool> demodulate(const std::vector<double> &modulated_signal) final;
 private:
-    [[nodiscard]] std::vector<double> integrate(const std::vector<double>& modulated_signal) const;
-private:
-    double _central_freq;
+    double _central_frequency;
     double _sample_rate;
-    double _modulation_rate;
+    double _symbol_duration;
 };
 
 #endif //PRE_DETECTOR_SIGNAL_PHASE_SHIFT_KEYING_DEMODULATION_H
