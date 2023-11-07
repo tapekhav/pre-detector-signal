@@ -15,6 +15,7 @@ file(GLOB QT_PLOTTER_SOURCE src/*.cpp)
 
 set(FORMS
         ui/qt_plotter.ui
+        ui/qt_coordinate_tool_tip.ui
 )
 
 qt5_wrap_ui(FORMS_HEADERS ${FORMS})

@@ -6,6 +6,8 @@
 #include <QPair>
 #include <qcustomplot.h>
 
+class CoordinateToolTip;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class QtPlotter; }
 QT_END_NAMESPACE
@@ -17,20 +19,27 @@ public:
     explicit QtPlotter(const QVector<QPair<double, double>>& series_data,
                        const QVector<QPair<double, double>>& init_signal_data,
                        QWidget *parent = nullptr);
-    ~QtPlotter() final = default;
+    ~QtPlotter() final;
 
     void setSeries(const QVector<QPair<double, double>>& series, int num_graph);
 
     void addToSeries(double x, double y, int num_graph);
     void setRanges(const QVector<QPair<double, double>>& series_data);
+
+    void setTextItem();
+    void setPlotter(const QVector<QPair<double, double>>& series_data,
+                    const QVector<QPair<double, double>>& init_signal_data);
+
     QCustomPlot* getCustomPlot();
 signals:
     void signal();
-public slots:
-    void slot() {};
+private slots:
+    void onMouseMove(QMouseEvent *event);
 private:
-    QCustomPlot* customPlot;
     Ui::QtPlotter* _ui;
+
+    QCPItemText* _text_item;
+    CoordinateToolTip* _tool_tip;
 };
 
 
