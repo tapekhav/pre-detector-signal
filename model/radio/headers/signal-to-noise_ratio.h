@@ -43,6 +43,8 @@ public:
     [[nodiscard]] inline double getBeginSNRLinear() const { return _snr_linear; }
     [[nodiscard]] inline double getResultSNR() const { return _result_snr; }
 
+    [[nodiscard]] inline double findPmin(int modulation_speed) const;
+
     [[nodiscard]] inline double generate() const { return _generator->generate(); }
 private:
     double _snr_linear;

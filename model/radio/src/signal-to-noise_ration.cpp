@@ -10,3 +10,8 @@ SNR::SNR(double snr_dB, double noise_dB)
 
     _generator = std::make_unique<NoiseGenerator>(std::sqrt(noise_variance));
 }
+
+double SNR::findPmin(int modulation_speed) const
+{
+    return -174 + _result_snr + 10 * std::log10(modulation_speed);
+}
