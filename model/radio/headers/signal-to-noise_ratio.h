@@ -40,11 +40,13 @@ class SNR
 public:
     SNR(double snr_dB, double noise_dB);
 
-    [[nodiscard]] inline double getSNRLinear() const { return _snr_linear; }
+    [[nodiscard]] inline double getBeginSNRLinear() const { return _snr_linear; }
+    [[nodiscard]] inline double getResultSNR() const { return _result_snr; }
 
     [[nodiscard]] inline double generate() const { return _generator->generate(); }
 private:
     double _snr_linear;
+    double _result_snr;
 
     std::unique_ptr<NoiseGenerator> _generator;
 };

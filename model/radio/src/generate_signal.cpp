@@ -13,10 +13,11 @@ SignalGenerator::SignalGenerator(double amplitude,
                                     _duration(duration),
                                     _sample_rate(sample_rate),
                                     _modulation(std::make_unique<PSKModulation>(_amplitude,
+                                                                                _sample_rate,
                                                                                 _frequency,
-                                                                                _sample_rate)){}
+                                                                                _duration)){}
 
-std::vector<double> SignalGenerator::generateSignal()
+std::vector<bool> SignalGenerator::generateSignal()
 {
     int num_samples = static_cast<int>(_duration * _sample_rate);
 
@@ -24,7 +25,7 @@ std::vector<double> SignalGenerator::generateSignal()
     {
         double time = static_cast<double>(i) / _sample_rate;
         _time_vector.push_back(time);
-        _modulating_signal.push_back(_amplitude * std::sin(2.0 * M_PI * _frequency * time + _phase));
+        _modulating_signal.push_back(static_cast<bool>(_amplitude * std::sin(2.0 * M_PI * _frequency * time + _phase)));
     }
 
     return _modulating_signal;
