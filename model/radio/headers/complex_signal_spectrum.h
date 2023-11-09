@@ -49,7 +49,7 @@ public:
 private:
     //! Vector to store the calculated complex spectrum.
     std::vector<complex> _complex_spectrum;
-   //! FFTW plan for performing the real-to-complex FFT.
+    //! FFTW plan for performing the real-to-complex FFT.
     fftw_plan _plan;
 };
 

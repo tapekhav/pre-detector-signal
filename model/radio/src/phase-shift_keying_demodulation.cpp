@@ -1,7 +1,6 @@
 #include <binary_phase-shift_keying_demodulation.h>
 
-#include <cmath>
-#include <cstddef>
+#include <numeric>
 
 
 BPSKDemodulation::BPSKDemodulation(double sample_rate,
@@ -17,12 +16,7 @@ std::vector<bool> BPSKDemodulation::demodulate(const std::vector<double> &modula
 
     for (int i = 0; i < modulated_signal.size(); i += num_samples_per_symbol)
     {
-        double sum = 0.0;
-
-        for (int j = i; j < i + num_samples_per_symbol; ++j)
-        {
-            sum += modulated_signal[j];
-        }
+        double sum = std::accumulate(modulated_signal.begin() + i, modulated_signal.begin() + i + num_samples_per_symbol, 0.0);
 
         binary_data.push_back(sum >= 0);
     }

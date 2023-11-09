@@ -1,6 +1,5 @@
 #include <binary_phase-shift_keying_modulation.h>
 #include <cmath>
-#include <algorithm>
 
 
 BPSKModulation::BPSKModulation(double amplitude,
@@ -25,14 +24,7 @@ std::vector<double> BPSKModulation::modulate(const std::vector<bool> &initial_si
             double t = i / _sample_rate;
             double phase = 2.0 * M_PI * _central_frequency * t;
 
-            if (bit == 0)
-            {
-                bpsk_signal.push_back(_amplitude * cos(phase));
-            }
-            else
-            {
-                bpsk_signal.push_back(_amplitude * cos(phase + M_PI));
-            }
+            bpsk_signal.push_back(_amplitude * cos(phase + (1 - bit) * M_PI));
         }
     }
 
