@@ -1,18 +1,18 @@
-#include <phase-shift_keying_modulation.h>
+#include <binary_phase-shift_keying_modulation.h>
 #include <cmath>
 #include <algorithm>
 
 
-PSKModulation::PSKModulation(double amplitude,
-                             double sample_rate,
-                             double central_frequency,
-                             double symbol_duration)
+BPSKModulation::BPSKModulation(double amplitude,
+                               double sample_rate,
+                               double central_frequency,
+                               double symbol_duration)
                                                : _amplitude(amplitude),
                                                  _sample_rate(sample_rate),
                                                  _central_frequency(central_frequency),
                                                  _symbol_duration(symbol_duration) {}
 
-std::vector<double> PSKModulation::modulate(const std::vector<bool> &initial_signal)
+std::vector<double> BPSKModulation::modulate(const std::vector<bool> &initial_signal)
 {
     std::vector<double> bpsk_signal;
 

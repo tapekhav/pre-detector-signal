@@ -1,17 +1,15 @@
-#include <phase-shift_keying_demodulation.h>
+#include <binary_phase-shift_keying_demodulation.h>
 
 #include <cmath>
 #include <cstddef>
 
 
-PSKDemodulation::PSKDemodulation(double sample_rate,
-                                 double central_frequency,
-                                 double symbol_duration)
+BPSKDemodulation::BPSKDemodulation(double sample_rate,
+                                   double symbol_duration)
                                                 : _sample_rate(sample_rate),
-                                                  _symbol_duration(symbol_duration),
-                                                  _central_frequency(central_frequency){}
+                                                  _symbol_duration(symbol_duration) {}
 
-std::vector<bool> PSKDemodulation::demodulate(const std::vector<double> &modulated_signal)
+std::vector<bool> BPSKDemodulation::demodulate(const std::vector<double> &modulated_signal)
 {
     std::vector<bool> binary_data;
 

@@ -10,46 +10,80 @@
 class NoiseGenerator
 {
 public:
+    /*!
+     * \brief Constructor for the NoiseGenerator class.
+     *
+     * \param sigma The standard deviation of the normal distribution.
+     */
     inline explicit NoiseGenerator(int sigma) : _rd(), _gen(_rd()), _distribution(0, sigma) {}
+    /*!
+     * \brief Generate a random noise value with a normal distribution.
+     *
+     * \return The generated noise value.
+     */
     inline double generate() { return _distribution(_gen); }
 
 private:
+    //! Random device for seeding the random number generator.
     std::random_device _rd;
+    //! Mersenne Twister random number generator.
     std::mt19937 _gen;
+    //! Normal distribution with specified sigma.
     std::normal_distribution<double> _distribution;
 };
 
-/**
- * Деление и умножение на 10 используются для преобразования отношения сигнал/шум из децибелов (dB) в линейную шкалу.
- * В децибелах отношение сигнал/шум (SNR) выражается как логарифмическая величина, и чтобы перейти к линейной шкале,
- * нужно выполнить следующие операции:
-
-1. Разделить значение в децибелах на 10, чтобы получить отношение в натуральных логарифмах (десятичные децибелы).
-2. Взять экспоненту полученного значения, чтобы перейти к линейной шкале.
-
-Формула для этого преобразования выглядит следующим образом:
-
-\[ \text{Linear Value} = 10^{\left(\frac{\text{dB Value}}{10}\right)} \]
-
-Таким образом, деление на 10 выполняет первый шаг, переводя значение из децибелов в десятичные децибелы,
- а затем возведение в степень 10 выполняет второй шаг, переводя значение в линейную шкалу.
- Это преобразование позволяет работать с отношением сигнал/шум в линейной форме при моделировании или анализе сигналов и шумов.*/
-
+/*!
+ * \class SNR
+ * \brief Calculates Signal-to-Noise Ratio (SNR) and provides functionality to generate noise based on SNR values.
+ *
+ * The SNR class allows for the calculation of Signal-to-Noise Ratio (SNR) and provides a method to generate
+ * noise based on specified SNR values.
+ */
 class SNR
 {
 public:
+    /*!
+     * \brief Constructor for the SNR class.
+     *
+     * \param snr_dB The Signal-to-Noise Ratio in decibels.
+     * \param noise_dB The noise level in decibels.
+     */
     SNR(double snr_dB, double noise_dB);
 
+    /*!
+     * \brief Getter for the initial SNR value in linear scale.
+     *
+     * \return The initial SNR value in linear scale.
+     */
     [[nodiscard]] inline double getBeginSNRLinear() const { return _snr_linear; }
+    /*!
+     * \brief Get the result SNR value after calculations.
+     *
+     * \return The result SNR value.
+     */
     [[nodiscard]] inline double getResultSNR() const { return _result_snr; }
 
+    /*!
+     * \brief Find the minimum power level required based on modulation speed.
+     *
+     * \param modulation_speed The modulation speed.
+     * \return The minimum power level required.
+     */
     [[nodiscard]] inline double findPmin(int modulation_speed) const;
 
+    /*!
+     * \brief Generate noise based on SNR values.
+     *
+     * \return The generated noise value.
+     */
     [[nodiscard]] inline double generate() const { return _generator->generate(); }
 private:
+    //! The initial SNR value in linear scale.
     double _snr_linear;
+    //! The result SNR value after calculations.
     double _result_snr;
 
+    //! Pointer to the NoiseGenerator instance.
     std::unique_ptr<NoiseGenerator> _generator;
 };
 
