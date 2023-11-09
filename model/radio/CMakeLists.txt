@@ -15,4 +15,4 @@ add_library(
         ${RADIO_SOURCE}
 )
 
-target_link_libraries(Radio FFTW3)
+target_link_libraries(Radio fftw3)
