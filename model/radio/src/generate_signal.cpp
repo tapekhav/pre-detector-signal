@@ -31,3 +31,8 @@ std::vector<bool> SignalGenerator::generateSignal()
     return _modulating_signal;
 }
 
+void SignalGenerator::templateMethod()
+{
+
+}
+

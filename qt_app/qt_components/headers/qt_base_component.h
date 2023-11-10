@@ -1,12 +1,14 @@
 #ifndef PRE_DETECTOR_SIGNAL_BASE_COMPONENT_INTERFACE_H
 #define PRE_DETECTOR_SIGNAL_BASE_COMPONENT_INTERFACE_H
 
+#include <QWidget>
+
 #include <qt_mediator_inteface.h>
 
-class BaseQtComponent
+class QtBaseComponent : public QWidget
 {
 public:
-    explicit BaseQtComponent(std::unique_ptr<IQtMediator>& mediator) : _mediator(std::move(mediator)) {}
+    explicit QtBaseComponent(std::unique_ptr<IQtMediator>& mediator) : _mediator(std::move(mediator)) {}
 
     void setMediator(std::unique_ptr<IQtMediator>& mediator) { _mediator = std::move(mediator); }
 protected:

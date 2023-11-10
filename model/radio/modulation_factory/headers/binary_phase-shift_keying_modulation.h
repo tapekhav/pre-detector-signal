@@ -5,10 +5,10 @@
 
 /*!
  * \class BPSKModulation
- * \brief Modulates binary data using Binary Phase Shift Keying modulation.
+ * \brief Modulates binary data using Binary Phase Shift Keying modulation_factory.
  *
  * The BPSKModulation class implements the IModulation interface and provides functionality for modulating binary
- * data using Binary Phase Shift Keying modulation.
+ * data using Binary Phase Shift Keying modulation_factory.
  */
 class BPSKModulation final : public IModulation<double, bool>
 {
@@ -27,9 +27,9 @@ public:
                             double symbol_duration);
 
     /*!
-     * \brief Modulates binary data using BPSK modulation.
+     * \brief Modulates binary data using BPSK modulation_factory.
      *
-     * The modulation process involves generating BPSK-modulated signals.
+     * The modulation_factory process involves generating BPSK-modulated signals.
      *
      * \param initial_signal The input binary signal to be modulated.
      * \return A vector of modulated signal values.

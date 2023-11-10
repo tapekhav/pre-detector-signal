@@ -12,7 +12,6 @@
 class QtClassMainWindow final : public QMainWindow
 {
 public:
-
     explicit QtClassMainWindow(QWidget *parent = nullptr);
 
     void setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter);

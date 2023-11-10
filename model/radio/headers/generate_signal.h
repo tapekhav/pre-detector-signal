@@ -14,6 +14,8 @@ public:
                              double duration = 2.0,
                              int sample_rate = 100);
 
+    void templateMethod();
+
     std::vector<bool> generateSignal();
 
     inline std::vector<double> modulateSignal() { return _modulation->modulate(generateSignal()); };

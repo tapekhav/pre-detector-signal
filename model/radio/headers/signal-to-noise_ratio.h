@@ -64,9 +64,9 @@ public:
     [[nodiscard]] inline double getResultSNR() const { return _result_snr; }
 
     /*!
-     * \brief Find the minimum power level required based on modulation speed.
+     * \brief Find the minimum power level required based on modulation_factory speed.
      *
-     * \param modulation_speed The modulation speed.
+     * \param modulation_speed The modulation_factory speed.
      * \return The minimum power level required.
      */
     [[nodiscard]] inline double findPmin(int modulation_speed) const;

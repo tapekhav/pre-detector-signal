@@ -4,10 +4,11 @@
 #include <memory>
 
 class QtBaseComponent;
+
 class IQtMediator
 {
 public:
-    virtual void notify(std::unique_ptr<QtBaseComponent> sender) const = 0;
+    virtual void notify(std::unique_ptr<QtBaseComponent> sender, const QString& message) const = 0;
     virtual ~IQtMediator() = default;
 };
 

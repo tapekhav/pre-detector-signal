@@ -3,14 +3,15 @@
 
 #include <QWidget>
 
+#include <qt_base_component.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CoordinateToolTip; }
 QT_END_NAMESPACE
 
-class CoordinateToolTip final : public QWidget {
+class CoordinateToolTip final : public QWidget
+{
     Q_OBJECT
-
 public:
     explicit CoordinateToolTip(QWidget *parent = nullptr);
     ~CoordinateToolTip() final;

@@ -4,7 +4,10 @@
 #include <QWidget>
 #include <QVector>
 #include <QPair>
+
 #include <qcustomplot.h>
+
+#include <qt_base_component.h>
 
 class CoordinateToolTip;
 

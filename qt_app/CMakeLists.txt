@@ -10,6 +10,7 @@ include_directories(
         qt_components/headers
         ${CMAKE_CURRENT_BINARY_DIR}
         ../model/radio/headers
+        ../model/radio/modulation_factory/headers
 )
 
 file(GLOB QT_DEPENDENCIES_HEADERS qt_dependencies/headers/*.h)

@@ -69,6 +69,7 @@ include_directories(
         utilities/plotter
         ${CMAKE_CURRENT_BINARY_DIR}/model
         model/radio/headers
+        model/radio/modulation_factory/headers
         qt_app/qt_components/headers
         qt_app/qt_mediators/headers
         qt_app/qt_dependencies/headers

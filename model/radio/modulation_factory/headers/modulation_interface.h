@@ -5,7 +5,7 @@
 
 /*!
  * \class IModulation
- * \brief Interface for signal modulation.
+ * \brief Interface for signal modulation_factory.
  *
  * The IModulation class represents an interface for modulating an initial signal to produce a modulated signal.
  * It is template class, allowing for flexibility in the types.
@@ -18,7 +18,7 @@ class IModulation
 {
 public:
     /*!
-     * \brief Virtual function to perform signal modulation.
+     * \brief Virtual function to perform signal modulation_factory.
      *
      * This function modulate an initial signal and returning the modulated output.
      *

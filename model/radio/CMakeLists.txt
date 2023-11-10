@@ -4,16 +4,22 @@ find_package(FFTW3 REQUIRED)
 
 include_directories(
         headers
+        modulation_factory/headers
 )
 
 file(GLOB RADIO_HEADERS headers/*.h)
 file(GLOB RADIO_SOURCE src/*.cpp)
 file(GLOB RADIO_TESTS tests/*.cpp)
 
+file(GLOB MODULATION_HEADERS modulation_factory/headers/*.h)
+file(GLOB MODULATION_SRC modulation_factory/src/*.cpp)
+
 add_library(
         Radio STATIC
         ${RADIO_HEADERS}
         ${RADIO_SOURCE}
+        ${MODULATION_HEADERS}
+        ${MODULATION_SRC}
 )
 target_link_libraries(Radio fftw3)
 
