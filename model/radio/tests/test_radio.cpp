@@ -19,7 +19,6 @@ TEST(ModulationAndDemodulation, TestTogether)
 
     for (int i = 0; i < signal.size(); ++i)
     {
-        //std::cout << signal[i] << " " << demodulated[i] << "\n";
         ASSERT_EQ(signal[i], demodulated[i]);
     }
 }

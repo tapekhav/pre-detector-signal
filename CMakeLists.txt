@@ -67,9 +67,11 @@ include_directories(
         ${PROTOBUF_INCLUDE_DIRS}
         utilities/headers
         utilities/plotter
-        qt_app/headers
         ${CMAKE_CURRENT_BINARY_DIR}/model
         model/radio/headers
+        qt_app/qt_components/headers
+        qt_app/qt_mediators/headers
+        qt_app/qt_dependencies/headers
 )
 
 add_executable(

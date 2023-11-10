@@ -1,5 +1,7 @@
 #include <qt_main_window_class.h>
+
 #include <QVBoxLayout>
+
 #include <qcustomplot.h>
 
 QtClassMainWindow::QtClassMainWindow(QWidget *parent) : QMainWindow(parent)
