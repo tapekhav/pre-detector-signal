@@ -7,18 +7,17 @@
 
 #include <library_consts.h>
 
+//! RAII
 class BinaryFileManager
 {
 public:
     explicit BinaryFileManager(const std::string& file_name = "result.txt");
 
-    inline void addSynchronize() { std::bitset<15> syn("111100010011010"); _file << syn.to_string(); }
+    void addSynchronize();
 
     void setStartFrameMarker(size_t number, double time_step);
 
-    inline void writeBitset(const bitset_sequence& number) { std::for_each(number.begin(), number.end(),
-                                                             [&](std::bitset<14> bits) { _file << bits.to_string(); }); }
-
+    void writeBitset(const bitset_sequence& number);
 
     inline ~BinaryFileManager() { _file.close(); }
 private:
