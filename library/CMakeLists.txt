@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-include_directories(encode_data/headers)
-include_directories(files/headers)
-include_directories (encode_data/tests/)
+find_package(spdlog REQUIRED)
+
+include_directories(
+        encode_data/tests
+        encode_data/headers
+        files/headers
+        files/exceptions/headers
+)
 
 file(GLOB ENCODE_DATA_HEADERS encode_data/headers/*.h)
 file(GLOB ENCODE_DATA_SOURCE encode_data/src/*.cpp)
@@ -10,13 +15,24 @@ file(GLOB ENCODE_DATA_SOURCE encode_data/src/*.cpp)
 file(GLOB FILES_HEADERS files/headers/*.h)
 file(GLOB FILES_SOURCE files/src/*.cpp)
 
-add_library(EncodeData ${ENCODE_DATA_HEADERS} ${ENCODE_DATA_SOURCE} ${FILES_HEADERS} ${FILES_SOURCE})
+file(GLOB EXCEPTIONS_HEADERS files/exceptions/headers/*.h)
+file(GLOB EXCEPTIONS_SOURCE files/exceptions/src/*.cpp)
+
+add_library(
+        EncodeData
+        ${ENCODE_DATA_HEADERS}
+        ${ENCODE_DATA_SOURCE}
+        ${FILES_HEADERS}
+        ${FILES_SOURCE}
+        ${EXCEPTIONS_HEADERS}
+        ${EXCEPTIONS_SOURCE}
+)
 
 file(GLOB TESTS encode_data/tests/*.cpp)
 
 find_package(GTest)
 if (${GTest_FOUND})
-    message(STATUS "Starting tests...")
+    message(STATUS "Starting model tests...")
     add_executable(test_encode ${TESTS})
 
     target_link_libraries(test_encode
@@ -33,3 +49,5 @@ if (${GTest_FOUND})
     add_test(NAME ExampleTest COMMAND test_encode)
 
 endif (${GTest_FOUND})
+
+target_link_libraries(EncodeData PRIVATE spdlog::spdlog)

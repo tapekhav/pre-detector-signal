@@ -5,7 +5,7 @@ BinaryFileManager::BinaryFileManager(const std::string &file_name)
 
 void BinaryFileManager::setStartFrameMarker(size_t number, double time_step)
 {
-    std::bitset<11> bits("11111100000");
+    std::bitset<12> bits("111111000000");
     _file << bits.to_string();
 
     std::bitset<8> number_bits_set(number);
