@@ -2,8 +2,6 @@
 #define PRE_DETECTOR_SIGNAL_MODULATION_FACTORY_H
 
 #include <abstract_modulation_factory.h>
-#include <binary_phase-shift_keying_modulation.h>
-#include <binary_phase-shift_keying_demodulation.h>
 
 class BPSKModulationFactory final : public AbstractModulationFactory<double, bool>
 {

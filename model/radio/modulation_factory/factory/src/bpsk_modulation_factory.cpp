@@ -1,5 +1,8 @@
 #include <bpsk_modulation_factory.h>
 
+#include <binary_phase-shift_keying_modulation.h>
+#include <binary_phase-shift_keying_demodulation.h>
+
 BPSKModulationFactory::BPSKModulationFactory(double amplitude,
                                              double sample_rate,
                                              double central_frequency,

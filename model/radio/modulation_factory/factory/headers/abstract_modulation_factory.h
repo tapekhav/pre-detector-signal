@@ -3,11 +3,8 @@
 
 #include <memory>
 
-template<class OutputType, class SignalType>
-class IModulation;
-
-template<class OutputType, class SignalType>
-class IDemodulation;
+#include <modulation_interface.h>
+#include <demodulation_interface.h>
 
 template<class T, class U>
 class AbstractModulationFactory

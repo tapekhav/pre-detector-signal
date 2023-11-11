@@ -9,6 +9,7 @@ include_directories(
         qt_mediators/headers
         qt_components/headers
         ${CMAKE_CURRENT_BINARY_DIR}
+        ../model/headers
         ../model/radio/headers
         ../model/radio/modulation_factory/factory/headers
         ../model/radio/modulation_factory/products/headers
@@ -46,4 +47,6 @@ target_link_libraries(
         Qt5::Widgets
         Qt5::Charts
         Qt5::PrintSupport
+        Radio
+        Model
 )
