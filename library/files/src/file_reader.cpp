@@ -6,6 +6,8 @@
 #include <spdlog/sinks/stdout_sinks.h>
 
 #include <begin_marker_read_error.h>
+#include <information_marker_read_error.h>
+#include <parameter_read_error.h>
 
 FileReader::FileReader(const std::string &file_name)
         : _file(file_name, std::ios::binary),
@@ -25,21 +27,80 @@ bool FileReader::readFrame()
 {
     try
     {
-        std::string begin_marker;
-        _file.read(begin_marker.data(), 12);
+        readBeginningOfFrame();
+        readAllParams();
+    }
+    catch (const BaseException& error)
+    {
+        _logger->error("{}: {}", error.name(),
+                                 error.what());
+        return false;
+    }
 
+    return true;
+}
+
+void FileReader::readAllParams()
+{
+    for (size_t i = 0; i < 10; ++i)
+    {
+        bool was_bitset_read = readParam();
+        if (!was_bitset_read)
+        {
+            _logger->error(file_consts::kLogMap.at(i));
+            throw ParameterReadError();
+        }
+    }
+}
+
+void FileReader::readBeginningOfFrame()
+{
+    readBeginMarker();
+    readInformationAboutFrame();
+}
+
+void FileReader::readBeginMarker() {
+    char buffer[12];
+    _file.read(buffer, 12);
+
+    _char_read += _file.gcount();
+
+    if (_file.fail())
+    {
+        throw BeginMarkerReadError();
+    }
+
+    _current_frame.append(buffer);
+}
+
+void FileReader::readInformationAboutFrame()
+{
+    char buffer[40];
+    _file.read(buffer, 40);
+
+    _char_read += _file.gcount();
+
+    if (_file.fail())
+    {
+        throw InformationMarkerReadError();
+    }
+
+    _current_frame.append(buffer);
+}
+
+bool FileReader::readParam()
+{
+    char buffer[lib_consts::kSizeBitset];
+    for(uint8_t i = 0; i < lib_consts::kNumOfBitset; ++i)
+    {
+        _file.read(buffer, lib_consts::kSizeBitset);
         _char_read += _file.gcount();
 
         if (_file.fail())
         {
-            throw BeginMarkerReadError();
+            return false;
         }
     }
-    catch (const BeginMarkerReadError& begin_marker_read_error)
-    {
-        std::cerr << begin_marker_read_error.name() << ": "
-                  << begin_marker_read_error.what() << '\n';
-    }
 
-    return false;
+    return true;
 }

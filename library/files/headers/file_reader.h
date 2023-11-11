@@ -18,6 +18,16 @@ public:
 
     inline ~FileReader() { _file.close(); }
 private:
+    void readAllParams();
+
+    bool readParam();
+
+    void readBeginningOfFrame();
+
+    void readBeginMarker();
+
+    void readInformationAboutFrame();
+private:
     size_t _char_read;
     std::fstream _file;
     std::string _current_frame;
