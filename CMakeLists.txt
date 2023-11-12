@@ -71,9 +71,9 @@ include_directories(
         model/radio/headers
         model/radio/modulation_factory/factory/headers
         model/radio/modulation_factory/products/headers
-        qt_app/qt_components/headers
-        qt_app/qt_mediators/headers
-        qt_app/qt_dependencies/headers
+        qt_app/qt_plotter_view/qt_components/headers
+        qt_app/qt_plotter_view/qt_mediators/headers
+        qt_app/qt_plotter_view/qt_dependencies/headers
 )
 
 add_executable(

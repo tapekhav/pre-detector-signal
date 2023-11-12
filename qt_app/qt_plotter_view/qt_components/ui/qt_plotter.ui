@@ -43,7 +43,7 @@
          <enum>QLayout::SetMinimumSize</enum>
         </property>
         <item>
-         <widget class="QLineEdit" name="begin_line_edit">
+         <widget class="QLineEdit" name="_begin_line_edit">
           <property name="styleSheet">
            <string notr="true">QLineEdit {
     background-color: #f0f0f0;
@@ -145,7 +145,7 @@ QLineEdit:focus {
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="apply_button">
+       <widget class="QPushButton" name="_apply_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
           <horstretch>0</horstretch>

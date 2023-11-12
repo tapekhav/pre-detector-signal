@@ -29,7 +29,7 @@ namespace file_consts
             {7, "humidity"},
             {8, "board_voltage"},
             {9, "control_voltage"}
-    }
+    };
 }
 
 using bitset_sequence = std::vector<std::bitset<lib_consts::kSizeBitset>>;
