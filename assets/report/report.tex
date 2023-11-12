@@ -1,0 +1,91 @@
+\documentclass[14pt, a4paper]{extarticle}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{ucs} 
+\usepackage{tabto} 
+\usepackage[utf8x]{inputenc}  
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[T1]{fontenc} % only necessary for internationalization
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{amsmath}
+
+\title{Отчет по заданию.}
+\author{Владимир Тапеха.}
+
+\begin{document}
+\maketitle
+
+/*!
+
+1. **АЦП (аналого-цифровое преобразование):**
+   - АЦП преобразует аналоговый сигнал \(x(t)\) в цифровую форму с использованием разрядности \(N\) (в вашем случае, \(N = 16\) бит):
+
+     \[x_{\text{дискр}}[n] = \text{round}\left(\frac{x(t)}{V_{\text{max}}} \cdot (2^N - 1)\right)\]
+
+     Где:
+     - \(x_{\text{дискр}}[n]\) - дискретное значение сигнала после АЦП.
+     - \(n\) - дискретный индекс времени.
+     - \(V_{\text{max}}\) - максимальное (опорное) напряжение АЦП (в вашем случае, \(V_{\text{max}} = 5\) В).
+*/
+
+\newpage
+To demodulate an FM signal with the given formula, you can use the following demodulation approach and then provide C++ code to implement it. The demodulation process involves taking the derivative of the FM signal to obtain the instantaneous frequency and then integrating it to recover the original modulating signal. Here's the formula:
+
+1. Differentiate the FM signal \(s(t)\) to obtain the instantaneous frequency \(f_i(t)\):
+\[f_i(t) = \frac{1}{2\pi} \frac{d}{dt}\left(2\pi f_c t + 2\pi k_f \int_{0}^{t} m(\tau) d\tau\right)\]
+
+2. Integrate \(f_i(t)\) over time to recover the original modulating signal \(m(t)\):
+\[m(t) = \frac{1}{2\pi k_f} \int_{0}^{t} f_i(\tau) d\tau\]
+
+\par % Start a new paragraph
+
+* The general form for BPSK follows the equation:
+
+\[
+s_{n}(t) = \sqrt{\frac{2E_{b}}{T_{b}}} \cos\left(2\pi ft + \pi(1-n)\right), \quad n=0,1
+\]
+
+This yields two phases, 0 and $\pi$. In the specific form, binary data is often conveyed with the following signals:
+
+\[
+s_{0}(t) = \sqrt{\frac{2E_{b}}{T_{b}}} \cos\left(2\pi ft + \pi\right) = -\sqrt{\frac{2E_{b}}{T_{b}}} \cos\left(2\pi ft\right) \quad \text{для бинарного 0}
+\]
+
+\[
+s_{1}(t) = \sqrt{\frac{2E_{b}}{T_{b}}} \cos\left(2\pi ft\right) \quad \text{for binary 1}
+\]
+
+where \( f \) is the frequency of the baseband.
+
+Hence, the signal space can be represented by the single basis function:
+
+\[
+\phi(t) = \sqrt{\frac{2}{T_{b}}} \cos\left(2\pi ft\right)
+\]
+\newpage
+/**
+ * Деление и умножение на 10 используются для преобразования отношения сигнал/шум из децибелов (dB) в линейную шкалу.
+ * В децибелах отношение сигнал/шум (SNR) выражается как логарифмическая величина, и чтобы перейти к линейной шкале,
+ * нужно выполнить следующие операции:
+
+1. Разделить значение в децибелах на 10, чтобы получить отношение в натуральных логарифмах (десятичные децибелы).
+2. Взять экспоненту полученного значения, чтобы перейти к линейной шкале.
+
+Формула для этого преобразования выглядит следующим образом:
+
+\[ \text{Linear Value} = 10^{\left(\frac{\text{dB Value}}{10}\right)} \]
+
+Таким образом, деление на 10 выполняет первый шаг, переводя значение из децибелов в десятичные децибелы,
+ а затем возведение в степень 10 выполняет второй шаг, переводя значение в линейную шкалу.
+ Это преобразование позволяет работать с отношением сигнал/шум в линейной форме при моделировании или анализе сигналов и шумов.*/
+
+
+  
+
+\end{document}

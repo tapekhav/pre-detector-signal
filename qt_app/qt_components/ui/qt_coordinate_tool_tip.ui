@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CoordinateToolTip</class>
+ <widget class="QWidget" name="CoordinateToolTip">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>94</width>
+    <height>60</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CoordinateToolTip</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+	background-color: white;
+    border: 1px solid black;
+	border-radius: 5px;     
+}
+</string>
+  </property>
+  <widget class="QLabel" name="coordinate_label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>80</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

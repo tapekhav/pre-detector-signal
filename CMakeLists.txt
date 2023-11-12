@@ -17,7 +17,7 @@ if (MSVC_VERSION GREATER_EQUAL "1900")
     endif()
 endif()
 
-if (CMAKE_CXX_COMPILER_ID MATCHES " GNU|Clang")
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     #add_compile_options(-Wall -Wextra -Werror -Wpedantic -Wconversion -Wformat -Wunused -Wshadow -Wuninitialized -Wsign-compare)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     add_compile_options(/W4)
@@ -67,19 +67,20 @@ include_directories(
         ${PROTOBUF_INCLUDE_DIRS}
         utilities/headers
         utilities/plotter
-        qt_app/headers
         ${CMAKE_CURRENT_BINARY_DIR}/model
         model/radio/headers
+        model/radio/modulation_factory/factory/headers
+        model/radio/modulation_factory/products/headers
+        qt_app/qt_components/headers
+        qt_app/qt_mediators/headers
+        qt_app/qt_dependencies/headers
 )
-
-link_directories(${GNURADIO_LIBRARY_DIRS})
-
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/model)
 
 add_executable(
         pre-detector-signal
         main.cpp
 )
+
 
 target_link_libraries(
         pre-detector-signal
@@ -91,17 +92,7 @@ target_link_libraries(
         Qt5::Widgets
         Qt5::Charts
         Qt_Plotters
-)
-
-target_link_libraries(
-        pre-detector-signal
-        Model
-        Utility
-        EncodeData
         Radio
-        ${PROTOBUF_LIBRARIES}
-        Qt5::Widgets
-        Qt5::Charts
 )
 
 add_compile_definitions(path_to_config="${CMAKE_CURRENT_SOURCE_DIR}/config.json")

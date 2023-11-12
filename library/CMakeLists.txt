@@ -32,7 +32,7 @@ file(GLOB TESTS encode_data/tests/*.cpp)
 
 find_package(GTest)
 if (${GTest_FOUND})
-    message(STATUS "Starting model tests...")
+    message(STATUS "Starting encode tests...")
     add_executable(test_encode ${TESTS})
 
     target_link_libraries(test_encode
