@@ -84,3 +84,4 @@ TEST(CheckAll, checkAll)
 }
 
 //! 010editor
+//! TODO add tests with parse frame and file reader
