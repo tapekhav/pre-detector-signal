@@ -2,9 +2,9 @@
 
 #include <QLoggingCategory>
 
-SignalController::SignalController(QLineEdit *lineEdit,
-                                   QPushButton *button,
-                                   SignalGenerator *generator,
+SignalController::SignalController(QLineEdit* lineEdit,
+                                   QPushButton* button,
+                                   SignalGenerator generator,
                                    QObject *parent)
                                    : QObject(parent),
                                      _begin_line_edit(lineEdit),

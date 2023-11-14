@@ -8,28 +8,20 @@
 class SignalGenerator
 {
 public:
-    explicit SignalGenerator(double amplitude = 1.0,
-                             double frequency = 1.0,
-                             double phase = 0.0,
-                             double duration = 2.0,
-                             int sample_rate = 100);
+    explicit SignalGenerator(double sample_rate,
+                             const std::vector<double>& modulating_signal,
+                             std::unique_ptr<IModulation<double, bool>>& modulation);
 
-    void templateMethod();
-
-    std::vector<bool> generateSignal();
-
-    inline std::vector<double> modulateSignal() { return _modulation->modulate(generateSignal()); };
+    SignalGenerator(const SignalGenerator& other);
 
     [[nodiscard]] inline std::vector<double> getTimeVector() const { return _time_vector; }
     [[nodiscard]] inline std::vector<bool> getModulatingSignal() const { return _modulating_signal; }
 
-private:
-    double _amplitude;
-    double _frequency;
-    double _phase;
-    double _duration;
-    int _sample_rate;
+    inline std::vector<double> modulateSignal() { return _modulation->modulate(getModulatingSignal()); };
 
+    void tryToSetModulation(const std::unique_ptr<IModulation<double, bool>>& other_modulation);
+
+private:
     std::vector<double> _time_vector;
     std::vector<bool> _modulating_signal;
 

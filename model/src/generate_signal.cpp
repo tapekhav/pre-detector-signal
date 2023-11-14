@@ -1,38 +1,47 @@
 #include <generate_signal.h>
+
+#include <map>
 #include <cmath>
+#include <typeindex>
+#include <functional>
 
-
-SignalGenerator::SignalGenerator(double amplitude,
-                                   double frequency,
-                                   double phase,
-                                   double duration,
-                                   int sample_rate)
-                                    : _amplitude(amplitude),
-                                    _frequency(frequency),
-                                    _phase(phase),
-                                    _duration(duration),
-                                    _sample_rate(sample_rate),
-                                    _modulation(std::make_unique<BPSKModulation>(_amplitude,
-                                                                                 _sample_rate,
-                                                                                 _frequency,
-                                                                                 _duration)){}
-
-std::vector<bool> SignalGenerator::generateSignal()
+/*
+static const std::map<std::type_index, std::function<void(IModulation<double, bool>*)>> type_map =
 {
-    int num_samples = static_cast<int>(_duration * _sample_rate);
+        { std::type_index(typeid(BPSKModulation)), [](std::unique_ptr<IModulation<double, bool> modulation)
+            {
+                modulation = dynamic_cast<BPSKModulation*>(modulation);
+            }
+        }
+}; */
 
-    for (int i = 0; i < num_samples; i++)
+SignalGenerator::SignalGenerator(double sample_rate,
+                                 const std::vector<double>& modulating_signal,
+                                 std::unique_ptr<IModulation<double, bool>>& modulation)
+                                 : _modulation(std::move(modulation))
+{
+    for (size_t i = 0; i < modulating_signal.size(); ++i)
     {
-        double time = static_cast<double>(i) / _sample_rate;
-        _time_vector.push_back(time);
-        _modulating_signal.push_back(static_cast<bool>(_amplitude * std::sin(2.0 * M_PI * _frequency * time + _phase)));
+        _time_vector.push_back(static_cast<double>(i) / sample_rate);
     }
-
-    return _modulating_signal;
 }
 
-void SignalGenerator::templateMethod()
+void SignalGenerator::tryToSetModulation(const std::unique_ptr<IModulation<double, bool>>& other_modulation)
 {
+    if (auto modulation = dynamic_cast<BPSKModulation*>(other_modulation.get()))
+    {
+        _modulation = std::make_unique<BPSKModulation>(*modulation);
+    }
+    else
+    {
+        // some logic
+    }
+}
 
+SignalGenerator::SignalGenerator(const SignalGenerator &other)
+{
+    _time_vector = other._time_vector;
+    _modulating_signal = other._modulating_signal;
+    tryToSetModulation(other._modulation);
 }
 
