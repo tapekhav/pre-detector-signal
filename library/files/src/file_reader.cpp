@@ -32,8 +32,8 @@ bool FileReader::readFrame()
     }
     catch (const BaseException& error)
     {
-        _logger->error("{}: {}", error.name(),
-                                 error.what());
+        _logger->error("{}: {}(error while reading)", error.name(),
+                                                      error.what());
         return false;
     }
 
@@ -47,7 +47,7 @@ void FileReader::readAllParams()
         bool was_bitset_read = readParam();
         if (!was_bitset_read)
         {
-            _logger->error(file_consts::kLogMap.at(i));
+            _logger->error(model_consts::kLogMap.at(i));
             throw ParameterReadError();
         }
     }
@@ -75,8 +75,8 @@ void FileReader::readBeginMarker() {
 
 void FileReader::readInformationAboutFrame()
 {
-    char buffer[40];
-    _file.read(buffer, 40);
+    char buffer[64];
+    _file.read(buffer, 64);
 
     _char_read += _file.gcount();
 

@@ -15,7 +15,7 @@ namespace lib_consts
     const size_t kNumOfBitset = 4;
 }
 
-namespace file_consts
+namespace model_consts
 {
     const std::map<size_t, std::string> kLogMap =
     {

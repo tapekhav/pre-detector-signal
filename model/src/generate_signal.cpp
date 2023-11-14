@@ -1,8 +1,6 @@
 #include <generate_signal.h>
 
 #include <map>
-#include <cmath>
-#include <typeindex>
 #include <functional>
 
 /*

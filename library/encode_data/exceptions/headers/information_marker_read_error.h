@@ -6,7 +6,7 @@
 class InformationMarkerReadError final : public BaseException
 {
 public:
-    [[nodiscard]] inline const char* name() const noexcept { return "InformationMarkerReadError"; }
+    [[nodiscard]] inline const char* name() const noexcept final { return "InformationMarkerReadError"; }
     [[nodiscard]] inline const char* what() const noexcept final { return "Failed to read the information about marker"; }
 
     ~InformationMarkerReadError() noexcept final = default;

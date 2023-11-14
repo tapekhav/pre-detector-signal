@@ -6,7 +6,7 @@
 class ParameterReadError final : public BaseException
 {
 public:
-    [[nodiscard]] inline const char* name() const noexcept { return "ParameterReadError"; }
+    [[nodiscard]] inline const char* name() const noexcept final { return "ParameterReadError"; }
     [[nodiscard]] inline const char* what() const noexcept final { return "Failed to read parameter"; }
 
     ~ParameterReadError() noexcept final = default;

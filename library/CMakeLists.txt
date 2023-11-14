@@ -6,7 +6,7 @@ include_directories(
         encode_data/tests
         encode_data/headers
         files/headers
-        files/exceptions/headers
+        encode_data/exceptions/headers
 )
 
 file(GLOB ENCODE_DATA_HEADERS encode_data/headers/*.h)
@@ -15,8 +15,8 @@ file(GLOB ENCODE_DATA_SOURCE encode_data/src/*.cpp)
 file(GLOB FILES_HEADERS files/headers/*.h)
 file(GLOB FILES_SOURCE files/src/*.cpp)
 
-file(GLOB EXCEPTIONS_HEADERS files/exceptions/headers/*.h)
-file(GLOB EXCEPTIONS_SOURCE files/exceptions/src/*.cpp)
+file(GLOB EXCEPTIONS_HEADERS encode_data/exceptions/headers/*.h)
+file(GLOB EXCEPTIONS_SOURCE encode_data/exceptions/src/*.cpp)
 
 add_library(
         EncodeData

@@ -6,7 +6,7 @@
 class BeginMarkerReadError final : public BaseException
 {
 public:
-    [[nodiscard]] inline const char* name() const noexcept { return "BeginMarkerReadError"; }
+    [[nodiscard]] inline const char* name() const noexcept final { return "BeginMarkerReadError"; }
     [[nodiscard]] inline const char* what() const noexcept final { return "Failed to read the begin marker"; }
 
     ~BeginMarkerReadError() noexcept final = default;

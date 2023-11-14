@@ -6,7 +6,7 @@
 class BaseException : public std::exception
 {
 public:
-    virtual const char* name() const noexcept { return "BaseException"; }
+    [[nodiscard]] virtual const char* name() const noexcept { return "BaseException"; }
     [[nodiscard]] const char* what() const noexcept override { return "Something wrong"; }
 
     ~BaseException() noexcept override = default;
