@@ -10,7 +10,7 @@
 #include <parameter_read_error.h>
 
 FileReader::FileReader(const std::string &file_name)
-        : _file(file_name, std::ios::binary),
+        : _file(file_name),
           _char_read(0)
 {
     assert(_file.is_open());
@@ -44,6 +44,7 @@ void FileReader::readAllParams()
 {
     for (size_t i = 0; i < 10; ++i)
     {
+        readSync();
         bool was_bitset_read = readParam();
         if (!was_bitset_read)
         {
@@ -60,10 +61,11 @@ void FileReader::readBeginningOfFrame()
 }
 
 void FileReader::readBeginMarker() {
-    char buffer[12];
+    char buffer[13];
     _file.read(buffer, 12);
+    buffer[12] = '\0';
 
-    _char_read += _file.gcount();
+    _char_read += 12;
 
     if (_file.fail())
     {
@@ -75,8 +77,10 @@ void FileReader::readBeginMarker() {
 
 void FileReader::readInformationAboutFrame()
 {
-    char buffer[64];
-    _file.read(buffer, 64);
+    char buf[97];
+    _file.read(buf, 96);
+
+    buf[96] = '\0';
 
     _char_read += _file.gcount();
 
@@ -85,7 +89,7 @@ void FileReader::readInformationAboutFrame()
         throw InformationMarkerReadError();
     }
 
-    _current_frame.append(buffer);
+    _current_frame.append(buf);
 }
 
 bool FileReader::readParam()
@@ -94,13 +98,32 @@ bool FileReader::readParam()
     for(uint8_t i = 0; i < lib_consts::kNumOfBitset; ++i)
     {
         _file.read(buffer, lib_consts::kSizeBitset);
-        _char_read += _file.gcount();
 
         if (_file.fail())
         {
             return false;
         }
+
+        _char_read += lib_consts::kSizeBitset;
+        _current_frame.append(buffer);
     }
 
     return true;
+}
+
+void FileReader::readSync()
+{
+    char buffer[16];
+    _file.read(buffer, 15);
+    buffer[15] = '\0';
+
+    _char_read += 15;
+
+    if (_file.fail())
+    {
+        _logger->error("problem with sync");
+        throw ParameterReadError();
+    }
+
+    _current_frame.append(buffer);
 }

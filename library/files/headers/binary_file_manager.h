@@ -19,7 +19,7 @@ public:
 
     void writeBitset(const bitset_sequence& number);
 
-    inline ~BinaryFileManager() { _file.close(); }
+    ~BinaryFileManager();
 private:
     std::ofstream _file;
 };

@@ -16,9 +16,13 @@ public:
 
     bool readFrame();
 
+    [[nodiscard]] std::string getCurrentFrameInfo() const { return _current_frame; }
+
     inline ~FileReader() { _file.close(); }
 private:
     void readAllParams();
+
+    void readSync();
 
     bool readParam();
 
