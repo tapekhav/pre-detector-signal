@@ -21,7 +21,7 @@ public:
 
     void tryToParseBeginMarker();
 
-    void tryToParseParameter(bool time);
+    double tryToParseParameter();
 
     void tryToParseSync();
 

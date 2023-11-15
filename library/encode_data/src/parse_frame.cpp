@@ -62,7 +62,12 @@ void ParseFrame::tryToParseBeginMarker()
     _number_frame = current_number;
     _current_sym += 32;
 
-    tryToParseParameter(true);
+    _time = tryToParseParameter();
+
+    if (static_cast<double>(_number_frame) * _sample_step != _time)
+    {
+        throw BeginMarkerReadError();
+    }
 }
 
 void ParseFrame::tryToParseSync()
@@ -77,9 +82,8 @@ void ParseFrame::tryToParseSync()
     _current_sym += 15;
 }
 
-void ParseFrame::tryToParseParameter(bool time)
+double ParseFrame::tryToParseParameter()
 {
-    //! TODO чекать, что все ок со структурой параметра
     bitset_sequence param_number;
     for (size_t i = 0; i < 4; ++i)
     {
@@ -88,17 +92,7 @@ void ParseFrame::tryToParseParameter(bool time)
         _current_sym += 14;
     }
 
-    DecodeData data(param_number);
-
-    //! хуета
-    if (!time)
-    {
-        _params.push_back(data.execute());
-    }
-    else
-    {
-        _time = data.execute();
-    }
+    return DecodeData(param_number).execute();
 }
 
 void ParseFrame::tryToParseAllParams()
@@ -106,6 +100,6 @@ void ParseFrame::tryToParseAllParams()
     for (size_t i = 0; i < 10; ++i)
     {
         tryToParseSync();
-        tryToParseParameter(false);
+        _params.push_back(tryToParseParameter());
     }
 }

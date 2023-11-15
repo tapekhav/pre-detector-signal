@@ -7,17 +7,14 @@ BinaryFileManager::BinaryFileManager(const std::string &file_name)
     assert(_file.is_open());
 }
 
-void BinaryFileManager::setStartFrameMarker(size_t number, double time_step)
+void BinaryFileManager::setStartFrameMarker(size_t number, const bitset_sequence& time_step)
 {
     _file << "111111000000";
 
     std::bitset<32> number_bits_set(number);
-
     _file << number_bits_set;
 
-    //! TODO костыль(хуета) ну да бля реально же хуетень
-    auto num = EncodeData(time_step).execute();
-    writeBitset(num);
+    writeBitset(time_step);
 }
 
 void BinaryFileManager::writeBitset(const bitset_sequence &number)

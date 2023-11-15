@@ -15,7 +15,7 @@ public:
 
     void addSynchronize();
 
-    void setStartFrameMarker(size_t number, double time_step);
+    void setStartFrameMarker(size_t number, const bitset_sequence& time_step);
 
     void writeBitset(const bitset_sequence& number);
 
