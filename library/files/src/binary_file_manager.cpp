@@ -1,4 +1,5 @@
 #include <binary_file_manager.h>
+#include <full_encode_number.h>
 
 BinaryFileManager::BinaryFileManager(const std::string &file_name)
                                      : _file(file_name)
@@ -12,9 +13,11 @@ void BinaryFileManager::setStartFrameMarker(size_t number, double time_step)
 
     std::bitset<32> number_bits_set(number);
 
-    std::bitset<64> time_step_bits_set(*reinterpret_cast<uint32_t*>(&time_step));
+    _file << number_bits_set;
 
-    _file << number_bits_set << time_step_bits_set;
+    //! TODO костыль(хуета) ну да бля реально же хуетень
+    auto num = EncodeData(time_step).execute();
+    writeBitset(num);
 }
 
 void BinaryFileManager::writeBitset(const bitset_sequence &number)

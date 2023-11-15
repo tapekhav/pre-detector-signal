@@ -75,12 +75,13 @@ void FileReader::readBeginMarker() {
     _current_frame.append(buffer);
 }
 
+//! TODO мрак
 void FileReader::readInformationAboutFrame()
 {
-    char buf[97];
-    _file.read(buf, 96);
+    char buf[33];
+    _file.read(buf, 32);
 
-    buf[96] = '\0';
+    buf[32] = '\0';
 
     _char_read += _file.gcount();
 
@@ -90,6 +91,8 @@ void FileReader::readInformationAboutFrame()
     }
 
     _current_frame.append(buf);
+
+    readParam();
 }
 
 bool FileReader::readParam()

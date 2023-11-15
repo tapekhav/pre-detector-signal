@@ -10,10 +10,8 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_sinks.h>
 
-ParseFrame::ParseFrame(double sample_step,
-                       std::string frame)
-                       : _frame(std::move(frame)),
-                         _sample_step(sample_step),
+ParseFrame::ParseFrame(double sample_step)
+                       : _sample_step(sample_step),
                          _current_sym(0),
                          _time(0),
                          _number_frame(0)
@@ -26,8 +24,10 @@ ParseFrame::ParseFrame(double sample_step,
                                                                         console_logger->sinks().front()}));
 }
 
-bool ParseFrame::tryToParseFrame()
+bool ParseFrame::tryToParseFrame(std::string frame)
 {
+    _frame = std::move(frame);
+
     try
     {
         tryToParseBeginMarker();
@@ -62,30 +62,23 @@ void ParseFrame::tryToParseBeginMarker()
     _number_frame = current_number;
     _current_sym += 32;
 
-    std::bitset<32> step(_frame.substr(_current_sym, 32));
-
-    float time;
-    std::memcpy(&time, &step, sizeof(float));
-
-    if (_sample_step * static_cast<double>(_number_frame) != time)
-    {
-        throw BeginMarkerReadError();
-    }
-
-    _time = static_cast<double>(time);
-    _current_sym += 32;
+    tryToParseParameter(true);
 }
 
-void ParseFrame::tryToParseParameter()
+void ParseFrame::tryToParseSync()
 {
     std::string sync_param("111100010011010");
     if (_frame.compare(_current_sym, 15, sync_param))
     {
+        _logger->error("problem with sync");
         throw ParameterReadError();
     }
 
     _current_sym += 15;
+}
 
+void ParseFrame::tryToParseParameter(bool time)
+{
     //! TODO чекать, что все ок со структурой параметра
     bitset_sequence param_number;
     for (size_t i = 0; i < 4; ++i)
@@ -96,13 +89,23 @@ void ParseFrame::tryToParseParameter()
     }
 
     DecodeData data(param_number);
-    _params.push_back(data.execute());
+
+    //! хуета
+    if (!time)
+    {
+        _params.push_back(data.execute());
+    }
+    else
+    {
+        _time = data.execute();
+    }
 }
 
 void ParseFrame::tryToParseAllParams()
 {
     for (size_t i = 0; i < 10; ++i)
     {
-        tryToParseParameter();
+        tryToParseSync();
+        tryToParseParameter(false);
     }
 }

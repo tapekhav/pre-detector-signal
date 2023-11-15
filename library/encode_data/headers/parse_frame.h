@@ -15,14 +15,15 @@ namespace spdlog
 class ParseFrame
 {
 public:
-    ParseFrame(double sample_step,
-               std::string frame);
+    explicit ParseFrame(double sample_step);
 
-    bool tryToParseFrame();
+    bool tryToParseFrame(std::string frame);
 
     void tryToParseBeginMarker();
 
-    void tryToParseParameter();
+    void tryToParseParameter(bool time);
+
+    void tryToParseSync();
 
     void tryToParseAllParams();
 
