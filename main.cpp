@@ -1,4 +1,3 @@
-#include <encode_word.h>
 #include <bitset_to_double.h>
 #include <full_encode_number.h>
 #include <model_generator.h>
@@ -44,7 +43,7 @@ private:
         auto end = static_cast<size_t>(_time_interval.end / _time_interval.step);
         for (size_t i = 0; i < end; ++i)
         {
-            _manager.setStartFrameMarker(i, 0.5);
+            _manager.setStartFrameMarker(i, EncodeData(0.5).execute());
             for (size_t j = 0; j < model_list.size(); ++j)
             {
                 writeParam(*(model_list.begin() + j));

@@ -45,14 +45,14 @@ bool ParseFrame::tryToParseFrame(std::string frame)
 
 void ParseFrame::tryToParseBeginMarker()
 {
-    std::string begin_marker("111111000000");
-    if (_frame.compare(_current_sym, 12, begin_marker))
+    std::string begin_marker(markers::kBeginMarker);
+    if (_frame.compare(_current_sym, param_consts::kSizeInfoBits, begin_marker))
     {
         throw BeginMarkerReadError();
     }
-    _current_sym += 12;
+    _current_sym += param_consts::kSizeInfoBits;
 
-    std::bitset<32> number(_frame.substr(_current_sym, 32));
+    std::bitset<param_consts::kSizeInt> number(_frame.substr(_current_sym, param_consts::kSizeInt));
     auto current_number = number.to_ulong();
     if (current_number != _number_frame + 1)
     {
@@ -60,7 +60,7 @@ void ParseFrame::tryToParseBeginMarker()
     }
 
     _number_frame = current_number;
-    _current_sym += 32;
+    _current_sym += param_consts::kSizeInt;
 
     _time = tryToParseParameter();
 
@@ -72,8 +72,8 @@ void ParseFrame::tryToParseBeginMarker()
 
 void ParseFrame::tryToParseSync()
 {
-    std::string sync_param("111100010011010");
-    if (_frame.compare(_current_sym, 15, sync_param))
+    std::string sync_param(markers::kSyncMarker);
+    if (_frame.compare(_current_sym, param_consts::kSizeOfSync, sync_param))
     {
         _logger->error("problem with sync");
         throw ParameterReadError();
@@ -85,11 +85,11 @@ void ParseFrame::tryToParseSync()
 double ParseFrame::tryToParseParameter()
 {
     bitset_sequence param_number;
-    for (size_t i = 0; i < 4; ++i)
+    for (size_t i = 0; i < param_consts::kNumOfBitset; ++i)
     {
-        std::string param_data = _frame.substr(_current_sym, 14);
+        std::string param_data = _frame.substr(_current_sym, param_consts::kSizeBitset);
         param_number.emplace_back(param_data);
-        _current_sym += 14;
+        _current_sym += param_consts::kSizeBitset;
     }
 
     return DecodeData(param_number).execute();
@@ -97,7 +97,7 @@ double ParseFrame::tryToParseParameter()
 
 void ParseFrame::tryToParseAllParams()
 {
-    for (size_t i = 0; i < 10; ++i)
+    for (size_t i = 0; i < model_consts::kNumParams; ++i)
     {
         tryToParseSync();
         _params.push_back(tryToParseParameter());

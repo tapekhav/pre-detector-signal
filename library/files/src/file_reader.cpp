@@ -33,7 +33,7 @@ bool FileReader::readFrame()
     catch (const BaseException& error)
     {
         _logger->error("{}: {}(error while reading)", error.name(),
-                                                      error.what());
+                       error.what());
         return false;
     }
 
@@ -42,7 +42,7 @@ bool FileReader::readFrame()
 
 void FileReader::readAllParams()
 {
-    for (size_t i = 0; i < 10; ++i)
+    for (size_t i = 0; i < model_consts::kNumParams; ++i)
     {
         readSync();
         bool was_bitset_read = readParam();
@@ -61,11 +61,11 @@ void FileReader::readBeginningOfFrame()
 }
 
 void FileReader::readBeginMarker() {
-    char buffer[13];
-    _file.read(buffer, 12);
-    buffer[12] = '\0';
+    char buffer[param_consts::kSizeInfoBits + 1];
+    _file.read(buffer, param_consts::kSizeInfoBits);
+    buffer[param_consts::kSizeInfoBits] = '\0';
 
-    _char_read += 12;
+    _char_read += param_consts::kSizeInfoBits;
 
     if (_file.fail())
     {
@@ -75,13 +75,12 @@ void FileReader::readBeginMarker() {
     _current_frame.append(buffer);
 }
 
-//! TODO мрак
 void FileReader::readInformationAboutFrame()
 {
-    char buf[33];
-    _file.read(buf, 32);
+    char buf[param_consts::kSizeInt + 1];
+    _file.read(buf, param_consts::kSizeInt);
 
-    buf[32] = '\0';
+    buf[param_consts::kSizeInt] = '\0';
 
     _char_read += _file.gcount();
 
@@ -97,17 +96,17 @@ void FileReader::readInformationAboutFrame()
 
 bool FileReader::readParam()
 {
-    char buffer[lib_consts::kSizeBitset];
-    for(uint8_t i = 0; i < lib_consts::kNumOfBitset; ++i)
+    char buffer[param_consts::kSizeBitset];
+    for(uint8_t i = 0; i < param_consts::kNumOfBitset; ++i)
     {
-        _file.read(buffer, lib_consts::kSizeBitset);
+        _file.read(buffer, param_consts::kSizeBitset);
 
         if (_file.fail())
         {
             return false;
         }
 
-        _char_read += lib_consts::kSizeBitset;
+        _char_read += param_consts::kSizeBitset;
         _current_frame.append(buffer);
     }
 
@@ -116,11 +115,11 @@ bool FileReader::readParam()
 
 void FileReader::readSync()
 {
-    char buffer[16];
-    _file.read(buffer, 15);
-    buffer[15] = '\0';
+    char buffer[param_consts::kSizeOfSync + 1];
+    _file.read(buffer, param_consts::kSizeOfSync);
+    buffer[param_consts::kSizeOfSync] = '\0';
 
-    _char_read += 15;
+    _char_read += param_consts::kSizeOfSync;
 
     if (_file.fail())
     {

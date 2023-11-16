@@ -36,8 +36,8 @@ private:
      * \param value The bitset containing the value to be set(for filling information_bitset).
      * \param offset The offset in the bitset sequence.
      */
-    void setValueFromSequence(std::bitset<lib_consts::kSizeDouble>& information_bitset,
-                              std::bitset<lib_consts::kSizeBitset> value,
+    void setValueFromSequence(std::bitset<param_consts::kSizeDouble>& information_bitset,
+                              std::bitset<param_consts::kSizeBitset> value,
                               size_t& offset) const;
 private:
     //! The bitset sequence to be converted.

@@ -62,7 +62,8 @@ add_subdirectory(qt_app)
 include_directories(
         headers
         model/headers
-        library/encode_data/headers
+        library/encode_data/utilities/headers
+        library/encode_data/encryption/headers
         library/files/headers
         ${PROTOBUF_INCLUDE_DIRS}
         utilities/headers

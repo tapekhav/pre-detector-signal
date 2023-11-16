@@ -9,9 +9,9 @@ BinaryFileManager::BinaryFileManager(const std::string &file_name)
 
 void BinaryFileManager::setStartFrameMarker(size_t number, const bitset_sequence& time_step)
 {
-    _file << "111111000000";
+    _file << markers::kBeginMarker;
 
-    std::bitset<32> number_bits_set(number);
+    std::bitset<param_consts::kSizeInt> number_bits_set(number);
     _file << number_bits_set;
 
     writeBitset(time_step);
@@ -19,12 +19,12 @@ void BinaryFileManager::setStartFrameMarker(size_t number, const bitset_sequence
 
 void BinaryFileManager::writeBitset(const bitset_sequence &number)
 {
-    std::for_each(number.begin(), number.end(), [&](std::bitset<14> bits) { _file << bits.to_string(); });
+    std::for_each(number.begin(), number.end(), [&](std::bitset<param_consts::kSizeBitset> bits) { _file << bits.to_string(); });
 }
 
 void BinaryFileManager::addSynchronize()
 {
-    _file << "111100010011010";
+    _file << markers::kSyncMarker;
 }
 
 BinaryFileManager::~BinaryFileManager()

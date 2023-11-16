@@ -563,7 +563,7 @@ NLOHMANN_JSON_NAMESPACE_END
     ( \
       defined(__TMS470__) || defined(__TI_ARM__) || \
       defined(__MSP430__) || \
-      defined(__TMS320C2000__) \
+      defined(__TMS0C2000__) \
     )
 #if (__TI_COMPILER_VERSION__ >= 16000000)
     #define JSON_HEDLEY_TI_VERSION JSON_HEDLEY_VERSION_ENCODE(__TI_COMPILER_VERSION__ / 1000000, (__TI_COMPILER_VERSION__ % 1000000) / 1000, (__TI_COMPILER_VERSION__ % 1000))
@@ -582,7 +582,7 @@ NLOHMANN_JSON_NAMESPACE_END
 #if defined(JSON_HEDLEY_TI_CL2000_VERSION)
     #undef JSON_HEDLEY_TI_CL2000_VERSION
 #endif
-#if defined(__TI_COMPILER_VERSION__) && defined(__TMS320C2000__)
+#if defined(__TI_COMPILER_VERSION__) && defined(__TMS0C2000__)
     #define JSON_HEDLEY_TI_CL2000_VERSION JSON_HEDLEY_VERSION_ENCODE(__TI_COMPILER_VERSION__ / 1000000, (__TI_COMPILER_VERSION__ % 1000000) / 1000, (__TI_COMPILER_VERSION__ % 1000))
 #endif
 
@@ -630,7 +630,7 @@ NLOHMANN_JSON_NAMESPACE_END
 #if defined(JSON_HEDLEY_TI_CL6X_VERSION)
     #undef JSON_HEDLEY_TI_CL6X_VERSION
 #endif
-#if defined(__TI_COMPILER_VERSION__) && defined(__TMS320C6X__)
+#if defined(__TI_COMPILER_VERSION__) && defined(__TMS0C6X__)
     #define JSON_HEDLEY_TI_CL6X_VERSION JSON_HEDLEY_VERSION_ENCODE(__TI_COMPILER_VERSION__ / 1000000, (__TI_COMPILER_VERSION__ % 1000000) / 1000, (__TI_COMPILER_VERSION__ % 1000))
 #endif
 
@@ -1610,9 +1610,9 @@ JSON_HEDLEY_DIAGNOSTIC_POP
 #if defined(JSON_HEDLEY_PRINTF_FORMAT)
     #undef JSON_HEDLEY_PRINTF_FORMAT
 #endif
-#if defined(__MINGW32__) && JSON_HEDLEY_GCC_HAS_ATTRIBUTE(format,4,4,0) && !defined(__USE_MINGW_ANSI_STDIO)
+#if defined(__MINGW__) && JSON_HEDLEY_GCC_HAS_ATTRIBUTE(format,4,4,0) && !defined(__USE_MINGW_ANSI_STDIO)
     #define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(ms_printf, string_idx, first_to_check)))
-#elif defined(__MINGW32__) && JSON_HEDLEY_GCC_HAS_ATTRIBUTE(format,4,4,0) && defined(__USE_MINGW_ANSI_STDIO)
+#elif defined(__MINGW__) && JSON_HEDLEY_GCC_HAS_ATTRIBUTE(format,4,4,0) && defined(__USE_MINGW_ANSI_STDIO)
     #define JSON_HEDLEY_PRINTF_FORMAT(string_idx,first_to_check) __attribute__((__format__(gnu_printf, string_idx, first_to_check)))
 #elif \
     JSON_HEDLEY_HAS_ATTRIBUTE(format) || \

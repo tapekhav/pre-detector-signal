@@ -6,17 +6,39 @@
 #include <bitset>
 #include <map>
 
-namespace lib_consts
+/*!
+ * \namespace param_consts
+ * \brief Namespace containing constants related to bitset sizes and data representation.
+ */
+namespace param_consts
 {
     const size_t kSizeBitset = 14;
     const size_t kSizeInfoBits = 12;
     const size_t kSizeDouble = 64;
     const size_t kSizeAllInfo = 48;
     const size_t kNumOfBitset = 4;
+    const size_t kSizeOfSync = 15;
+    const size_t kNumOfBits = 8;
+    const size_t kSizeInt = sizeof(int) * kNumOfBits;
 }
 
+/*!
+ * \namespace markers
+ * \brief Namespace containing constants related to markers.
+ */
+namespace markers
+{
+    const std::string kBeginMarker = "111111000000";
+    const std::string kSyncMarker = "111100010011010";
+}
+
+/*!
+ * \namespace model_consts
+ * \brief Namespace containing constants related to model logging.
+ */
 namespace model_consts
 {
+    const size_t kNumParams = 10;
     const std::map<size_t, std::string> kLogMap =
     {
             {0, "temperature"},
@@ -32,6 +54,7 @@ namespace model_consts
     };
 }
 
-using bitset_sequence = std::vector<std::bitset<lib_consts::kSizeBitset>>;
+//! \typedef Type alias for a sequence of bitsets used throughout the library.
+using bitset_sequence = std::vector<std::bitset<param_consts::kSizeBitset>>;
 
 #endif //PRE_DETECTOR_SIGNAL_LIBRARY_CONSTS_H
