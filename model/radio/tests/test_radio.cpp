@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <binary_phase-shift_keying_modulation.h>
 #include <binary_phase-shift_keying_demodulation.h>
 

@@ -24,8 +24,9 @@ class ModelGenerator
 {
 public:
     //! Constructor
-    explicit ModelGenerator(Model model) : _initial_model(std::move(model)), _plotter(std::make_unique<Plotter>(plt_dir)),
-                                                                             _meters_plotter(std::make_unique<Plotter>(plt)) {}
+    explicit ModelGenerator(Model model);
+
+
     //! Generate signals of model in time interval
     std::vector<Model> generateModel(Interval time_interval);
 private:
@@ -46,7 +47,9 @@ private:
     std::function<Params*(double, const Coordinates&)> _motion_formula;
     std::function<double(double)> _atmosphere_formula;
     std::function<double(double)> _humidity_formula;
-    std::function<double(double, double)> _voltage_formula;
+    std::function<double(double)> _friis_formula;
+
+    std::function<double(const Coordinates&)> _distance_formula;
 };
 
 

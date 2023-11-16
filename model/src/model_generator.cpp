@@ -3,6 +3,23 @@
 #include <complex>
 
 #include <consts.h>
+#include <antenna_signal_strength.h>
+
+ModelGenerator::ModelGenerator(Model model)
+        : _initial_model(std::move(model)),
+          _plotter(std::make_unique<Plotter>(plt_dir)),
+          _meters_plotter(std::make_unique<Plotter>(plt))
+{
+    _distance_formula = [this](const Coordinates& current_coordinates)
+    {
+        const auto& first = current_coordinates;
+        auto second = _initial_model.wgs().coordinates();
+
+        return std::sqrt((first.x() - second.x()) * (first.x() - second.x()) +
+                         (first.y() - second.y()) * (first.y() - second.y()) +
+                         (first.z() - second.z()) * (first.z() - second.z()));
+    };
+}
 
 std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
 {
@@ -23,7 +40,7 @@ std::vector<Model> ModelGenerator::generateModel(Interval time_interval)
         auto h = model.wgs().coordinates().z();
         model.set_temperature(_atmosphere_formula(h));
         model.set_humidity(_humidity_formula(h));
-        model.set_board_voltage(_voltage_formula(model.temperature(), i));
+        model.set_board_voltage(_friis_formula(_distance_formula(model.wgs().coordinates())));
 
         result.push_back(model);
     }
@@ -101,8 +118,8 @@ void ModelGenerator::setMotionFormula()
 
 double ModelGenerator::getRadius(double lat_rad)
 {
-    double numerator = (consts::physics::k_major_axis * consts::physics::k_major_axis * cos(lat_rad) * cos(lat_rad)) +
-                       (consts::physics::k_minor_axis * consts::physics::k_minor_axis * sin(lat_rad) * sin(lat_rad));
+    double numerator = (consts::physics::kMajorAxis * consts::physics::kMajorAxis * cos(lat_rad) * cos(lat_rad)) +
+                       (consts::physics::kMinorAxis * consts::physics::kMinorAxis * sin(lat_rad) * sin(lat_rad));
     double denominator = (cos(lat_rad) * cos(lat_rad)) + (sin(lat_rad) * sin(lat_rad));
 
     return sqrt(numerator / denominator);
@@ -126,9 +143,15 @@ void ModelGenerator::setHumidityFormula()
 
 void ModelGenerator::setBoardVoltage()
 {
-    _voltage_formula = [=](double temperature, double time_point)
+    _friis_formula = [=](double distance)
     {
-        return _initial_model.board_voltage() + consts::physics::TCV * (temperature - _initial_model.temperature())
-                                              + consts::physics::TC_t * time_point;
+        SignalStrength friis_formula(
+                1,
+                10,
+                3000,
+                consts::radio::kCentralFrequency
+        );
+
+        return friis_formula.getPowerReceiving(distance);
     };
 }

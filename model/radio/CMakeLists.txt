@@ -4,6 +4,7 @@ find_package(FFTW3 REQUIRED)
 
 include_directories(
         headers
+        ../../utilities/headers
         modulation_factory/factory/headers
         modulation_factory/products/headers
 )
@@ -27,7 +28,7 @@ add_library(
         ${PRODUCTS_HEADERS}
         ${PRODUCTS_SRC}
 )
-target_link_libraries(Radio fftw3)
+target_link_libraries(Radio Utilities fftw3)
 
 find_package(GTest)
 if (${GTest_FOUND})
