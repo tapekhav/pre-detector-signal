@@ -15,8 +15,8 @@ FileReader::FileReader(const std::string &file_name)
 {
     assert(_file.is_open());
 
-    auto console_logger = spdlog::stdout_logger_mt("console_logger");
-    auto file_logger = spdlog::basic_logger_mt("file_logger", "error.log");
+    auto console_logger = spdlog::stdout_logger_mt("console_log");
+    auto file_logger = spdlog::basic_logger_mt("file_log", "error.log");
 
     _logger = std::make_unique<spdlog::logger>("multi_sink_logger",
                                                spdlog::sinks_init_list({file_logger->sinks().front(),
