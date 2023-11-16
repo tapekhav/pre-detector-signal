@@ -14,6 +14,8 @@ public:
 
     SignalGenerator(const SignalGenerator& other);
 
+    SignalGenerator(SignalGenerator&& other) noexcept;
+
     [[nodiscard]] inline std::vector<double> getTimeVector() const { return _time_vector; }
     [[nodiscard]] inline std::vector<bool> getModulatingSignal() const { return _modulating_signal; }
 

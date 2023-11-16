@@ -24,6 +24,18 @@ SignalGenerator::SignalGenerator(double sample_rate,
     }
 }
 
+SignalGenerator::SignalGenerator(const SignalGenerator &other)
+{
+    _time_vector = other._time_vector;
+    _modulating_signal = other._modulating_signal;
+    tryToSetModulation(other._modulation);
+}
+
+SignalGenerator::SignalGenerator(SignalGenerator&& other) noexcept
+                                 : _time_vector(std::move(other._time_vector)),
+                                   _modulating_signal(std::move(other._modulating_signal)),
+                                   _modulation(std::move(other._modulation)) {}
+
 void SignalGenerator::tryToSetModulation(const std::unique_ptr<IModulation<double, bool>>& other_modulation)
 {
     if (auto modulation = dynamic_cast<BPSKModulation*>(other_modulation.get()))
@@ -34,12 +46,5 @@ void SignalGenerator::tryToSetModulation(const std::unique_ptr<IModulation<doubl
     {
         // some logic
     }
-}
-
-SignalGenerator::SignalGenerator(const SignalGenerator &other)
-{
-    _time_vector = other._time_vector;
-    _modulating_signal = other._modulating_signal;
-    tryToSetModulation(other._modulation);
 }
 

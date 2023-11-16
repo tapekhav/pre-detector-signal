@@ -9,7 +9,7 @@ SignalController::SignalController(QLineEdit* lineEdit,
                                    : QObject(parent),
                                      _begin_line_edit(lineEdit),
                                      _apply_button(button),
-                                     _signal_generator(generator)
+                                     _signal_generator(std::move(generator))
 {
     connect(_apply_button, &QPushButton::clicked, this, &SignalController::onApplyButtonClicked);
 }

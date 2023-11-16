@@ -26,7 +26,6 @@ public:
     //! Constructor
     explicit ModelGenerator(Model model);
 
-
     //! Generate signals of model in time interval
     std::vector<Model> generateModel(Interval time_interval);
 private:
