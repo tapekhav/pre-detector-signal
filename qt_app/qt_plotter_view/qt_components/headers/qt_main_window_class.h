@@ -8,26 +8,27 @@
 
 #include <qt_plotter.h>
 #include <generate_signal.h>
+#include <qt_plotter_controller.h>
 
-class QtClassMainWindow final : public QMainWindow
+class QClassMainWindow final : public QMainWindow
 {
+Q_OBJECT
 public:
-    explicit QtClassMainWindow(QWidget *parent = nullptr);
+    explicit QClassMainWindow(QWidget *parent = nullptr);
 
-    void setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter);
+    void setQtPlotter(std::unique_ptr<QPlotter>& qt_plotter);
 
     void setPlotter(const QSize& size);
 
     void setSignals();
 
-    ~QtClassMainWindow() final = default;
+    ~QClassMainWindow() final = default;
 private:
-    SignalGenerator _signal_generator;
     QVector<QPair<double, double>> _series_modulated_signal;
     QVector<QPair<double, double>> _series_modulating_signal;
 
-    std::unique_ptr<QtPlotter> _qt_plotter;
+    std::unique_ptr<QPlotter> _qt_plotter;
+    QPlotterController _controller;
 };
 
-
-#endif //PRE_DETECTOR_SIGNAL_QT_MAIN_WINDOW_CLASS_H
+#endif // PRE_DETECTOR_SIGNAL_QT_MAIN_WINDOW_CLASS_H

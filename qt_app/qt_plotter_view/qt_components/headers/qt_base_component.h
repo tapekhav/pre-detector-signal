@@ -5,10 +5,10 @@
 
 #include <qt_mediator_inteface.h>
 
-class QtBaseComponent : public QWidget
+class QBaseComponent : public QWidget
 {
 public:
-    explicit QtBaseComponent(std::unique_ptr<IQtMediator>& mediator) : _mediator(std::move(mediator)) {}
+    explicit QBaseComponent(std::unique_ptr<IQtMediator>& mediator) : _mediator(std::move(mediator)) {}
 
     void setMediator(std::unique_ptr<IQtMediator>& mediator) { _mediator = std::move(mediator); }
 protected:

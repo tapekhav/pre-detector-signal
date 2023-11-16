@@ -3,26 +3,31 @@
 #include <QVBoxLayout>
 
 #include <qcustomplot.h>
+#include <qt_plotter_controller.h>
 
-QtClassMainWindow::QtClassMainWindow(QWidget *parent) : QMainWindow(parent)
+QClassMainWindow::QClassMainWindow(QWidget *parent)
+                                   : QMainWindow(parent),
+                                     _qt_plotter(nullptr),
+                                     _controller(&_signal_generator)
 {
+    _qt_plotter = std::make_unique<QPlotter>(_series_modulated_signal, _series_modulating_signal, this);
+
+    setPlotter(QSize(400, 300));
+
+    connect(&_signal_generator, &SignalGenerator::someSignal, &_controller, &QPlotterController::updatePlot);
+
     setSignals();
-    _qt_plotter = std::make_unique<QtPlotter>(_series_modulated_signal, _series_modulating_signal, this);
-
-    setQtPlotter(_qt_plotter);
-
-    setStyleSheet("QMainWindow {\n"
-                  "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f0f0f0, stop:1 #c0c0c0);\n"
-                  "}");
+    emit _controller.updatePlot();
 }
 
-void QtClassMainWindow::setQtPlotter(std::unique_ptr<QtPlotter>& qt_plotter)
+
+void QClassMainWindow::setQtPlotter(std::unique_ptr<QPlotter>& qt_plotter)
 {
     setPlotter(QSize(800, 600));
     setCentralWidget(qt_plotter.get());
 }
 
-void QtClassMainWindow::setPlotter(const QSize& size)
+void QClassMainWindow::setPlotter(const QSize& size)
 {
     if (_qt_plotter)
     {
@@ -30,7 +35,7 @@ void QtClassMainWindow::setPlotter(const QSize& size)
     }
 }
 
-void QtClassMainWindow::setSignals()
+void QClassMainWindow::setSignals()
 {
     auto values = _signal_generator.modulateSignal();
     auto times = _signal_generator.getTimeVector();

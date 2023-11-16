@@ -13,15 +13,13 @@ static const std::map<std::type_index, std::function<void(IModulation<double, bo
         }
 }; */
 
-SignalGenerator::SignalGenerator(double sample_rate,
-                                 const std::vector<double>& modulating_signal,
+SignalGenerator::SignalGenerator(const Interval& time,
+                                 const std::vector<bool>& modulating_signal,
                                  std::unique_ptr<IModulation<double, bool>>& modulation)
-                                 : _modulation(std::move(modulation))
+                                 : _modulation(std::move(modulation)),
+                                   _modulating_signal(modulating_signal)
 {
-    for (size_t i = 0; i < modulating_signal.size(); ++i)
-    {
-        _time_vector.push_back(static_cast<double>(i) / sample_rate);
-    }
+    setTimeInterval(time);
 }
 
 SignalGenerator::SignalGenerator(const SignalGenerator &other)
@@ -45,6 +43,14 @@ void SignalGenerator::tryToSetModulation(const std::unique_ptr<IModulation<doubl
     else
     {
         // some logic
+    }
+}
+
+void SignalGenerator::setTimeInterval(const Interval &time)
+{
+    for (size_t i = time.begin; i < time.end; i += time.step)
+    {
+        _time_vector.push_back(time.begin + static_cast<double>(i) / time.step);
     }
 }
 

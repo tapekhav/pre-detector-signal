@@ -2,7 +2,7 @@
 #include <ui_qt_coordinate_tool_tip.h>
 
 
-CoordinateToolTip::CoordinateToolTip(QWidget *parent)
+QCoordinateToolTip::QCoordinateToolTip(QWidget *parent)
         : QWidget(parent),
           _ui(new Ui::CoordinateToolTip)
 {
@@ -19,12 +19,12 @@ CoordinateToolTip::CoordinateToolTip(QWidget *parent)
     setAttribute(Qt::WA_ShowWithoutActivating);
 }
 
-CoordinateToolTip::~CoordinateToolTip()
+QCoordinateToolTip::~QCoordinateToolTip()
 {
     delete _ui;
 }
 
-void CoordinateToolTip::setCoordinates(double x, double y1, double y2)
+void QCoordinateToolTip::setCoordinates(double x, double y1, double y2)
 {
     _ui->coordinate_label->setText(QString("X: %1\nY1: %2\nY2: %3").arg(x).arg(y1).arg(y2));
 }

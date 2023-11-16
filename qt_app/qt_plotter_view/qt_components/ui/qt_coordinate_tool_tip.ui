@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CoordinateToolTip</class>
- <widget class="QWidget" name="CoordinateToolTip">
+ <class>QCoordinateToolTip</class>
+ <widget class="QWidget" name="QCoordinateToolTip">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>CoordinateToolTip</string>
+   <string>QCoordinateToolTip</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {

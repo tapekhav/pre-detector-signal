@@ -3,18 +3,9 @@
 
 #include <model.pb.h>
 #include <plotter.h>
+#include <consts.h>
 
 #include <utility>
-
-struct Interval
-{
-    inline explicit Interval(double begin = 0, double end = 10, double step = 0.01)
-                                           : begin(begin), end(end), step(step) { assert(step >= 0.01 && step <= 0.5); }
-
-    double begin;
-    double end;
-    double step;
-};
 
 /*!
  * \class ModelGenerator

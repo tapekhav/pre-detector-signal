@@ -9,12 +9,12 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class CoordinateToolTip; }
 QT_END_NAMESPACE
 
-class CoordinateToolTip final : public QWidget
+class QCoordinateToolTip final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CoordinateToolTip(QWidget *parent = nullptr);
-    ~CoordinateToolTip() final;
+    explicit QCoordinateToolTip(QWidget *parent = nullptr);
+    ~QCoordinateToolTip() final;
 
     void setCoordinates(double x, double y1, double y2);
 

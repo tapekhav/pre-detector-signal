@@ -1,29 +1,55 @@
 #include <qt_plotter_controller.h>
 
-#include <QLoggingCategory>
-
-SignalController::SignalController(QLineEdit* lineEdit,
-                                   QPushButton* button,
-                                   SignalGenerator generator,
-                                   QObject *parent)
-                                   : QObject(parent),
-                                     _begin_line_edit(lineEdit),
-                                     _apply_button(button),
-                                     _signal_generator(std::move(generator))
+QPlotterController::QPlotterController(double sample_rate,
+                                       const std::vector<bool>& modulating_signal,
+                                       std::unique_ptr<IModulation<double, bool>>& modulation,
+                                       QObject *parent)
+                                       : QObject(parent),
+                                         _signal_generator(std::make_unique<SignalGenerator>(
+                                                              sample_rate,
+                                                              modulating_signal,
+                                                              modulation
+                                         )
+                                       )
 {
-    connect(_apply_button, &QPushButton::clicked, this, &SignalController::onApplyButtonClicked);
+    updateVectors();
 }
 
-void SignalController::onApplyButtonClicked()
+void QPlotterController::updateVectors()
 {
-    bool ok;
-    double value = _begin_line_edit->text().toDouble(&ok);
-    if (ok)
+    auto modulated_signal = _signal_generator->modulateSignal();
+
+    for (const auto& point : modulated_signal)
     {
-        //_signal_generator->generateSignal(value);
+        _modulated_signal.push_back(point);
     }
-    else
+
+    auto modulating_signal = _signal_generator->getModulatingSignal();
+
+    for (const auto& point : modulated_signal)
     {
-        //qWarning() << "Warning message.";
+        _modulated_signal.push_back(point);
     }
+
+    auto time = _signal_generator->getTimeVector();
+
+    for (auto time_point : time)
+    {
+        _time_vector.push_back(time_point);
+    }
+}
+
+void QPlotterController::handleButtonClick(double begin, double end, double sample_rate)
+{
+    qDebug() << begin << " " << end << " " << sample_rate << "\n";
+}
+
+QVector<QPair<double, double>> QPlotterController::getModulatingSignal() {
+    return QVector<QPair<double, double>>();
+}
+
+QVector<QPair<double, double>> QPlotterController::getModulatedSignal()
+{
+
+    return QVector<QPair<double, double>>();
 }

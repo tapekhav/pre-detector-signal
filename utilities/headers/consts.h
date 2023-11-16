@@ -26,4 +26,14 @@ namespace consts
     }
 }
 
+struct Interval
+{
+    inline Interval(double begin, double end, double step)
+                    : begin(begin), end(end), step(step) { assert(step >= 0.01 && step <= 0.5); }
+
+    double begin;
+    double end;
+    double step;
+};
+
 #endif //PRE_DETECTOR_SIGNAL_CONSTS_H

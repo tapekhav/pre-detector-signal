@@ -75,6 +75,7 @@ include_directories(
         qt_app/qt_plotter_view/qt_components/headers
         qt_app/qt_plotter_view/qt_mediators/headers
         qt_app/qt_plotter_view/qt_dependencies/headers
+        qt_app/qt_plotter_controller/headers
 )
 
 add_executable(

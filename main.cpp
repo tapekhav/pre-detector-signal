@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QtClassMainWindow mainWindow;
+    QClassMainWindow mainWindow;
     mainWindow.show();
 
 

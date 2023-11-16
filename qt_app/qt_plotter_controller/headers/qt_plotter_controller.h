@@ -1,31 +1,40 @@
-#ifndef PRE_DETECTOR_SIGNAL_QT_PLOTTER_CONTROLLER_H
-#define PRE_DETECTOR_SIGNAL_QT_PLOTTER_CONTROLLER_H
-
-#include <memory>
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 #include <QObject>
-#include <QLineEdit>
-#include <QPushButton>
+#include <memory>
 
+#include <qt_plotter.h>
 #include <generate_signal.h>
 
-#include <bpsk_modulation_factory.h>
 
-class SignalController : public QObject
+//! TODO подключить фабрику
+class QPlotterController final : public QObject
 {
     Q_OBJECT
 public:
-    SignalController(QLineEdit* lineEdit,
-                     QPushButton* button,
-                     SignalGenerator generator,
-                     QObject *parent = nullptr);
+    QPlotterController(double sample_rate,
+                       const std::vector<bool>& modulating_signal,
+                       std::unique_ptr<IModulation<double, bool>>& modulation,
+                       QObject *parent = nullptr
+    );
+
+    ~QPlotterController() final = default;
 
 public slots:
-    void onApplyButtonClicked();
+    void updateVectors();
+    void handleButtonClick(double begin, double end, double sample_rate);
+
+private slots:
+    QVector<QPair<double, double>> getModulatedSignal();
+
+    QVector<QPair<double, double>> getModulatingSignal();
 private:
-    std::unique_ptr<QLineEdit> _begin_line_edit;
-    std::unique_ptr<QPushButton> _apply_button;
-    SignalGenerator _signal_generator;
+    std::unique_ptr<SignalGenerator> _signal_generator;
+
+    QVector<double> _time_vector;
+    QVector<double> _modulated_signal;
+    QVector<bool> _modulating_signal;
 };
 
-#endif //PRE_DETECTOR_SIGNAL_QT_PLOTTER_CONTROLLER_H
+#endif // CONTROLLER_H

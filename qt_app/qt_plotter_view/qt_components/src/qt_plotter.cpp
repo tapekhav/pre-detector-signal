@@ -5,11 +5,11 @@
 
 #include <qt_coordinate_tool_tip.h>
 
-QtPlotter::QtPlotter(const QVector<QPair<double, double>>& series_data,
-                     const QVector<QPair<double, double>>& init_signal_data,
-                     QWidget *parent)
-                        : QWidget(parent),
-                          _ui(new Ui::QtPlotter)
+QPlotter::QPlotter(const QVector<QPair<double, double>>& series_data,
+                   const QVector<QPair<double, double>>& init_signal_data,
+                   QWidget *parent)
+                   : QWidget(parent),
+                     _ui(new Ui::QtPlotter)
 {
     _ui->setupUi(this);
 
@@ -18,12 +18,12 @@ QtPlotter::QtPlotter(const QVector<QPair<double, double>>& series_data,
     setRanges(series_data);
     setToolTip();
 
-    connect(_ui->plotter, &QCustomPlot::mouseMove, this, &QtPlotter::onMouseMove);
+    connect(_ui->plotter, &QCustomPlot::mouseMove, this, &QPlotter::onMouseMove);
 
     _ui->plotter->replot();
 }
 
-void QtPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_graph)
+void QPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_graph)
 {
     QVector<double> x_data, y_data;
 
@@ -37,13 +37,13 @@ void QtPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_
     _ui->plotter->replot();
 }
 
-void QtPlotter::addToSeries(double x, double y, int num_graph)
+void QPlotter::addToSeries(double x, double y, int num_graph)
 {
     _ui->plotter->graph(num_graph)->addData(x, y);
     _ui->plotter->replot();
 }
 
-void QtPlotter::setRanges(const QVector<QPair<double, double>>& series_data)
+void QPlotter::setRanges(const QVector<QPair<double, double>>& series_data)
 {
     double min_x = std::numeric_limits<double>::max();
     double max_x = std::numeric_limits<double>::min();
@@ -68,7 +68,7 @@ void QtPlotter::setRanges(const QVector<QPair<double, double>>& series_data)
     _ui->plotter->yAxis->setRange(y_range.first, y_range.second);
 }
 
-void QtPlotter::onMouseMove(QMouseEvent *event)
+void QPlotter::onMouseMove(QMouseEvent *event)
 {
     double x = _ui->plotter->xAxis->pixelToCoord(event->pos().x());
     double y1 = _ui->plotter->yAxis->pixelToCoord(event->pos().y());
@@ -80,13 +80,13 @@ void QtPlotter::onMouseMove(QMouseEvent *event)
 }
 
 
-void QtPlotter::setToolTip()
+void QPlotter::setToolTip()
 {
-    _tool_tip = new CoordinateToolTip(_ui->plotter);
+    _tool_tip = new QCoordinateToolTip(_ui->plotter);
 }
 
-void QtPlotter::setPlotter(const QVector<QPair<double, double>>& series_data,
-                           const QVector<QPair<double, double>>& init_signal_data)
+void QPlotter::setPlotter(const QVector<QPair<double, double>>& series_data,
+                          const QVector<QPair<double, double>>& init_signal_data)
 {
     _ui->plotter->addGraph();
     _ui->plotter->addGraph();
@@ -101,7 +101,7 @@ void QtPlotter::setPlotter(const QVector<QPair<double, double>>& series_data,
     _ui->plotter->yAxis->setLabel("value");
 }
 
-QtPlotter::~QtPlotter()
+QPlotter::~QPlotter()
 {
     delete _ui;
 }
