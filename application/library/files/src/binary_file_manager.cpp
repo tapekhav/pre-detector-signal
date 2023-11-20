@@ -19,7 +19,11 @@ void BinaryFileManager::setStartFrameMarker(size_t number, const bitset_sequence
 
 void BinaryFileManager::writeBitset(const bitset_sequence &number)
 {
-    std::for_each(number.begin(), number.end(), [&](std::bitset<param_consts::kSizeBitset> bits) { _file << bits.to_string(); });
+    std::for_each(number.begin(), number.end(),
+    [&](std::bitset<param_consts::kSizeBitset> bits)
+    {
+        _file << bits.to_string();
+    });
 }
 
 void BinaryFileManager::addSynchronize()

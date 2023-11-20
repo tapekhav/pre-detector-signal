@@ -47,5 +47,6 @@ if (${GTest_FOUND})
     )
     enable_testing()
     add_test(NAME ExampleTest COMMAND test_radio)
-
-endif (${GTest_FOUND})
+else()
+    message(WARNING "GTest not found. Skipping test_encode.")
+endif ()

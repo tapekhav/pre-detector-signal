@@ -23,6 +23,12 @@ FileReader::FileReader(const std::string &file_name)
                                                                         console_logger->sinks().front()}));
 }
 
+void FileReader::readAllFile()
+{
+    while(readFrame()) {}
+    MEDIATE(EventType::ReadFromFile);
+}
+
 bool FileReader::readFrame()
 {
     try

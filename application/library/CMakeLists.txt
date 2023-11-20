@@ -1,3 +1,4 @@
+project(pre-detector-signal)
 cmake_minimum_required(VERSION 3.22.1)
 
 find_package(spdlog REQUIRED)
@@ -39,7 +40,13 @@ file(GLOB TESTS encode_data/tests/*.cpp)
 find_package(GTest)
 if (${GTest_FOUND})
     message(STATUS "Starting encode tests...")
+
+    add_definitions(-DGTEST_SKIP_MEDIATOR=ON)
+    message(STATUS "GTEST_SKIP_MEDIATOR: ${GTEST_SKIP_MEDIATOR}")
+
     add_executable(test_encode ${TESTS})
+
+    target_compile_definitions(test_encode PRIVATE -DGTEST_SKIP_MEDIATOR)
 
     target_link_libraries(
             test_encode
@@ -52,10 +59,13 @@ if (${GTest_FOUND})
             GTest::gmock_main
             EncodeData
     )
+
     enable_testing()
     add_test(NAME ExampleTest COMMAND test_encode)
+else()
+    message(WARNING "GTest not found. Skipping test_encode.")
+endif ()
 
-endif (${GTest_FOUND})
 
 target_link_libraries(EncodeData PRIVATE spdlog::spdlog)
 add_compile_definitions(CURRENT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")

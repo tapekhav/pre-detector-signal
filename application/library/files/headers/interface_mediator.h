@@ -1,6 +1,13 @@
 #ifndef PRE_DETECTOR_SIGNAL_INTERFACE_MEDIATOR_H
 #define PRE_DETECTOR_SIGNAL_INTERFACE_MEDIATOR_H
 
+#ifdef GTEST_SKIP_MEDIATOR
+#define MEDIATE(event)
+#else
+#define MEDIATE(event) this->_mediator->notify(event)
+#endif
+
+
 #include <memory>
 
 class BaseComponent;

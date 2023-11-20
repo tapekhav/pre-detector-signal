@@ -16,29 +16,29 @@ class ModelsMediator final : public IMediator
 public:
     ModelsMediator(std::shared_ptr<FileReader> &file_reader,
                    std::shared_ptr<BinaryFileManager> &file_manager,
-                   std::shared_ptr<ModelGenerator> &model_generator,
-                   const std::string &config_file_name=path_to_config);
+                   std::shared_ptr<ModelGenerator> &model_generator);
 
     void notify(EventType event) const final;
 
     ~ModelsMediator() final = default;
 private:
-    void configureParser();
-
     void writeToFile();
+
+    void writeModel(const Model& model);
+
+    void writeWord(size_t i, const Model& model);
+
+    void readFromFile();
 private:
     std::shared_ptr<FileReader> _file_reader;
     std::shared_ptr<ModelGenerator> _model_generator;
     std::shared_ptr<BinaryFileManager> _file_manager;
 
-    ConfigParser _parser;
-    Model _initial_model;
-
     const std::map<EventType, std::function<void()>> _mediator_map =
     {
-            {EventType::GenerateModel, },
-            {EventType::WriteToFile, },
-            {EventType::ReadFromFile, }
+            {EventType::GenerateModel, [this]() { writeToFile(); }},
+            {EventType::WriteToFile, [this]() { writeToFile(); }},
+            {EventType::ReadFromFile, [this]() { writeToFile(); }}
     };
 };
 

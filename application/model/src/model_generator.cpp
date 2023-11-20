@@ -8,7 +8,8 @@
 ModelGenerator::ModelGenerator(Model init_model)
         : _initial_model(std::move(init_model)),
           _plotter(std::make_unique<Plotter>(plt_dir)),
-          _meters_plotter(std::make_unique<Plotter>(plt))
+          _meters_plotter(std::make_unique<Plotter>(plt)),
+          _time_interval({0, 0, 0})
 {
     _distance_formula = [this](const Coordinates& current_coordinates)
     {
@@ -23,12 +24,14 @@ ModelGenerator::ModelGenerator(Model init_model)
 
 void ModelGenerator::generateModel(const Interval& time_interval)
 {
+    setTimeInterval(time_interval);
+
     setMotionFormula();
     setTemperatureFormula();
     setHumidityFormula();
     setBoardVoltage();
 
-    for(double i = time_interval.begin; i < time_interval.end; i += time_interval.step)
+    for(double i = _time_interval.begin; i < _time_interval.end; i += _time_interval.step)
     {
         Model model;
 

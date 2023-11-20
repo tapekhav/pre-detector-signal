@@ -31,11 +31,11 @@ public:
     explicit FileReader(const std::string& file_name = "result.txt");
 
     /*!
-     * \brief Reads and parses a data frame from the file.
+     * \brief Reads and parses all data from the file.
      *
      * \return True if reading is successful, false otherwise.
      */
-    bool readFrame();
+    void readAllFile();
 
     /*!
      * \brief Gets the information about the currently read data frame.
@@ -51,37 +51,44 @@ public:
     inline ~FileReader() { _file.close(); }
 
 private:
-    /**
-     * @brief Reads information about all parameters in a data frame.
+    /*!
+     * \brief Reads information about all parameters in a data frame.
      */
     void readAllParams();
 
-    /**
-     * @brief Reads synchronization information from the file.
+    /*!
+     * \brief Reads synchronization information from the file.
      */
     void readSync();
 
-    /**
-     * @brief Reads a parameter from the file.
+    /*!
+     * \brief Reads a parameter from the file.
      *
-     * @return True if the parameter is successfully read, false otherwise.
+     * \return True if the parameter is successfully read, false otherwise.
      */
     bool readParam();
 
-    /**
-     * @brief Reads the beginning of a data frame.
+    /*!
+     * \brief Reads the beginning of a data frame.
      */
     void readBeginningOfFrame();
 
-    /**
-     * @brief Reads the begin marker of a data frame.
+    /*!
+     * \brief Reads the begin marker of a data frame.
      */
     void readBeginMarker();
 
-    /**
-     * @brief Reads general information about a data frame.
+    /*!
+     * \brief Reads general information about a data frame.
      */
     void readInformationAboutFrame();
+
+    /*!
+     * \brief Reads and parses a data frame from the file.
+     *
+     * \return True if reading is successful, false otherwise.
+     */
+    bool readFrame();
 
 private:
     size_t _char_read;              ///< The number of characters read during file operations.

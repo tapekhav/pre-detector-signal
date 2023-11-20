@@ -22,9 +22,14 @@ public:
     //! Generate signals of model in time interval
     void generateModel(const Interval& time_interval);
 
+    [[nodiscard]] inline const Interval& getTimeInterval() const { return _time_interval; }
+
     [[nodiscard]] inline const std::vector<Model>& getModels() const { return _result_models; }
+
     [[nodiscard]] inline const Model& operator[](size_t i) const { return _result_models[i]; }
 private:
+    inline void setTimeInterval(const Interval& time_interval) { _time_interval = time_interval; }
+
     void setMotionFormula();
 
     void setTemperatureFormula();
@@ -36,6 +41,7 @@ private:
     double getRadius(double lat_rad);
 private:
     Model _initial_model;
+    Interval _time_interval;
     std::vector<Model> _result_models;
 
     std::unique_ptr<Plotter> _plotter;
