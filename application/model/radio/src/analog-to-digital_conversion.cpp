@@ -11,7 +11,7 @@ ADC::ADC(int bit_depth,
     [this](const std::vector<double>& signal)
     {
         std::vector<int> result;
-        for (int i : signal)
+        for (double i : signal)
         {
             result.push_back(static_cast<int>(std::round(i / _max_reference_voltage *
                                                         (std::pow(2, _bit_depth) - 1))));

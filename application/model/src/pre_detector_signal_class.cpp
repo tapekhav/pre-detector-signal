@@ -1,4 +1,4 @@
-#include <pre_dector_signal_class.h>
+#include <pre_detector_signal_class.h>
 
 #include <analog-to-digital_conversion.h>
 #include <bpsk_modulation_factory.h>
@@ -11,7 +11,7 @@ PreDetectorSignalClass::PreDetectorSignalClass(const std::vector<bool> &signal)
     _modulation = factory.createModulationProduct();
     _demodulation = factory.createDemodulationProduct();
 
-    _modulated_signal = _modulation->modulate(signal);
+    _modulating_signal = signal;
 }
 
 void PreDetectorSignalClass::doPreDetectorSignal()
@@ -19,3 +19,12 @@ void PreDetectorSignalClass::doPreDetectorSignal()
 
 }
 
+void PreDetectorSignalClass::doADC(const std::vector<complex>& modulated_signal)
+{
+    ADC(consts::radio::kADCSize, consts::radio::kReferenceADCVoltage);
+}
+
+std::vector<complex> PreDetectorSignalClass::doModulation()
+{
+    return _modulation->modulate(_modulating_signal);
+}

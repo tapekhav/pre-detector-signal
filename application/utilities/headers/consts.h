@@ -12,18 +12,29 @@ namespace consts
 {
     namespace physics
     {
-        static const double g = 9.81;
+        const double g = 9.81;
 
-        static const double L = 0.0065;
-        static const double H = 1500;
+        const double L = 0.0065;
+        const double H = 1500;
 
-        static const double kMajorAxis = 6378137.0;
-        static const double kMinorAxis = 6356752.3142;
+        const double kMajorAxis = 6378137.0;
+        const double kMinorAxis = 6356752.3142;
     }
 
     namespace radio
     {
-        static const double kCentralFrequency = 433 * 10e6;
+        const int kSNR = 20;
+        const int kNoiseLevel = 8;
+        const int kADCSize = 16;
+        const int kGainFactorReceiving = 3000;
+        const double kStartSignalLevel = 10e6;
+        const double kSampleRate = 2.5 * 10e6;
+        const double kReferenceADCVoltage = 5.0;
+
+        const int kBroadWidth = 4096;
+        const double kTransmitterPower = 1.0;
+        const int kGainFactorTransmitting = 10;
+        const double kCentralFrequency = 433 * 10e6;
     }
 }
 
