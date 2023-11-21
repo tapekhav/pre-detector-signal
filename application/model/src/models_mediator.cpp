@@ -78,6 +78,4 @@ void ModelsMediator::doPreDetectorSignal()
 
     std::vector<bool> bool_info;
     std::transform(info.begin(), info.end(), std::back_inserter(bool_info), [](char c) { return c == '1'; });
-
-
 }
