@@ -46,7 +46,7 @@ void ModelGenerator::generateModel(const Interval& time_interval)
         _result_models.push_back(model);
     }
 
-    this->_mediator->notify(EventType::GenerateModel);
+    MEDIATE(EventType::GenerateModel);
 }
 
 void ModelGenerator::setMotionFormula()

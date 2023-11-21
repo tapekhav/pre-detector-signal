@@ -2,6 +2,9 @@
 #define PRE_DETECTOR_SIGNAL_MODULATION_INTERFACE_H
 
 #include <vector>
+#include <complex>
+
+using complex = std::complex<double>;
 
 /*!
  * \class IModulation

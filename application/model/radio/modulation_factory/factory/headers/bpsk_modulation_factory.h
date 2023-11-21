@@ -3,7 +3,7 @@
 
 #include <abstract_modulation_factory.h>
 
-class BPSKModulationFactory final : public AbstractModulationFactory<double, bool>
+class BPSKModulationFactory final : public AbstractModulationFactory<complex, bool>
 {
 public:
     BPSKModulationFactory(double amplitude,
@@ -12,8 +12,8 @@ public:
                           double symbol_duration);
 
 
-    [[nodiscard]] std::unique_ptr<IModulation<double, bool>> createModulationProduct() const final;
-    [[nodiscard]] std::unique_ptr<IDemodulation<bool, double>> createDemodulationProduct() const final;
+    [[nodiscard]] std::unique_ptr<IModulation<complex, bool>> createModulationProduct() const final;
+    [[nodiscard]] std::unique_ptr<IDemodulation<bool, complex>> createDemodulationProduct() const final;
 
     ~BPSKModulationFactory() final = default;
 

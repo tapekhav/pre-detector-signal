@@ -1,8 +1,9 @@
-#include <bitset_to_double.h>
-#include <full_encode_number.h>
-#include <model_generator.h>
+//#include <bitset_to_double.h>
+//#include <full_encode_number.h>
+//#include <model_generator.h>
 #include <config_parser.h>
-#include <binary_file_manager.h>
+//#include <binary_file_manager.h>
+/*
 
 class CLI
 {
@@ -64,6 +65,7 @@ private:
     BinaryFileManager _manager;
     std::unique_ptr<EncodeData> _encode;
 };
+*/
 
 
 #include <QApplication>

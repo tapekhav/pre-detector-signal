@@ -5,7 +5,6 @@
 #include <binary_file_manager.h>
 
 #include <full_encode_number.h>
-#include <full_decode_number.h>
 
 static const std::map<size_t, std::function<double(const Model& model)>> kModelMap =
 {
@@ -66,4 +65,19 @@ void ModelsMediator::writeWord(size_t i, const Model& model)
 
     auto param = kModelMap.at(i)(model);
     _file_manager->writeBitset(EncodeData(param).execute());
+}
+
+void ModelsMediator::readFromFile()
+{
+    _file_reader->readAllFile();
+}
+
+void ModelsMediator::doPreDetectorSignal()
+{
+    auto info = _file_reader->getFileInfo();
+
+    std::vector<bool> bool_info;
+    std::transform(info.begin(), info.end(), std::back_inserter(bool_info), [](char c) { return c == '1'; });
+
+
 }

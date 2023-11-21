@@ -28,7 +28,7 @@ add_library(
         ${PRODUCTS_HEADERS}
         ${PRODUCTS_SRC}
 )
-target_link_libraries(Radio Utilities fftw3)
+target_link_libraries(Radio fftw3)
 
 find_package(GTest)
 if (${GTest_FOUND})
@@ -45,6 +45,7 @@ if (${GTest_FOUND})
             GTest::gmock_main
             Radio
     )
+
     enable_testing()
     add_test(NAME ExampleTest COMMAND test_radio)
 else()

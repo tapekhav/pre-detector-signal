@@ -15,6 +15,7 @@ include_directories(
         radio/headers
         ../library/files/headers
         ../library/encode_data/encryption/headers
+        ../library/encode_data/utilities/headers
 )
 
 file(GLOB MODEL_HEADERS headers/*.h)

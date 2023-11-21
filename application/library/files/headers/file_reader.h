@@ -42,7 +42,7 @@ public:
      *
      * \return A string containing information about the current frame.
      */
-    [[nodiscard]] std::string getCurrentFrameInfo() const { return _current_frame; }
+    [[nodiscard]] std::string getFileInfo() const { return _current_frame; }
 
     /*!
      * \name Destructor

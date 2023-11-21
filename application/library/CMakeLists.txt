@@ -41,11 +41,9 @@ find_package(GTest)
 if (${GTest_FOUND})
     message(STATUS "Starting encode tests...")
 
-    add_definitions(-DGTEST_SKIP_MEDIATOR=ON)
-    message(STATUS "GTEST_SKIP_MEDIATOR: ${GTEST_SKIP_MEDIATOR}")
-
     add_executable(test_encode ${TESTS})
 
+    add_definitions(-DGTEST_SKIP_MEDIATOR=ON)
     target_compile_definitions(test_encode PRIVATE -DGTEST_SKIP_MEDIATOR)
 
     target_link_libraries(

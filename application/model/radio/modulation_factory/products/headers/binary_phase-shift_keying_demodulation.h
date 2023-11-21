@@ -10,7 +10,7 @@
  * The BPSKDemodulation class implements the IDemodulation interface and provides functionality for demodulating
  * binary Phase Shift Keying (PSK) signals.
  */
-class BPSKDemodulation final : public IDemodulation<bool, double>
+class BPSKDemodulation final : public IDemodulation<bool, complex>
 {
 public:
     /*!
@@ -28,7 +28,7 @@ public:
      * @param modulated_signal The input modulated signal.
      * @return A vector of demodulated binary values returns the recovered modulating signal.
      */
-    std::vector<bool> demodulate(const std::vector<double> &modulated_signal) final;
+    std::vector<bool> demodulate(const std::vector<complex> &modulated_signal) final;
     /*!
      * \brief Destructor.
      */

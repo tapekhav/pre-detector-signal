@@ -11,9 +11,9 @@ BPSKModulation::BPSKModulation(double amplitude,
                                                  _central_frequency(central_frequency),
                                                  _symbol_duration(symbol_duration) {}
 
-std::vector<double> BPSKModulation::modulate(const std::vector<bool> &initial_signal)
+std::vector<complex> BPSKModulation::modulate(const std::vector<bool> &initial_signal)
 {
-    std::vector<double> bpsk_signal;
+    std::vector<complex> bpsk_signal;
 
     int num_samples_per_symbol = static_cast<int>(_sample_rate * _symbol_duration);
 
@@ -22,9 +22,11 @@ std::vector<double> BPSKModulation::modulate(const std::vector<bool> &initial_si
         for (int i = 0; i < num_samples_per_symbol; ++i)
         {
             double t = i / _sample_rate;
-            double phase = 2.0 * M_PI * _central_frequency * t;
 
-            bpsk_signal.push_back(_amplitude * cos(phase + (1 - bit) * M_PI));
+            double phase_shift = (1 - bit) * M_PI;
+            double phase = 2.0 * M_PI * _central_frequency * t + phase_shift;
+
+            bpsk_signal.emplace_back(std::polar(_amplitude, phase));
         }
     }
 
