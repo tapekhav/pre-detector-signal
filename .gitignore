@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+
+/.cache
+/build
+/assets/report/report.aux
+/assets/report/report.fls
+/assets/report/report.log
+/assets/report/report.synctex.gz
