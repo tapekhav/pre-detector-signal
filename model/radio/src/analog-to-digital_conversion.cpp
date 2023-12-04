@@ -11,13 +11,15 @@ ADC::ADC(int resolution,
 void ADC::analogToDigital(const std::vector<double> &re, const std::vector<double> &im)
 {
     auto formula =
-    [this](const std::vector<double>& signal)
+    [this](const std::vector<double>& signals)
     {
         std::vector<int> result;
-        for (double i : signal)
+
+        result.reserve(signals.size());
+        for (double signal : signals)
         {
-            result.push_back(static_cast<int>(std::round(i / _max_reference_voltage *
-                                                        ((1 << _resolution) - 1))));
+            result.push_back(static_cast<int>(std::round(signal / _max_reference_voltage *
+                                                           ((1 << _resolution) - 1))));
         }
 
         return result;

@@ -35,8 +35,7 @@ file(GLOB PROTOBUF_HEADERS ${CMAKE_CURRENT_BINARY_DIR}/*.pb.h)
 file(GLOB PROTOBUF_SRC ${CMAKE_CURRENT_BINARY_DIR}/*.pb.cc)
 
 add_library(
-        Model STATIC
-        ../utilities/plotter/plotter.h
+        Model
         ${MODEL_HEADERS}
         ${MODEL_SOURCE}
         ${PROTO_SRCS}
@@ -49,7 +48,7 @@ target_link_libraries(
         Model
         ${PROTOBUF_LIBRARIES}
         Radio
-        EncodeData
+        EncodeData 
 )
 
 add_compile_definitions(plt_dir="${CMAKE_CURRENT_SOURCE_DIR}/../utilities/plotter/plotters/coordinates.txt")

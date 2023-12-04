@@ -3,10 +3,8 @@
 
 #include <QWidget>
 
-#include <qt_base_component.h>
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class CoordinateToolTip; }
+namespace Ui { class QCoordinateToolTip; }
 QT_END_NAMESPACE
 
 class QCoordinateToolTip final : public QWidget
@@ -19,7 +17,7 @@ public:
     void setCoordinates(double x, double y1, double y2);
 
 private:
-    Ui::CoordinateToolTip *_ui;
+    Ui::QCoordinateToolTip *_ui;
 };
 
 

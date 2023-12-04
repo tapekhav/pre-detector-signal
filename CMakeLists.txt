@@ -29,7 +29,7 @@ set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTOR
 set(CMAKE_PREFIX_PATH "/home/vladimir/anaconda3/lib/cmake/Qt5")
 
 find_package(spdlog REQUIRED)
-find_package(fmt REQUIRED)
+find_package(fmt 9 REQUIRED)
 find_package(Protobuf REQUIRED)
 
 if(PROTOBUF_FOUND)
@@ -37,7 +37,8 @@ if(PROTOBUF_FOUND)
 else()
     message(FATAL_ERROR "Protobuf not found!")
 endif()
-set(PROTOBUF_PROTOC_EXECUTABLE /usr/bin/protoc)
+
+set(PROTOBUF_PROTOC_EXECUTABLE /home/vladimir/anaconda3/bin/protoc)
 set_target_properties(protobuf::protoc PROPERTIES IMPORTED_LOCATION ${PROTOBUF_PROTOC_EXECUTABLE})
 
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets Charts)
@@ -52,8 +53,8 @@ set(output_files "")
 foreach(proto_file ${source_files})
     get_filename_component(output_file_name ${proto_file} NAME_WE)
     list(APPEND output_files
-            ${CMAKE_CURRENT_BINARY_DIR}/model/${output_file_name}.pb.cc
-            ${CMAKE_CURRENT_BINARY_DIR}/model/${output_file_name}.pb.h
+        ${CMAKE_CURRENT_BINARY_DIR}/model/${output_file_name}.pb.cc
+        ${CMAKE_CURRENT_BINARY_DIR}/model/${output_file_name}.pb.h
     )
 
     add_custom_command(

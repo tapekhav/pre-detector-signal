@@ -20,7 +20,7 @@ file(GLOB PRODUCTS_HEADERS modulation_factory/products/headers/*.h)
 file(GLOB PRODUCTS_SRC modulation_factory/products/src/*.cpp)
 
 add_library(
-        Radio STATIC
+        Radio
         ${RADIO_HEADERS}
         ${RADIO_SOURCE}
         ${FACTORY_HEADERS}

@@ -10,7 +10,7 @@
 class ConfigParser
 {
 public:
-    explicit ConfigParser(const std::string& file_name = path_to_config);
+    explicit ConfigParser(const std::string& file_name = "result.json");
 
     void setData();
 

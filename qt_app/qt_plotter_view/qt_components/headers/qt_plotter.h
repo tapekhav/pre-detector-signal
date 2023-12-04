@@ -10,7 +10,7 @@
 class QCoordinateToolTip;
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class QtPlotter; }
+namespace Ui { class QPlotter; }
 QT_END_NAMESPACE
 
 class QPlotter final : public QWidget
@@ -36,7 +36,7 @@ signals:
 private slots:
     void onMouseMove(QMouseEvent *event);
 private:
-    Ui::QtPlotter* _ui;
+    Ui::QPlotter* _ui;
     QCoordinateToolTip* _tool_tip;
 };
 

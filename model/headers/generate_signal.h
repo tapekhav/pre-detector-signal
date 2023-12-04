@@ -13,6 +13,9 @@ public:
                     std::unique_ptr<IModulation<double, bool>>& modulation);
 
     SignalGenerator(const SignalGenerator& other);
+    auto operator=(const SignalGenerator& other) -> SignalGenerator&;
+
+    void swap(SignalGenerator& other);
 
     SignalGenerator(SignalGenerator&& other) noexcept;
 
@@ -33,5 +36,6 @@ private:
 
     std::unique_ptr<IModulation<double, bool>> _modulation;
 };
+
 
 #endif //PRE_DETECTOR_SIGNAL_GENERATE_SIGNAL_H

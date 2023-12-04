@@ -9,7 +9,7 @@ QPlotter::QPlotter(const QVector<QPair<double, double>>& series_data,
                    const QVector<QPair<double, double>>& init_signal_data,
                    QWidget *parent)
                    : QWidget(parent),
-                     _ui(new Ui::QtPlotter)
+                     _ui(new Ui::QPlotter)
 {
     _ui->setupUi(this);
 
@@ -25,7 +25,8 @@ QPlotter::QPlotter(const QVector<QPair<double, double>>& series_data,
 
 void QPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_graph)
 {
-    QVector<double> x_data, y_data;
+    QVector<double> x_data;
+    QVector<double> y_data;
 
     for (const auto& pair : series)
     {

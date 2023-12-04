@@ -95,4 +95,35 @@ Hence, the signal space can be represented by the single basis function:
   
 $$T = \frac{1}{f_c} = \frac{1}{2.5 \cdot 10^6} = 4 \cdot 10^{-6} $$
 
+В математике теорема о свертке утверждает, что при подходящих условиях преобразование Фурье свертки двух функций (или сигналов) является поточечным произведением их преобразований Фурье. 
+В более общем смысле, свертка в одной области (например, во временной области) равна поточечному умножению в другой области (например, в частотной области). Другие версии теоремы о свертке применимы к различным преобразованиям Фурье.
+
+The convolution theorem states that the Fourier transform of the convolution of two functions is equal to the product of their individual Fourier transforms.
+
+Mathematically, if \( f(t) \) and \( g(t) \) are two functions with Fourier transforms \( F(\omega) \) and \( G(\omega) \) respectively, then the convolution theorem can be expressed as:
+
+\[ \mathcal{F}\{f * g\} = F(\omega) \cdot G(\omega) \]
+
+Here, \( f * g \) represents the convolution of \( f \) and \( g \), and \( \mathcal{F} \) denotes the Fourier transform.
+
+If you are dealing with continuous functions, the Fourier transforms are given by:
+
+\[ F(\omega) = \int_{-\infty}^{\infty} f(t) \cdot e^{-i \omega t} \, dt \]
+\[ G(\omega) = \int_{-\infty}^{\infty} g(t) \cdot e^{-i \omega t} \, dt \]
+
+If you are dealing with discrete signals, the Fourier transforms are replaced by discrete sums.
+
+\newpage
+
+\par BPSK:
+\[
+s_{n}(t) = \sqrt{\frac{2E_{b}}{T_{b}}} \cos\left(2\pi ft + \pi(1-n)\right), \quad n=0,1
+\]
+
+\par PM:
+\[
+s(t) = A \cdot \cos(2\pi f_c t + k_p m(t))
+\]
+
+
 \end{document}

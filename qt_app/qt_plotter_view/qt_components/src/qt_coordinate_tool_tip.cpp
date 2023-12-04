@@ -4,7 +4,7 @@
 
 QCoordinateToolTip::QCoordinateToolTip(QWidget *parent)
         : QWidget(parent),
-          _ui(new Ui::CoordinateToolTip)
+          _ui(new Ui::QCoordinateToolTip)
 {
     _ui->setupUi(this);
 

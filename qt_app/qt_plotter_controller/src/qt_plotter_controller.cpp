@@ -11,10 +11,8 @@ QPlotterController::QPlotterController(const Interval& time_interval,
 
     //! Поменять на уже смодулированные
     _model_generator = std::make_unique<ModelGenerator>(parser.getModel());
-    _signal_generator = std::make_unique<SignalGenerator>(
-            _model_generator->generateModel(time_interval),
-            modulation
-    );
+    _model_generator->generateModel(time_interval);
+
 
     updateVectors(time_interval);
 }

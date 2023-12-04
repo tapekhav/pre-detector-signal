@@ -25,6 +25,23 @@ SignalGenerator::SignalGenerator(const SignalGenerator &other)
     tryToSetModulation(other._modulation);
 }
 
+SignalGenerator& SignalGenerator::operator=(const SignalGenerator& other)
+{
+    if (this == &other)
+    {
+        SignalGenerator(other).swap(*this);
+    }
+    
+    return *this;
+}
+
+void SignalGenerator::swap(SignalGenerator& other)
+{
+    std::swap(_time_vector, other._time_vector);
+    std::swap(_modulating_signal, other._modulating_signal);
+    std::swap(_modulation, other._modulation);
+}
+
 SignalGenerator::SignalGenerator(SignalGenerator&& other) noexcept
                                  : _time_vector(std::move(other._time_vector)),
                                    _modulating_signal(std::move(other._modulating_signal)),
