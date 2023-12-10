@@ -28,7 +28,7 @@ private:
     QVector<QPair<double, double>> _series_modulating_signal;
 
     std::unique_ptr<QPlotter> _qt_plotter;
-    QPlotterController _controller;
+    // QPlotterController _controller;
 };
 
 #endif // PRE_DETECTOR_SIGNAL_QT_MAIN_WINDOW_CLASS_H
