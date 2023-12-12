@@ -25,16 +25,21 @@ void QPlotterController::updateVectors(const Interval& time_interval)
         time_vector.push_back(time_point);
     }
 
-    auto modulated_signal = _signal_generator->modulateSignal(time_interval);
-    for (int i = 0; i < modulated_signal.size(); ++i)
+    _signal_generator->modulateSignal(time_interval);
+
+    auto in_phase = _signal_generator->getInPhase();
+    auto quadrature = _signal_generator->getQuadrature();
+
+    for (int i = 0; i < in_phase.size(); ++i)
     {
-        _modulated_signal.push_back({modulated_signal[i], time_vector[i]});
+        _in_phase.push_back({in_phase[i], time_vector[i]});
+        _quadrature.push_back({quadrature[i], time_vector[i]});
     }
 
     auto modulating_signal = _signal_generator->getModulatingSignal();
     for (int i = 0; i < modulating_signal.size(); ++i)
     {
-        _modulating_signal.push_back({modulated_signal[i], time_vector[i]});
+        _modulating_signal.push_back({modulating_signal[i], time_vector[i]});
     }
 
 }

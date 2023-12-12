@@ -6,9 +6,9 @@
 
 #include <qt_plotter.h>
 #include <generate_signal.h>
+#include <qvector.h>
 
 
-//! TODO подключить фабрику
 class QPlotterController final : public QObject
 {
     Q_OBJECT
@@ -27,7 +27,9 @@ private:
     std::unique_ptr<ModelGenerator> _model_generator;
     std::unique_ptr<SignalGenerator> _signal_generator;
 
-    QVector<QPair<double, double>> _modulated_signal;
+    QVector<QPair<double, double>> _in_phase;
+    QVector<QPair<double, double>> _quadrature;
+
     QVector<QPair<bool, double>> _modulating_signal;
 };
 
