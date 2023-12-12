@@ -49,7 +49,7 @@ SignalGenerator::SignalGenerator(SignalGenerator&& other) noexcept
 
 void SignalGenerator::tryToSetModulation(const std::unique_ptr<IModulation<double, bool>>& other_modulation)
 {
-    if (auto modulation = dynamic_cast<BPSKModulation*>(other_modulation.get()))
+    if (auto *modulation = dynamic_cast<BPSKModulation*>(other_modulation.get()))
     {
         // _modulation = std::move(std::make_unique<BPSKModulation>(*modulation));
     }
@@ -67,9 +67,12 @@ void SignalGenerator::setTimeInterval(const Interval &time_interval)
     }
 }
 
-std::vector<double> SignalGenerator::modulateSignal(const Interval &time_interval)
+void SignalGenerator::modulateSignal(const Interval &time_interval)
 {
     setTimeInterval(time_interval);
-    return _modulation->modulate(_modulating_signal);
+    _modulation->modulate(_modulating_signal);
+
+    _in_phase = std::move(_modulation->getInPhase());
+    _quadrature = std::move(_modulation->getQuadrature());
 }
 
