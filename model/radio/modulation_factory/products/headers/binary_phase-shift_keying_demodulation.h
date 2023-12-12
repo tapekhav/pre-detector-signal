@@ -8,9 +8,9 @@
  * \brief Demodulates Phase Shift Keying signals to recover the original modulating binary signal.
  *
  * The BPSKDemodulation class implements the IDemodulation interface and provides functionality for demodulating
- * binary Phase Shift Keying (PSK) signals.
+ * Binary Phase Shift Keying (BPSK) signals.
  */
-class BPSKDemodulation final : public IDemodulation<bool, complex>
+class BPSKDemodulation final : public IDemodulation<bool, double>
 {
 public:
     /*!
@@ -28,7 +28,9 @@ public:
      * @param modulated_signal The input modulated signal.
      * @return A vector of demodulated binary values returns the recovered modulating signal.
      */
-    std::vector<bool> demodulate(const std::vector<complex> &modulated_signal) final;
+    std::vector<bool> demodulate(const std::vector<double>& in_phase,
+                                 const std::vector<double>& quadrature) final;
+    
     /*!
      * \brief Destructor.
      */

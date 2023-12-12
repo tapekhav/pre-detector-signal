@@ -30,7 +30,8 @@ public:
      * \param modulated_signal The input modulated signal.
      * \return A vector of demodulated signal.
      */
-    virtual std::vector<OutputType> demodulate(const std::vector<SignalType>& modulated_signal) = 0;
+    virtual std::vector<OutputType> demodulate(const std::vector<SignalType>& in_phase,
+                                               const std::vector<SignalType>& quadrature) = 0;
     /*!
      * \brief Virtual destructor.
      *

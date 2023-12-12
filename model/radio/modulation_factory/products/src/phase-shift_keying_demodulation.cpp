@@ -1,31 +1,25 @@
 #include <binary_phase-shift_keying_demodulation.h>
 
 #include <numeric>
-
+#include <cmath>
 
 BPSKDemodulation::BPSKDemodulation(double sample_rate,
                                    double symbol_duration)
-                                                : _sample_rate(sample_rate),
-                                                  _symbol_duration(symbol_duration) {}
+                                   : _sample_rate(sample_rate),
+                                     _symbol_duration(symbol_duration) {}
 
-std::vector<bool> BPSKDemodulation::demodulate(const std::vector<complex> &received_signal)
+std::vector<bool> BPSKDemodulation::demodulate(const std::vector<double>& in_phase,
+                                               const std::vector<double>& quadrature)
 {
     std::vector<bool> demodulated_bits;
 
     int num_samples_per_symbol = static_cast<int>(_sample_rate * _symbol_duration);
 
-    for (int i = 0; i < received_signal.size(); i += num_samples_per_symbol)
+    for (int i = 0; i < in_phase.size(); i += num_samples_per_symbol)
     {
-        complex symbol_sum = std::accumulate(
-                received_signal.begin() + i,
-                received_signal.begin() + i + num_samples_per_symbol,
-                complex(0.0, 0.0)
-        );
+        double phase = std::atan2(in_phase[i], quadrature[i]);
 
-        double phase = std::arg(symbol_sum);
-
-        bool demodulated_bit = (phase > 0.0);
-        demodulated_bits.push_back(demodulated_bit);
+        demodulated_bits.push_back(phase > 0);
     }
 
     return demodulated_bits;

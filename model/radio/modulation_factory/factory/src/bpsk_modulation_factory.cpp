@@ -12,12 +12,12 @@ BPSKModulationFactory::BPSKModulationFactory(double amplitude,
                                                  _central_frequency(central_frequency),
                                                  _symbol_duration(symbol_duration) {}
 
-std::unique_ptr<IModulation<complex, bool>> BPSKModulationFactory::createModulationProduct() const
+std::unique_ptr<IModulation<double, bool>> BPSKModulationFactory::createModulationProduct() const
 {
     return std::make_unique<BPSKModulation>(_amplitude, _sample_rate, _central_frequency, _symbol_duration);
 }
 
-std::unique_ptr<IDemodulation<bool, complex>> BPSKModulationFactory::createDemodulationProduct() const
+std::unique_ptr<IDemodulation<bool, double>> BPSKModulationFactory::createDemodulationProduct() const
 {
     return std::make_unique<BPSKDemodulation>(_sample_rate, _symbol_duration);
 }
