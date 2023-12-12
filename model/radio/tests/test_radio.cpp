@@ -13,10 +13,13 @@ TEST(ModulationAndDemodulation, TestTogether)
     std::vector<bool> signal = {true, false, true, false, true, true};
     BPSKModulation modulation(1, 3, 1, 2);
 
-    auto modulated = modulation.modulate(signal);
+    modulation.modulate(signal);
+
+    auto in_phase = modulation.getInPhase();
+    auto quadrature = modulation.getQuadrature();
 
     BPSKDemodulation demodulation(3, 2);
-    auto demodulated = demodulation.demodulate(modulated);
+    auto demodulated = demodulation.demodulate(in_phase, quadrature);
 
     for (int i = 0; i < signal.size(); ++i)
     {
