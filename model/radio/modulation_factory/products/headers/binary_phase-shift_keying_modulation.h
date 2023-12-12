@@ -10,7 +10,7 @@
  * The BPSKModulation class implements the IModulation interface and provides functionality for modulating binary
  * data using Binary Phase Shift Keying modulation_factory.
  */
-class BPSKModulation final : public IModulation<complex, bool>
+class BPSKModulation final : public IModulation<double, bool>
 {
 public:
     /*!
@@ -34,7 +34,11 @@ public:
      * \param initial_signal The input binary signal to be modulated.
      * \return A vector of modulated signal values.
      */
-    std::vector<complex> modulate(const std::vector<bool>& initial_signal) final;
+    void modulate(const std::vector<bool>& initial_signal) final;
+
+    [[nodiscard]] inline std::vector<double> getInPhase() const final { return _in_phase; }
+
+    [[nodiscard]] inline std::vector<double> getQuadrature() const final { return _quadrature; }
 
     /*!
      * \brief Destructor.
@@ -49,6 +53,10 @@ private:
     double _central_frequency;
     //! The duration of each symbol in the modulated signal.
     double _symbol_duration;
+
+    //! The modulation vectors
+    std::vector<double> _in_phase;
+    std::vector<double> _quadrature;
 };
 
 #endif //PRE_DETECTOR_SIGNAL_FREQUENCY_MODULATION_2_H

@@ -28,7 +28,11 @@ public:
      * \param initial_signal The input initial signal to be modulated.
      * \return A vector of modulated output values.
      */
-    virtual std::vector<OutputType> modulate(const std::vector<SignalType>& initial_signal) = 0;
+    virtual void modulate(const std::vector<SignalType>& initial_signal) = 0;
+
+    virtual std::vector<OutputType> getInPhase() const = 0;
+
+    virtual std::vector<OutputType> getQuadrature() const = 0;
     /*!
      * \brief Virtual destructor.
      *

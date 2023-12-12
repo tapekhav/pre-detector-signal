@@ -1,0 +1,41 @@
+#include <digital-to-analog_conversion.h>
+#include <cmath>
+#include <thread>
+
+DAC::DAC(int resolution,
+         double voltage,
+         double sample_rate, 
+         double input_amplitude)
+         : _resolution(resolution),
+           _max_reference_voltage(voltage),
+           _input_amplitude(input_amplitude) 
+{
+    
+}
+
+void DAC::digitalToAnalog(const std::vector<int>& re, const std::vector<int>& im)
+{
+    auto formula =
+    [this](const std::vector<int>& signals)
+    {
+        std::vector<double> result;
+
+        result.reserve(signals.size());
+        for (double signal : signals)
+        {
+            result.push_back(static_cast<double>(signal / ((1 << _resolution) - 1)) * _max_reference_voltage);
+        }
+
+        return result;
+    };
+
+    std::thread thread_re([this, &re, formula]()
+    {
+        _analog_signal_re = formula(re);
+    });
+
+    _analog_signal_im = formula(im);
+
+
+    thread_re.join();
+}

@@ -5,21 +5,21 @@
 #include <functional>
 
 /*!
- * \typedef adc_conversion
+ * \typedef dac_conversion
  * \brief Typedef for the function signature of analog-to-digital conversion.
  *
  * This typedef represents a function that takes a vector of doubles (representing the real and imaginary parts
  * of a complex signal) and returns a vector of integers as the result of the analog-to-digital conversion process.
  */
-using adc_conversion = std::function<std::vector<int>(std::vector<double>)>;
+using dac_conversion = std::function<std::vector<double>(std::vector<int>)>;
 
 /*!
- * \class ADC
+ * \class DAC
  * \brief Analog-to-Digital Converter (ADC) class.
  *
- * The ADC class provides functionality for converting analog signals to digital signals with a specified bit depth.
+ * The DAC class provides functionality for converting digital signals to analog signals with a specified bit depth.
  */
-class ADC
+class DAC
 {
 public:
     /*!
@@ -28,16 +28,16 @@ public:
      * \param resolution The number of bits used for digital representation.
      * \param voltage The maximum reference voltage of the ADC.
      */
-    ADC(int resolution, double voltage, double sample_rate, double input_amplitude);
+    DAC(int resolution, double voltage, double sample_rate, double input_amplitude);
 
     /*!
-     * \brief Performs analog-to-digital conversion on a complex signal.
+     * \brief Performs digital-to-analog conversion on a complex signal.
      *
-     * The analog-to-digital conversion is applied separately to the real and imaginary parts of a complex signal.
+     * The digital-to-analog conversion is applied separately to the real and imaginary parts of a complex signal.
      *
      * \details
      * The conversion process involves creating two separate threads, one for the real part and one for the imaginary part,
-     * to perform the analog-to-digital conversion concurrently.
+     * to perform the digital-to-analog conversion concurrently.
      *
      * \note
      * It is important to ensure that the vectors `re` and `im` remain valid and unchanged throughout the duration of the
@@ -49,34 +49,34 @@ public:
      * \param re Vector representing the real part of the complex signal.
      * \param im Vector representing the imaginary part of the complex signal (default is an empty vector for real signals).
      */
-    void analogToDigital(const std::vector<double>& re, const std::vector<double>& im = {});
+    void digitalToAnalog(const std::vector<int>& re, const std::vector<int>& im = {});
 
     /*!
      * \brief Getter for the discrete representation of the real part of the converted signal.
      *
      * \return A vector of integers representing the discrete values of the real part of the converted signal.
      */
-    [[nodiscard]] std::vector<int> getDiscreteSignalRe() const { return _discrete_signal_re; }
+    [[nodiscard]] std::vector<double> getAnalogSignalRe() const { return _analog_signal_re; }
 
     /*!
      * \brief Getter for the discrete representation of the imaginary part of the converted signal.
      *
      * \return A vector of integers representing the discrete values of the imaginary part of the converted signal.
      */
-    [[nodiscard]] std::vector<int> getDiscreteSignalIm() const { return _discrete_signal_im; }
+    [[nodiscard]] std::vector<double> getAnalogSignalIm() const { return _analog_signal_im; }
 private:
     //! Amplitude of source signal
     double _input_amplitude;
     //! Number of bits used for digital representation.
     int _resolution;
-    //! Maximum reference voltage of the ADC.
+    //! Maximum reference voltage of the DAC.
     double _max_reference_voltage;
     //! Sample rate of analog signal
 
-    //! Discrete representation of the real part of the converted signal.
-    std::vector<int> _discrete_signal_re;
-    //! Discrete representation of the imaginary part of the converted signal.
-    std::vector<int> _discrete_signal_im;
+    //! Analog representation of the real part of the converted signal.
+    std::vector<double> _analog_signal_re;
+    //! Analog representation of the imaginary part of the converted signal.
+    std::vector<double> _analog_signal_im;
 };
 
 #endif //PRE_DETECTOR_SIGNAL_ANALOG_TO_DIGITAL_CONVERSION_H

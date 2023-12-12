@@ -4,9 +4,12 @@
 
 ADC::ADC(int resolution,
          double voltage,
-         double sample_rate)
+         double sample_rate, 
+         double input_amplitude)
          : _resolution(resolution),
-           _max_reference_voltage(voltage) {}
+           _max_reference_voltage(voltage),
+           _input_amplitude(input_amplitude)
+            {}
 
 void ADC::analogToDigital(const std::vector<double> &re, const std::vector<double> &im)
 {
@@ -34,19 +37,4 @@ void ADC::analogToDigital(const std::vector<double> &re, const std::vector<doubl
 
 
     thread_re.join();
-}
-
-void ADC::convertDigitalToAnalog(double sample_rate, const std::vector<double> &re, const std::vector<double> &im)
-{
-    auto formula = [this, sample_rate](const std::vector<double>& signal)
-    {
-        std::vector<int> result;
-        for (double i : signal)
-        {
-            result.push_back(static_cast<int>(std::round(i / _max_reference_voltage *
-                                                         ((1 << _resolution) - 1))));
-        }
-
-        return result;
-    };
 }
