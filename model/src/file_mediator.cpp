@@ -1,4 +1,4 @@
-#include <models_mediator.h>
+#include <file_mediator.h>
 
 #include <file_reader.h>
 #include <model_generator.h>
@@ -20,25 +20,25 @@ static const std::map<size_t, std::function<double(const Model& model)>> kModelM
     {9, [](const Model& model) { return model.control_voltage(); }}
 };
 
-ModelsMediator::ModelsMediator(std::shared_ptr<FileReader> &file_reader,
+FileMediator::FileMediator(std::shared_ptr<FileReader> &file_reader,
                                std::shared_ptr<BinaryFileManager> &file_manager,
                                std::shared_ptr<ModelGenerator> &model_generator)
                                : _file_reader(file_reader),
                                  _file_manager(file_manager),
                                  _model_generator(model_generator)
 {
-    std::shared_ptr<ModelsMediator> mediator_ptr(this);
+    std::shared_ptr<FileMediator> mediator_ptr(this);
     _file_manager->set_mediator(mediator_ptr);
     _file_reader->set_mediator(mediator_ptr);
     _model_generator->set_mediator(mediator_ptr);
 }
 
-void ModelsMediator::notify(EventType event) const
+void FileMediator::notify(EventType event) const
 {
     _mediator_map.at(event)();
 }
 
-void ModelsMediator::writeToFile()
+void FileMediator::writeToFile()
 {
     auto models = _model_generator->getModels();
     auto time_step = _model_generator->getTimeInterval().step;
@@ -51,7 +51,7 @@ void ModelsMediator::writeToFile()
     notify(EventType::WriteToFile);
 }
 
-void ModelsMediator::writeModel(const Model& model)
+void FileMediator::writeModel(const Model& model)
 {
     for (size_t i = 0; i < 10; ++i)
     {
@@ -59,7 +59,7 @@ void ModelsMediator::writeModel(const Model& model)
     }
 }
 
-void ModelsMediator::writeWord(size_t i, const Model& model)
+void FileMediator::writeWord(size_t i, const Model& model)
 {
     _file_manager->addSynchronize();
 
@@ -67,12 +67,12 @@ void ModelsMediator::writeWord(size_t i, const Model& model)
     _file_manager->writeBitset(EncodeData(param).execute());
 }
 
-void ModelsMediator::readFromFile()
+void FileMediator::readFromFile()
 {
     _file_reader->readAllFile();
 }
 
-void ModelsMediator::doPreDetectorSignal()
+void FileMediator::doPreDetectorSignal()
 {
     auto info = _file_reader->getFileInfo();
 

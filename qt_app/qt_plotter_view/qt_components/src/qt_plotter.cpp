@@ -1,24 +1,24 @@
 #include <qt_plotter.h>
-#include <ui_qt_plotter.h>
 
 #include <QVBoxLayout>
 
+#include <ui_qt_plotter.h>
 #include <qt_coordinate_tool_tip.h>
 
-QPlotter::QPlotter(const QVector<QPair<double, double>>& series_data,
-                   const QVector<QPair<double, double>>& init_signal_data,
-                   QWidget *parent)
+#include <memory>
+
+QPlotter::QPlotter(QWidget *parent)
                    : QWidget(parent),
-                     _ui(new Ui::QPlotter)
+                     _ui(new Ui::QPlotter),
+                     _time({0, 10, 0.5})
 {
     _ui->setupUi(this);
 
-    setPlotter(series_data, init_signal_data);
-
-    setRanges(series_data);
+    //setRanges(series_data);
     setToolTip();
 
     connect(_ui->plotter, &QCustomPlot::mouseMove, this, &QPlotter::onMouseMove);
+    connect(_ui->_apply_button, SIGNAL(clicked()), this, SLOT(sendData()));
 
     _ui->plotter->replot();
 }
@@ -83,7 +83,14 @@ void QPlotter::onMouseMove(QMouseEvent *event)
 
 void QPlotter::setToolTip()
 {
-    _tool_tip = new QCoordinateToolTip(_ui->plotter);
+    _tool_tip = std::make_unique<QCoordinateToolTip>(_ui->plotter);
+}
+
+void QPlotter::sendData()
+{
+   _time = Interval(_ui->_begin_line_edit->text().toDouble(), 
+                    _ui->end_line_edit->text().toDouble(),
+                    _ui->step_line_edit->text().toDouble());
 }
 
 void QPlotter::setPlotter(const QVector<QPair<double, double>>& series_data,
@@ -101,6 +108,16 @@ void QPlotter::setPlotter(const QVector<QPair<double, double>>& series_data,
     _ui->plotter->xAxis->setLabel("time");
     _ui->plotter->yAxis->setLabel("value");
 }
+
+void QPlotter::timeOnChanged(const Interval& time)
+{
+    if (!(_time == time))
+    {
+        _controller->updateVectors(time);
+        emit timeChanged(time);
+    }
+}
+
 
 QPlotter::~QPlotter()
 {

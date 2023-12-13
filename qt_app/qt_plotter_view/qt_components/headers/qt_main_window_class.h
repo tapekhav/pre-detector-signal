@@ -24,9 +24,6 @@ public:
 
     ~QClassMainWindow() final = default;
 private:
-    //QVector<QPair<double, double>> _series_modulated_signal;
-    //QVector<QPair<double, double>> _series_modulating_signal;
-
     std::unique_ptr<QPlotter> _qt_plotter;
 };
 

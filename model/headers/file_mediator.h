@@ -15,10 +15,10 @@ class ModelGenerator;
 class FileReader;
 class BinaryFileManager;
 
-class ModelsMediator final : public IMediator
+class FileMediator final : public IMediator
 {
 public:
-    ModelsMediator(std::shared_ptr<FileReader> &file_reader,
+    FileMediator(std::shared_ptr<FileReader> &file_reader,
                    std::shared_ptr<BinaryFileManager> &file_manager,
                    std::shared_ptr<ModelGenerator> &model_generator);
 
@@ -26,7 +26,7 @@ public:
 
     [[nodiscard]] inline std::vector<bool> getInfoBits() const { return _info_bits; }
 
-    ~ModelsMediator() final = default;
+    ~FileMediator() final = default;
 private:
     void writeToFile();
 

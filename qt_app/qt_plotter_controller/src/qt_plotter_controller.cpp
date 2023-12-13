@@ -20,7 +20,7 @@ QPlotterController::QPlotterController(const Interval& time_interval,
     _file_reader = std::make_shared<FileReader>(kPath);
     _file_manager = std::make_shared<BinaryFileManager>(kPath);
 
-    _mediator = std::make_unique<ModelsMediator>(
+    _mediator = std::make_unique<FileMediator>(
         _file_reader, 
         _file_manager, 
         _model_generator
@@ -63,9 +63,4 @@ void QPlotterController::updateVectors(const Interval& time_interval)
     }
 
     modulated.join();
-}
-
-void QPlotterController::handleButtonClick(double begin, double end, double sample_rate)
-{
-    // qDebug() << begin << " " << end << " " << sample_rate << "\n";
 }

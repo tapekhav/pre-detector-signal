@@ -2,6 +2,7 @@
 #define PRE_DETECTOR_SIGNAL_CONSTS_H
 
 #include <cstdint>
+#include <type_traits>
 #include <vector>
 #include <bitset>
 #include <cassert>
@@ -42,6 +43,26 @@ struct Interval
 {
     inline Interval(double begin, double end, double step)
                     : begin(begin), end(end), step(step) { assert(step >= 0.01 && step <= 0.5); }
+
+    Interval(const Interval& other) 
+                    : begin(other.begin), end(other.end), step(other.step) {}
+
+    void swap(Interval& other) { std::swap(begin, other.begin); 
+                                 std::swap(end, other.end);
+                                 std::swap(step, other.step); }
+
+    bool operator==(const Interval& other) 
+                   { return begin == other.begin && end == other.end && step == other.step; }
+
+    Interval& operator=(const Interval& other)
+    { 
+        if (this != & other)
+        {
+            Interval(other).swap(*this);
+        }
+
+        return *this;
+    }
 
     double begin;
     double end;

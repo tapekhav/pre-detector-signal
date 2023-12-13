@@ -4,7 +4,7 @@
 #include <QObject>
 #include <memory>
 
-#include <models_mediator.h>
+#include <file_mediator.h>
 #include <generate_signal.h>
 #include <qvector.h>
 #include <vector>
@@ -27,12 +27,11 @@ public:
     [[nodiscard]] inline time_vec<bool> getModulating() const { return _modulating_signal; }
 public slots:
     void updateVectors(const Interval& time_interval);
-    void handleButtonClick(double begin, double end, double sample_rate);
 private:
     std::shared_ptr<FileReader> _file_reader;
     std::shared_ptr<BinaryFileManager> _file_manager;
     std::shared_ptr<ModelGenerator> _model_generator;
-    std::unique_ptr<ModelsMediator> _mediator;
+    std::unique_ptr<FileMediator> _mediator;
 
     std::unique_ptr<SignalGenerator> _signal_generator;
 
