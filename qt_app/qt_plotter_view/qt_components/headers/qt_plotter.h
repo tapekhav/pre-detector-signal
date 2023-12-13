@@ -1,10 +1,12 @@
 #ifndef PRE_DETECTOR_SIGNAL_QT_PLOTTER_H
 #define PRE_DETECTOR_SIGNAL_QT_PLOTTER_H
 
+#include <qt_plotter_controller.h>
 #include <QWidget>
 #include <QVector>
 #include <QPair>
 
+#include <memory>
 #include <qcustomplot.h>
 
 class QCoordinateToolTip;
@@ -38,6 +40,8 @@ private slots:
 private:
     Ui::QPlotter* _ui;
     QCoordinateToolTip* _tool_tip;
+
+    std::unique_ptr<QPlotterController> _controller;
 };
 
 #endif // PRE_DETECTOR_SIGNAL_QT_PLOTTER_H

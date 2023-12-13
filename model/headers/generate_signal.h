@@ -3,17 +3,15 @@
 
 #include <memory>
 
-#include <binary_phase-shift_keying_modulation.h>
+#include <bpsk_modulation_factory.h>
 #include <model_generator.h>
 #include <vector>
 
 class SignalGenerator
 {
 public:
-    SignalGenerator(const std::vector<bool>& modulating_signal,
-                    std::unique_ptr<IModulation<double, bool>>& modulation);
+    explicit SignalGenerator(std::vector<bool> modulating_signal);
 
-    SignalGenerator(const SignalGenerator& other);
     auto operator=(const SignalGenerator& other) -> SignalGenerator&;
 
     void swap(SignalGenerator& other);
@@ -42,6 +40,7 @@ private:
     std::vector<double> _quadrature;
 
     std::unique_ptr<IModulation<double, bool>> _modulation;
+
 };
 
 

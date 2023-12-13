@@ -76,6 +76,6 @@ void ModelsMediator::doPreDetectorSignal()
 {
     auto info = _file_reader->getFileInfo();
 
-    std::vector<bool> bool_info;
-    std::transform(info.begin(), info.end(), std::back_inserter(bool_info), [](char c) { return c == '1'; });
+    std::transform(info.begin(), info.end(), std::back_inserter(_info_bits),
+                   [](char c) { return c == '1'; });
 }

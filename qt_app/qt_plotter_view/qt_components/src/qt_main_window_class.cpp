@@ -1,3 +1,4 @@
+#include "consts.h"
 #include <qt_main_window_class.h>
 
 #include <QVBoxLayout>
@@ -8,7 +9,6 @@
 QClassMainWindow::QClassMainWindow(QWidget *parent)
                                    : QMainWindow(parent),
                                      _qt_plotter(nullptr)
-                                     //_controller(&_signal_generator)
 {
     _qt_plotter = std::make_unique<QPlotter>(_series_modulated_signal, _series_modulating_signal, this);
 

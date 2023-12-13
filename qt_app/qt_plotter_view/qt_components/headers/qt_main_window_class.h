@@ -24,11 +24,10 @@ public:
 
     ~QClassMainWindow() final = default;
 private:
-    QVector<QPair<double, double>> _series_modulated_signal;
-    QVector<QPair<double, double>> _series_modulating_signal;
+    //QVector<QPair<double, double>> _series_modulated_signal;
+    //QVector<QPair<double, double>> _series_modulating_signal;
 
     std::unique_ptr<QPlotter> _qt_plotter;
-    // QPlotterController _controller;
 };
 
 #endif // PRE_DETECTOR_SIGNAL_QT_MAIN_WINDOW_CLASS_H

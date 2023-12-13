@@ -1,38 +1,23 @@
+#include <consts.h>
+#include <cstddef>
 #include <generate_signal.h>
 
 #include <map>
 #include <functional>
 
-/*
-static const std::map<std::type_index, std::function<void(IModulation<double, bool>*)>> type_map =
-{
-        { std::type_index(typeid(BPSKModulation)), [](std::unique_ptr<IModulation<double, bool> modulation)
-            {
-                modulation = dynamic_cast<BPSKModulation*>(modulation);
-            }
-        }
-}; */
+#include <utility>
 
-SignalGenerator::SignalGenerator(const std::vector<bool>& modulating_signal,
-                                 std::unique_ptr<IModulation<double, bool>>& modulation)
-                                 : _modulation(std::move(modulation)),
-                                   _modulating_signal(modulating_signal) {}
+SignalGenerator::SignalGenerator(std::vector<bool> modulating_signal)
+                                 : _modulating_signal(std::move(modulating_signal))
+{    
+    BPSKModulationFactory factory(
+        1,
+        consts::radio::kSampleRate, 
+        consts::radio::kCentralFrequency,
+        consts::radio::kBroadWidth 
+    );
 
-SignalGenerator::SignalGenerator(const SignalGenerator &other)
-{
-    _time_vector = other._time_vector;
-    _modulating_signal = other._modulating_signal;
-    tryToSetModulation(other._modulation);
-}
-
-SignalGenerator& SignalGenerator::operator=(const SignalGenerator& other)
-{
-    if (this == &other)
-    {
-        SignalGenerator(other).swap(*this);
-    }
-    
-    return *this;
+    _modulation = std::move(factory.createModulationProduct());
 }
 
 void SignalGenerator::swap(SignalGenerator& other)
@@ -46,18 +31,6 @@ SignalGenerator::SignalGenerator(SignalGenerator&& other) noexcept
                                  : _time_vector(std::move(other._time_vector)),
                                    _modulating_signal(std::move(other._modulating_signal)),
                                    _modulation(std::move(other._modulation)) {}
-
-void SignalGenerator::tryToSetModulation(const std::unique_ptr<IModulation<double, bool>>& other_modulation)
-{
-    if (auto *modulation = dynamic_cast<BPSKModulation*>(other_modulation.get()))
-    {
-        // _modulation = std::move(std::make_unique<BPSKModulation>(*modulation));
-    }
-    else
-    {
-        // some logic
-    }
-}
 
 void SignalGenerator::setTimeInterval(const Interval &time_interval)
 {

@@ -9,6 +9,7 @@
 #include <complex_signal_spectrum.h>
 #include <bpsk_modulation_factory.h>
 #include <analog-to-digital_conversion.h>
+#include <vector>
 
 class ModelGenerator;
 class FileReader;
@@ -23,6 +24,8 @@ public:
 
     void notify(EventType event) const final;
 
+    [[nodiscard]] inline std::vector<bool> getInfoBits() const { return _info_bits; }
+
     ~ModelsMediator() final = default;
 private:
     void writeToFile();
@@ -34,12 +37,12 @@ private:
     void readFromFile();
 
     void doPreDetectorSignal();
-
+private:
     std::shared_ptr<FileReader> _file_reader;
     std::shared_ptr<ModelGenerator> _model_generator;
     std::shared_ptr<BinaryFileManager> _file_manager;
 
-    //BPSKModulationFactory _factory;
+    std::vector<bool> _info_bits;
 
     const std::map<EventType, std::function<void()>> _mediator_map =
     {
