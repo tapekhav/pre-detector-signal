@@ -2,6 +2,7 @@
 #define PRE_DETECTOR_SIGNAL_MODELS_MEDIATOR_H
 
 #include <string>
+#include <vector>
 
 #include <model.pb.h>
 #include <interface_mediator.h>
@@ -9,7 +10,6 @@
 #include <complex_signal_spectrum.h>
 #include <bpsk_modulation_factory.h>
 #include <analog-to-digital_conversion.h>
-#include <vector>
 
 class ModelGenerator;
 class FileReader;

@@ -14,6 +14,7 @@ include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/headers
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/radio/headers
         ${CMAKE_CURRENT_SOURCE_DIR}/../library/files/headers
+        ${CMAKE_CURRENT_SOURCE_DIR}/../library/encode_data/utilities/headers
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/radio/modulation_factory/factory/headers
         ${CMAKE_CURRENT_SOURCE_DIR}/../model/radio/modulation_factory/products/headers
         ${CMAKE_CURRENT_SOURCE_DIR}/../utilities/headers
@@ -58,5 +59,6 @@ target_link_libraries(
         Qt5::PrintSupport
         Radio
         Model
+        Utility
         EncodeData
 )

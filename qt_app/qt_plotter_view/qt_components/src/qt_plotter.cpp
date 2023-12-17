@@ -2,45 +2,42 @@
 
 #include <QVBoxLayout>
 
+#include <memory>
+
 #include <ui_qt_plotter.h>
 #include <qt_coordinate_tool_tip.h>
 
-#include <memory>
-
 QPlotter::QPlotter(QWidget *parent)
                    : QWidget(parent),
-                     _ui(new Ui::QPlotter),
-                     _time({0, 10, 0.5})
+                     _ui(std::make_unique<Ui::QPlotter>()),
+                     _time({0, 10, 0.5}),
+                     _tool_tip(std::make_unique<QCoordinateToolTip>(_ui->plotter)),
+                     _controller(std::make_unique<QPlotterController>(_time))
 {
     _ui->setupUi(this);
-
-    //setRanges(series_data);
-    setToolTip();
+    
+    //! TODO: remove magic number
+    for (size_t i = 0; i < 3; ++i)
+    {
+        _ui->plotter->addGraph();
+    }
 
     connect(_ui->plotter, &QCustomPlot::mouseMove, this, &QPlotter::onMouseMove);
     connect(_ui->_apply_button, SIGNAL(clicked()), this, SLOT(sendData()));
 
-    _ui->plotter->replot();
+    _controller->updateVectors(_time);
 }
 
-void QPlotter::setSeries(const QVector<QPair<double, double>>& series, int num_graph)
+void QPlotter::setSeries(const Interval& time)
 {
-    QVector<double> x_data;
-    QVector<double> y_data;
+    _controller->updateVectors(time);
 
-    for (const auto& pair : series)
-    {
-        x_data.append(pair.first);
-        y_data.append(pair.second);
-    }
+    auto time_vector = _controller->getTimeVector();
 
-    _ui->plotter->graph(num_graph)->setData(x_data, y_data);
-    _ui->plotter->replot();
-}
+    _ui->plotter->graph(0)->setData(_controller->getInPhase(), time_vector);
+    _ui->plotter->graph(1)->setData(_controller->getQuadrature(), time_vector);
+    _ui->plotter->graph(2)->setData(_controller->getModulating(), time_vector);
 
-void QPlotter::addToSeries(double x, double y, int num_graph)
-{
-    _ui->plotter->graph(num_graph)->addData(x, y);
     _ui->plotter->replot();
 }
 
@@ -80,12 +77,6 @@ void QPlotter::onMouseMove(QMouseEvent *event)
     _tool_tip->show();
 }
 
-
-void QPlotter::setToolTip()
-{
-    _tool_tip = std::make_unique<QCoordinateToolTip>(_ui->plotter);
-}
-
 void QPlotter::sendData()
 {
    _time = Interval(_ui->_begin_line_edit->text().toDouble(), 
@@ -99,11 +90,11 @@ void QPlotter::setPlotter(const QVector<QPair<double, double>>& series_data,
     _ui->plotter->addGraph();
     _ui->plotter->addGraph();
 
-    _ui->plotter->graph(0)->setPen(QPen(Qt::blue));
-    _ui->plotter->graph(1)->setPen(QPen(Qt::red));
-
-    setSeries(series_data, 0);
-    setSeries(init_signal_data, 1);
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        QColor randomColor = QColor::fromRgb(QRandomGenerator::global()->generate());
+        _ui->plotter->graph(i)->setPen(QPen(randomColor));
+    }
 
     _ui->plotter->xAxis->setLabel("time");
     _ui->plotter->yAxis->setLabel("value");
@@ -117,7 +108,6 @@ void QPlotter::timeOnChanged(const Interval& time)
         emit timeChanged(time);
     }
 }
-
 
 QPlotter::~QPlotter()
 {
