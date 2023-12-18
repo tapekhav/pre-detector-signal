@@ -108,8 +108,3 @@ void QPlotter::timeOnChanged(const Interval& time)
         emit timeChanged(time);
     }
 }
-
-QPlotter::~QPlotter()
-{
-    delete _ui;
-}

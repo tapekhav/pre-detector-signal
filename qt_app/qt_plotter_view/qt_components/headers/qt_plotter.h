@@ -20,7 +20,7 @@ class QPlotter final : public QWidget
     Q_OBJECT
 public:
     explicit QPlotter(QWidget *parent = nullptr);
-    ~QPlotter() final;
+    ~QPlotter() final = default;
 
     void setSeries(const Interval& time);
 
