@@ -40,7 +40,7 @@ void QPlotterController::updateVectors(const Interval& time_interval)
     auto modulating_signal = _mediator->getInfoBits(); 
     _signal_generator = std::make_unique<SignalGenerator>(modulating_signal);
 
-    std::jthread modulated(
+    std::thread modulated(
         [&]()
         {        
             _signal_generator->modulateSignal(time_interval);
@@ -56,4 +56,5 @@ void QPlotterController::updateVectors(const Interval& time_interval)
         _modulating_signal[k] = modulating_signal[k++] ? 1.0 : 0.0;
         _time.push_back(time_point);
     }
+    modulated.join();
 }

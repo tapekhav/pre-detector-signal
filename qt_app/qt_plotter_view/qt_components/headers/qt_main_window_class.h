@@ -16,11 +16,9 @@ Q_OBJECT
 public:
     explicit QClassMainWindow(QWidget *parent = nullptr);
 
-    void setQtPlotter(std::unique_ptr<QPlotter>& qt_plotter);
+    void setQPlotter();
 
     void setPlotter(const QSize& size);
-
-    void setSignals();
 
     ~QClassMainWindow() final = default;
 private:

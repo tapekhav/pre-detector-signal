@@ -8,8 +8,9 @@
 
 #include <memory>
 #include <qcustomplot.h>
+#include <qvector.h>
 
-class QCoordinateToolTip;
+#include <qt_coordinate_tool_tip.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QPlotter; }
@@ -20,11 +21,15 @@ class QPlotter final : public QWidget
     Q_OBJECT
 public:
     explicit QPlotter(QWidget *parent = nullptr);
-    ~QPlotter() final = default;
+    ~QPlotter() final;
 
     void setSeries(const Interval& time);
 
-    void setRanges(const QVector<QPair<double, double>>& series_data);
+    void setRanges();
+    void setRange();
+    [[nodiscard]] double getMinValue(const QVector<double>& vector) const;
+
+    void setTooltip();
 
     void setPlotter(const QVector<QPair<double, double>>& series_data,
                     const QVector<QPair<double, double>>& init_signal_data);
@@ -37,8 +42,8 @@ private slots:
     void onMouseMove(QMouseEvent *event);
     void sendData();
 private:
-    std::unique_ptr<Ui::QPlotter> _ui;
-    std::unique_ptr<QCoordinateToolTip> _tool_tip;
+    Ui::QPlotter* _ui;
+    QCoordinateToolTip* _tool_tip;
 
     std::unique_ptr<QPlotterController> _controller;
 

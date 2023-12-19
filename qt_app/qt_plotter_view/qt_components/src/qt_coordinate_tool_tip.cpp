@@ -19,12 +19,12 @@ QCoordinateToolTip::QCoordinateToolTip(QWidget *parent)
     setAttribute(Qt::WA_ShowWithoutActivating);
 }
 
-QCoordinateToolTip::~QCoordinateToolTip()
-{
-    delete _ui;
-}
-
 void QCoordinateToolTip::setCoordinates(double x, double y1, double y2)
 {
     _ui->coordinate_label->setText(QString("X: %1\nY1: %2\nY2: %3").arg(x).arg(y1).arg(y2));
+}
+
+QCoordinateToolTip::~QCoordinateToolTip()
+{
+    delete _ui;
 }

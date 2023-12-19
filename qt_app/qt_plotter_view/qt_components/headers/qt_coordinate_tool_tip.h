@@ -16,7 +16,7 @@ public:
 
     void setCoordinates(double x, double y1, double y2);
 private:
-    Ui::QCoordinateToolTip *_ui;
+    Ui::QCoordinateToolTip* _ui;
 };
 
 

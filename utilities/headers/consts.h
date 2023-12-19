@@ -37,12 +37,22 @@ namespace consts
         const int kGainFactorTransmitting = 10;
         const double kCentralFrequency = 433 * 10e6;
     }
+
+    namespace util
+    {
+        const int kPlottersNums = 3;
+        const double kUpperBound = 0.5;
+        const double kLowerBound = 0.01;
+        const double kEps = 1e-6;
+    }
 }
 
 struct Interval
 {
     inline Interval(double begin, double end, double step)
-                    : begin(begin), end(end), step(step) { assert(step >= 0.01 && step <= 0.5); }
+                    : begin(begin), end(end), step(step)
+                    { assert(step >= std::abs(consts::util::kLowerBound - consts::util::kEps) 
+                             && step <= std::abs(consts::util::kUpperBound - consts::util::kEps)); }
 
     Interval(const Interval& other) 
                     : begin(other.begin), end(other.end), step(other.step) {}

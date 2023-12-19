@@ -71,15 +71,16 @@ private:
 #include <config_parser.h>
 
 #include <QApplication>
+#include <memory>
 #include <qt_main_window_class.h>
 #include <qwidget.h>
 
-int main(int argc, char *argv[])
+auto main(int argc, char *argv[]) -> int
 {
     QApplication app(argc, argv);
 
-    //QMainWindow* main_window = dynamic_cast<QClassMainWindow*>(new QClassMainWindow); 
-    //main_window->show();
+    QMainWindow* main_window = new QClassMainWindow; 
+    main_window->show();
 
     return QApplication::exec();
 }

@@ -1,8 +1,10 @@
 #include <config_parser.h>
 
+static const std::string tmp = "/home/vladimir/pre-detector-signal/config.json";
+
 ConfigParser::ConfigParser(const std::string &file_name)
 {
-    std::ifstream file(file_name);
+    std::ifstream file(tmp);
     assert(file.is_open());
 
     file >> _json_data;
