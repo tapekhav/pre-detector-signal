@@ -24,7 +24,7 @@ public:
      * \name Constructor
      * \brief Constructor responsible for opening the file.
      */
-    explicit BinaryFileManager(const std::string& file_name = "result.txt");
+    explicit BinaryFileManager(const std::string& file_name = file_consts::kPath);
 
     /*!
      * \brief Adds a synchronization marker to the binary file.

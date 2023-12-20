@@ -31,6 +31,8 @@
 *.out
 *.app
 
+# Logs
+*.log
 
 /.cache
 /build

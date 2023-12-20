@@ -10,7 +10,6 @@
 #include <library_consts.h>
 #include <base_component.h>
 
-
 /*!
  * \class FileReader
  * \brief A class responsible for reading and parsing data frames from a binary file.
@@ -28,7 +27,7 @@ public:
      *
      * \param file_name The name of the file to be read. Defaults to "result.txt".
      */
-    explicit FileReader(const std::string& file_name = "result.txt");
+    explicit FileReader(const std::string& file_name = file_consts::kPath);
 
     /*!
      * \brief Reads and parses all data from the file.
@@ -48,7 +47,7 @@ public:
      * \name Destructor
      * \brief Destructor responsible for closing the file.
      */
-    inline ~FileReader() { _file.close(); }
+    ~FileReader();
 
 private:
     /*!

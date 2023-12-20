@@ -1,3 +1,5 @@
+#include <library_consts.h>
+#include <bits/types/FILE.h>
 #include <file_reader.h>
 
 #include <iostream>
@@ -67,7 +69,7 @@ void FileReader::readBeginningOfFrame()
 }
 
 void FileReader::readBeginMarker() {
-    char buffer[param_consts::kSizeInfoBits + 1];
+    char buffer[param_consts::kSizeInfoBits];
     _file.read(buffer, param_consts::kSizeInfoBits);
     buffer[param_consts::kSizeInfoBits] = '\0';
 
@@ -83,10 +85,10 @@ void FileReader::readBeginMarker() {
 
 void FileReader::readInformationAboutFrame()
 {
-    char buf[param_consts::kSizeInt + 1];
-    _file.read(buf, param_consts::kSizeInt);
+    char buffer[param_consts::kSizeInt];
+    _file.read(buffer, param_consts::kSizeInt);
 
-    buf[param_consts::kSizeInt] = '\0';
+    buffer[param_consts::kSizeInt] = '\0';
 
     _char_read += _file.gcount();
 
@@ -94,8 +96,7 @@ void FileReader::readInformationAboutFrame()
     {
         throw InformationMarkerReadError();
     }
-
-    _current_frame.append(buf);
+    _current_frame.append(buffer);
 
     readParam();
 }
@@ -106,12 +107,12 @@ bool FileReader::readParam()
     for(uint8_t i = 0; i < param_consts::kNumOfBitset; ++i)
     {
         _file.read(buffer, param_consts::kSizeBitset);
+        buffer[param_consts::kSizeBitset] = '\0';
 
         if (_file.fail())
         {
             return false;
         }
-
         _char_read += param_consts::kSizeBitset;
         _current_frame.append(buffer);
     }
@@ -121,7 +122,7 @@ bool FileReader::readParam()
 
 void FileReader::readSync()
 {
-    char buffer[param_consts::kSizeOfSync + 1];
+    char buffer[param_consts::kSizeOfSync];
     _file.read(buffer, param_consts::kSizeOfSync);
     buffer[param_consts::kSizeOfSync] = '\0';
 
@@ -134,4 +135,10 @@ void FileReader::readSync()
     }
 
     _current_frame.append(buffer);
+}
+
+
+FileReader::~FileReader()
+{
+    _file.close(); 
 }

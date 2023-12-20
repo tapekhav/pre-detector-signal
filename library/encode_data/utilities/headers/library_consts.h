@@ -54,6 +54,11 @@ namespace model_consts
     };
 }
 
+namespace file_consts
+{
+    const std::string kPath("/home/vladimir/pre-detector-signal/library/encode-data/utilities/result.bin");
+}
+
 //! \typedef Type alias for a sequence of bitsets used throughout the library.
 using bitset_sequence = std::vector<std::bitset<param_consts::kSizeBitset>>;
 

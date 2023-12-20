@@ -89,10 +89,7 @@ TEST(CheckAll, checkAll)
 
 TEST(CheckWorkWithFiles, FileReadAndWrite)
 {
-    std::string path = CURRENT_DIR;
-    path.append("/encode_data/tests/test_files/test.txt");
-
-    std::string file_name(path);
+    std::string file_name("/home/vladimir/pre-detector-signal/library/encode_data/tests/test_files/test.bin");
 
     BinaryFileManager manager(file_name);
     manager.setStartFrameMarker(1, EncodeData(0.5).execute());
