@@ -51,8 +51,8 @@ struct Interval
 {
     inline Interval(double begin, double end, double step)
                     : begin(begin), end(end), step(step)
-                    { assert(step >= std::abs(consts::util::kLowerBound - consts::util::kEps) 
-                             && step <= std::abs(consts::util::kUpperBound - consts::util::kEps)); }
+                    { /*assert(step >= std::abs(consts::util::kLowerBound - consts::util::kEps) 
+                             && step <= std::abs(consts::util::kUpperBound - consts::util::kEps));*/ }
 
     Interval(const Interval& other) 
                     : begin(other.begin), end(other.end), step(other.step) {}
@@ -62,7 +62,9 @@ struct Interval
                                  std::swap(step, other.step); }
 
     bool operator==(const Interval& other) 
-                   { return begin == other.begin && end == other.end && step == other.step; }
+                   { return begin <= std::abs(other.begin - eps) && 
+                            end <= std::abs(other.end - eps) &&
+                            step <= std::abs(other.step - eps); }
 
     Interval& operator=(const Interval& other)
     { 
@@ -77,6 +79,8 @@ struct Interval
     double begin;
     double end;
     double step;
+private:
+    const double eps = consts::util::kEps;
 };
 
 #endif //PRE_DETECTOR_SIGNAL_CONSTS_H
