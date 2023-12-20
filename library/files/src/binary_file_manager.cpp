@@ -1,5 +1,6 @@
 #include <binary_file_manager.h>
 #include <full_encode_number.h>
+#include <ios>
 
 BinaryFileManager::BinaryFileManager(const std::string &file_name)
                                      : _file(file_name)

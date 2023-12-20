@@ -1,6 +1,7 @@
 #ifndef PRE_DETECTOR_SIGNAL_CONSTS_H
 #define PRE_DETECTOR_SIGNAL_CONSTS_H
 
+#include <cstddef>
 #include <cstdint>
 #include <type_traits>
 #include <vector>
@@ -44,6 +45,7 @@ namespace consts
         const double kUpperBound = 0.5;
         const double kLowerBound = 0.01;
         const double kEps = 1e-6;
+        const size_t num_of_params = 10;
     }
 }
 

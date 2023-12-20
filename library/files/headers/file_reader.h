@@ -25,7 +25,7 @@ public:
      * \name Destructor
      * \brief Constructs a FileReader object, opening the specified file for reading.
      *
-     * \param file_name The name of the file to be read. Defaults to "result.txt".
+     * \param file_name The name of the file to be read. Defaults to "result.bin".
      */
     explicit FileReader(const std::string& file_name = file_consts::kPath);
 
@@ -90,11 +90,15 @@ private:
     bool readFrame();
 
 private:
-    size_t _char_read;              ///< The number of characters read during file operations.
-    std::fstream _file;             ///< The managed fstream object for file reading.
-    std::string _current_frame;     ///< Information about the currently read data frame.
+    //! The number of characters read during file operations.
+    size_t _char_read;
+    //! The managed fstream object for file reading.
+    std::fstream _file;
+    //! Information about the currently read data frame.
+    std::string _current_frame;
 
-    std::unique_ptr<spdlog::logger> _logger; ///< Logger for internal logging.
+    //! Logger for internal logging.
+    std::unique_ptr<spdlog::logger> _logger;
 };
 
-#endif //PRE_DETECTOR_SIGNAL_FILE_READER_H
+#endif //! PRE_DETECTOR_SIGNAL_FILE_READER_H

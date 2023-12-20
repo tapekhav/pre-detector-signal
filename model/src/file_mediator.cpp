@@ -48,6 +48,7 @@ void FileMediator::writeToFile()
         _file_manager->setStartFrameMarker(i, EncodeData(static_cast<double>(i) * time_step).execute());
         writeModel(models[i]);
     }
+    
     notify(EventType::WriteToFile);
 }
 

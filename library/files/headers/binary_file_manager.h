@@ -53,7 +53,7 @@ public:
     ~BinaryFileManager();
 
 private:
-    //! The managed ofstream object for binary file operations.
+    //! The managed fstream object for binary file operations.
     std::ofstream _file;
 };
 
